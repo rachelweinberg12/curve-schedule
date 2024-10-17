@@ -1,3 +1,4 @@
+import { useUser } from "@clerk/nextjs";
 import { useEffect, useLayoutEffect, useState } from "react";
 
 export const useSafeLayoutEffect =
@@ -23,3 +24,9 @@ export const useScreenWidth = () => {
 
   return screenWidth;
 };
+
+export function useUserRecordID() {
+  const useUserReturn = useUser();
+  const userRecordID = useUserReturn.user?.publicMetadata.record_id;
+  return userRecordID as string | undefined;
+}

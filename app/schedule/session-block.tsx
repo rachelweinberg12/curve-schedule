@@ -11,6 +11,8 @@ import Link from "next/link";
 import { useContext, useState } from "react";
 import { SessionModal } from "../modals";
 import { UserContext } from "../context";
+import { useUser } from "@clerk/nextjs";
+import { useUserRecordID } from "@/utils/hooks";
 
 export function SessionBlock(props: {
   eventName: string;
@@ -85,11 +87,10 @@ function BlankSessionCard(props: { numHalfHours: number }) {
   return <div className={`row-span-${numHalfHours} my-0.5 min-h-12`} />;
 }
 
-async function rsvp(guestId: string, sessionId: string, remove = false) {
+async function rsvp(sessionId: string, remove = false) {
   await fetch("/api/toggle-rsvp", {
     method: "POST",
     body: JSON.stringify({
-      guestId,
       sessionId,
       remove,
     }),
@@ -103,7 +104,7 @@ export function RealSessionCard(props: {
   rsvpsForEvent: RSVP[];
 }) {
   const { session, numHalfHours, location, rsvpsForEvent } = props;
-  const { user: currentUser } = useContext(UserContext);
+  const userRecordID = useUserRecordID();
   const [optimisticRSVPResponse, setOptimisticRSVPResponse] = useState<
     boolean | null
   >(null);
@@ -111,11 +112,12 @@ export function RealSessionCard(props: {
     optimisticRSVPResponse !== null
       ? optimisticRSVPResponse
       : rsvpsForEvent.length > 0;
-  const hostStatus = currentUser && session.Hosts?.includes(currentUser);
+  const hostStatus = userRecordID
+    ? !!session.Hosts?.includes(userRecordID)
+    : false;
   const formattedHostNames = session["Host name"]?.join(", ") ?? "No hosts";
   const lowerOpacity = !rsvpStatus && !hostStatus;
   const [sessionModalOpen, setSessionModalOpen] = useState(false);
-
   const numRSVPs = session["Num RSVPs"] + (optimisticRSVPResponse ? 1 : 0);
   const SessionInfoDisplay = () => (
     <>
@@ -163,11 +165,12 @@ export function RealSessionCard(props: {
         open={sessionModalOpen}
         // rsvp here should actually be rsvp
         rsvp={() => {
-          if (!currentUser) return;
-          rsvp(currentUser, session.ID, !!rsvpStatus);
+          if (!userRecordID) return;
+          rsvp(session.ID, !!rsvpStatus);
           setOptimisticRSVPResponse(!rsvpStatus);
         }}
         rsvpd={rsvpStatus}
+        hosting={hostStatus}
         sessionInfoDisplay={<SessionInfoDisplay />}
       />
       <button

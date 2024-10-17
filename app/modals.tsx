@@ -43,13 +43,14 @@ export function SessionModal(props: {
   rsvp: () => void;
   sessionInfoDisplay?: React.ReactNode;
   rsvpd: boolean;
+  hosting: boolean;
 }) {
-  const { open, close, rsvp, sessionInfoDisplay, rsvpd } = props;
+  const { open, close, rsvp, sessionInfoDisplay, rsvpd, hosting } = props;
   const { user } = useUser();
   return (
     <Modal open={open} setOpen={close} hideClose={!!user}>
       {sessionInfoDisplay}
-      {user && (
+      {user && !hosting && (
         <div className="flex gap-2 items-center mt-3 text-sm justify-end">
           RSVP'd
           <button
