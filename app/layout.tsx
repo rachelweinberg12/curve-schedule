@@ -38,12 +38,7 @@ export default function RootLayout({
         <body className="font-monteserrat">
           <Context>
             <NavBar />
-            <main
-              className={clsx(
-                "lg:px-24 sm:px-10 p-6",
-                CONSTS.MULTIPLE_EVENTS ? "py-24" : "pt-12 pb-24"
-              )}
-            >
+            <main className={clsx("lg:px-24 sm:px-10 p-6", "py-24")}>
               {children}
             </main>
           </Context>

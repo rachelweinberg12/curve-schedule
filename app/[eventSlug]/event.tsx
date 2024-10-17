@@ -7,7 +7,7 @@ import { Input } from "./input";
 import { useState } from "react";
 import { Day } from "@/db/days";
 import { Event } from "@/db/events";
-import { Guest } from "@/db/guests";
+import { BasicGuest } from "@/db/guests";
 import { Location } from "@/db/locations";
 import { RSVP } from "@/db/rsvps";
 import { CONSTS } from "@/utils/constants";
@@ -16,7 +16,7 @@ export function EventDisplay(props: {
   event: Event;
   days: Day[];
   locations: Location[];
-  guests: Guest[];
+  guests: BasicGuest[];
   rsvps: RSVP[];
 }) {
   const { event, days, locations, guests, rsvps } = props;
@@ -35,7 +35,7 @@ export function EventDisplay(props: {
   const [search, setSearch] = useState("");
   return (
     <div className="flex flex-col items-start w-full">
-      <h1 className="sm:text-4xl text-3xl font-bold mt-12">Schedule</h1>
+      <h1 className="sm:text-4xl text-3xl font-bold">Schedule</h1>
       <div className="mb-10 mt-5 w-full">
         <ScheduleSettings guests={guests} />
       </div>

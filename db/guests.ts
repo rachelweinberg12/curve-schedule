@@ -1,13 +1,21 @@
 import { CONSTS } from "@/utils/constants";
 import { base } from "./db";
 
-export type Guest = {
+export type BasicGuest = {
   Name: string;
   Email: string;
   ID: string;
 };
+
+export type GuestProfile = {
+  Name: string;
+  Email: string;
+  Bio: string;
+  ID: string;
+};
+
 export async function getGuests() {
-  const guests: Guest[] = [];
+  const guests: BasicGuest[] = [];
   await base("Guests")
     .select({
       fields: ["Name", "Email"],
@@ -22,7 +30,7 @@ export async function getGuests() {
 }
 
 export async function getGuestsByEvent(eventName: string) {
-  const guests: Guest[] = [];
+  const guests: BasicGuest[] = [];
   const filterFormula = CONSTS.MULTIPLE_EVENTS
     ? `SEARCH("${eventName}", {Events}) != 0`
     : "1";
@@ -38,4 +46,14 @@ export async function getGuestsByEvent(eventName: string) {
       fetchNextPage();
     });
   return guests;
+}
+
+export async function getGuestByID(guestID: string) {
+  const guests: GuestProfile[] = [];
+  await base("Guests")
+    .find(guestID)
+    .then(function (record: any) {
+      guests.push({ ...record.fields });
+    });
+  return guests[0];
 }
