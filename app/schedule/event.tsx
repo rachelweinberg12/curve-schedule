@@ -37,7 +37,7 @@ export function EventDisplay(props: {
     <div className="flex flex-col items-start w-full">
       <h1 className="sm:text-4xl text-3xl font-bold">Schedule</h1>
       <div className="mb-10 mt-5 w-full">
-        <ScheduleSettings guests={guests} />
+        <ScheduleSettings />
       </div>
       {view !== "grid" && (
         <Input
