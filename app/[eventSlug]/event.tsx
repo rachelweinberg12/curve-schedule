@@ -1,8 +1,6 @@
 "use client";
 import { ScheduleSettings } from "./schedule-settings";
 import { DayGrid } from "./day-grid";
-import { CalendarIcon, LinkIcon } from "@heroicons/react/24/outline";
-import { DateTime } from "luxon";
 import { useSearchParams } from "next/navigation";
 import { DayText } from "./day-text";
 import { Input } from "./input";
@@ -35,7 +33,6 @@ export function EventDisplay(props: {
   const searchParams = useSearchParams();
   const view = searchParams.get("view") ?? "grid";
   const [search, setSearch] = useState("");
-  const multipleDays = event["Start"] !== event["End"];
   return (
     <div className="flex flex-col items-start w-full">
       <h1 className="sm:text-4xl text-3xl font-bold mt-12">Schedule</h1>
