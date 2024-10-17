@@ -35,12 +35,7 @@ export default function Example() {
                     {CONSTS.TITLE}
                   </h1>
                   <div className="sm:hidden block ml-2">
-                    <SignedOut>
-                      <SignInButton />
-                    </SignedOut>
-                    <SignedIn>
-                      <UserButton />
-                    </SignedIn>
+                    <SignInSignUp />
                   </div>
                   <div className="flex gap-3 mr-14 sm:mr-0">
                     <MapModal />
@@ -54,12 +49,13 @@ export default function Example() {
                       {CONSTS.NAV_ITEMS.map((item) => (
                         <NavBarItem key={item.name} item={item} />
                       ))}
-                      <SignedOut>
-                        <SignInButton />
-                      </SignedOut>
                       <SignedIn>
-                        <UserButton />
+                        {/* TODO: change /profile to /recordID */}
+                        <NavBarItem
+                          item={{ name: "Profile", href: "/profile" }}
+                        />
                       </SignedIn>
+                      <SignInSignUp />
                     </div>
                   </div>
                 </div>
@@ -122,3 +118,14 @@ function SmallNavBarItem(props: { item: NavItem }) {
     </Disclosure.Button>
   );
 }
+
+const SignInSignUp = () => (
+  <>
+    <SignedOut>
+      <SignInButton />
+    </SignedOut>
+    <SignedIn>
+      <UserButton />
+    </SignedIn>
+  </>
+);
