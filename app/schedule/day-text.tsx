@@ -32,21 +32,9 @@ export function DayText(props: {
       ) && sessionMatchesSearch(session, search)
     );
   });
-  const sessionsSortedByLocation = includedSessions.sort((a, b) => {
-    return (
-      (locations.find((loc) => loc.Name === a["Location name"][0])?.Index ??
-        0) -
-      (locations.find((loc) => loc.Name === b["Location name"][0])?.Index ?? 0)
-    );
-  });
-  const sessionsSortedByTime = sessionsSortedByLocation.sort((a, b) => {
-    return (
-      new Date(a["Start time"]).getTime() - new Date(b["Start time"]).getTime()
-    );
-  });
+  let sessions = sortSessions(includedSessions, locations);
 
   // If RSVPs are present, only show sessions that the user has RSVP'd to
-  let sessions = sessionsSortedByTime;
   if (rsvps.length > 0) {
     const rsvpSet = new Set(rsvps.map((rsvp) => rsvp.Session[0]));
     sessions = sessions.filter(
@@ -95,4 +83,20 @@ function sessionMatchesSearch(session: Session, search: string) {
     ) ||
     checkStringForSearch(search, session["Location name"].join(" ") ?? "")
   );
+}
+
+export function sortSessions(sessions: Session[], locations: Location[]) {
+  const sortedByLocation = sessions.sort((a, b) => {
+    return (
+      (locations.find((loc) => loc.Name === a["Location name"][0])?.Index ??
+        0) -
+      (locations.find((loc) => loc.Name === b["Location name"][0])?.Index ?? 0)
+    );
+  });
+  const sortedByTime = sortedByLocation.sort((a, b) => {
+    return (
+      new Date(a["Start time"]).getTime() - new Date(b["Start time"]).getTime()
+    );
+  });
+  return sortedByTime;
 }

@@ -11,7 +11,15 @@ export async function getUserByEmail(email: string) {
   const userList = await clerkClient.users.getUserList({
     emailAddress,
   });
-  return userList.data[0];
+  const simpleUser =
+    userList && userList.data.length > 0
+      ? ({
+          id: userList.data[0].id,
+          imageUrl: userList.data[0].imageUrl,
+          recordID: userList.data[0].publicMetadata.record_id,
+        } as SimpleUser)
+      : undefined;
+  return simpleUser;
 }
 
 type Metadata = undefined | { record_id: string };

@@ -4,15 +4,13 @@ import { UserIcon } from "@heroicons/react/24/solid";
 import { Session } from "@/db/sessions";
 import { Day } from "@/db/days";
 import { Location } from "@/db/locations";
-import { BasicGuest } from "@/db/guests";
 import { RSVP } from "@/db/rsvps";
 import { DateTime } from "luxon";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { SessionModal } from "../modals";
-import { UserContext } from "../context";
-import { useUser } from "@clerk/nextjs";
 import { useUserRecordID } from "@/utils/hooks";
+import { PersonLink } from "../tags";
 
 export function SessionBlock(props: {
   eventName: string;
@@ -125,13 +123,11 @@ export function RealSessionCard(props: {
       <div className="text-xs text-gray-500 mb-2 mt-1 flex gap-2">
         {session.Hosts?.map((host, idx) => {
           return session["Host name"] ? (
-            <Link
+            <PersonLink
               key={host}
-              href={`/people/${host}`}
-              className="bg-gray-100 px-1.5 py-0.5 rounded-sm"
-            >
-              {session["Host name"][idx]}
-            </Link>
+              recordID={host}
+              name={session["Host name"][idx]}
+            />
           ) : undefined;
         })}
       </div>

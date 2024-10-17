@@ -74,3 +74,31 @@ export async function getSessionsByEvent(eventName: string) {
     });
   return sessions;
 }
+
+export async function getSessionsByHost(hostName: string) {
+  const sessions: Session[] = [];
+  await base("Sessions")
+    .select({
+      fields: [
+        "Title",
+        "Description",
+        "Start time",
+        "End time",
+        "Hosts",
+        "Host name",
+        "Host email",
+        "Location",
+        "Location name",
+        "Capacity",
+        "Num RSVPs",
+      ],
+      filterByFormula: `SEARCH("${hostName}", {Hosts}) != 0`,
+    })
+    .eachPage(function page(records: any, fetchNextPage: any) {
+      records.forEach(function (record: any) {
+        sessions.push({ ...record.fields, ID: record.id });
+      });
+      fetchNextPage();
+    });
+  return sessions;
+}

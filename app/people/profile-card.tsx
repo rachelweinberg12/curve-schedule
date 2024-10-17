@@ -1,7 +1,7 @@
 import { GuestProfile } from "@/db/guests";
 import { SimpleUser } from "@/db/auth";
 import Image from "next/image";
-import clsx from "clsx";
+import { ColoredTag } from "../tags";
 
 export function ProfileCard(props: {
   profile: GuestProfile;
@@ -18,7 +18,7 @@ export function ProfileCard(props: {
           <h3 className="truncate text-sm font-medium text-gray-900">
             {profile.Name}
           </h3>
-          <TypeTag type={profile.Type} />
+          <ColoredTag text={profile.Type} color={TypeTagColor[profile.Type]} />
         </div>
         <p className="mt-1 truncate text-sm text-gray-500">{profile.Title}</p>
       </div>
@@ -41,16 +41,3 @@ const TypeTagColor = {
   Facilitator: "teal",
   Staff: "purple",
 };
-function TypeTag(props: { type: keyof typeof TypeTagColor }) {
-  const color = TypeTagColor[props.type];
-  return (
-    <span
-      className={clsx(
-        "inline-flex flex-shrink-0 items-center rounded-full px-1.5 py-0.5 text-xs font-medium",
-        `bg-${color}-100 text-${color}-600 border border-${color}-600`
-      )}
-    >
-      {props.type}
-    </span>
-  );
-}
