@@ -12,6 +12,10 @@ export async function POST(req: Request) {
   const { sessionId, remove } = (await req.json()) as RSVPParams;
   const guestID = getUserRecordID();
 
+  if (!guestID) {
+    return Response.json({ success: false, error: "No user found" });
+  }
+
   if (!remove) {
     await base("RSVPs").create(
       [
