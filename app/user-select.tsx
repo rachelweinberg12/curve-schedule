@@ -1,7 +1,7 @@
 "use client";
-import { Guest } from "@/db/guests";
+import { BasicGuest } from "@/db/guests";
 import { useContext } from "react";
-import { SelectHosts } from "./[eventSlug]/add-session/add-session-form";
+import { SelectHosts } from "./schedule/add-session/add-session-form";
 import { UserContext } from "./context";
 import { useRouter } from "next/navigation";
 
@@ -9,7 +9,7 @@ export function UserSelect({
   guests,
   showOnlyWhenUserSet,
 }: {
-  guests: Guest[];
+  guests: BasicGuest[];
   showOnlyWhenUserSet?: boolean;
 }) {
   const { user: currentUser, setUser } = useContext(UserContext);

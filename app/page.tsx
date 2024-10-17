@@ -1,5 +1,5 @@
 import SummaryPage from "./summary-page";
-import EventPage from "./[eventSlug]/event-page";
+import EventPage from "./schedule/event-page";
 import { getEvents } from "@/db/events";
 import { CONSTS } from "@/utils/constants";
 

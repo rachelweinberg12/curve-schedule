@@ -8,10 +8,10 @@ import {
   TableCellsIcon,
 } from "@heroicons/react/24/outline";
 import { UserSelect } from "../user-select";
-import { Guest } from "@/db/guests";
+import { BasicGuest } from "@/db/guests";
 import { Location } from "@/db/locations";
 
-export function ScheduleSettings(props: { guests: Guest[] }) {
+export function ScheduleSettings(props: { guests: BasicGuest[] }) {
   const { guests } = props;
   const searchParams = useSearchParams();
   const [view, setView] = useState(searchParams.get("view") ?? "grid");

@@ -11,7 +11,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { convertParamDateTime, dateOnDay } from "@/utils/utils";
 import { MyListbox } from "./select";
 import { Day } from "@/db/days";
-import { Guest } from "@/db/guests";
+import { BasicGuest } from "@/db/guests";
 import { Location } from "@/db/locations";
 import { Session } from "@/db/sessions";
 
@@ -20,7 +20,7 @@ export function AddSessionForm(props: {
   days: Day[];
   sessions: Session[];
   locations: Location[];
-  guests: Guest[];
+  guests: BasicGuest[];
 }) {
   const { eventName, days, sessions, locations, guests } = props;
   const searchParams = useSearchParams();
@@ -54,7 +54,7 @@ export function AddSessionForm(props: {
     (st) => st.formattedTime === startTime
   )?.maxDuration;
   const [duration, setDuration] = useState(Math.min(maxDuration ?? 60, 60));
-  const [hosts, setHosts] = useState<Guest[]>([]);
+  const [hosts, setHosts] = useState<BasicGuest[]>([]);
   useEffect(() => {
     if (
       !startTimes.some((st) => st.formattedTime === startTime && st.available)
@@ -269,9 +269,9 @@ function getAvailableStartTimes(
 }
 
 export function SelectHosts(props: {
-  guests: Guest[];
-  hosts: Guest[];
-  setHosts: (hosts: Guest[]) => void;
+  guests: BasicGuest[];
+  hosts: BasicGuest[];
+  setHosts: (hosts: BasicGuest[]) => void;
 }) {
   const { guests, hosts, setHosts } = props;
   const [query, setQuery] = useState("");

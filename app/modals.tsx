@@ -8,7 +8,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { UserSelect } from "./user-select";
 import { UserContext } from "./context";
-import { Guest } from "@/db/guests";
+import { BasicGuest } from "@/db/guests";
 
 export function MapModal() {
   const [open, setOpen] = useState(false);
@@ -35,7 +35,7 @@ export function MapModal() {
 }
 
 export function CurrentUserModal(props: {
-  guests: Guest[];
+  guests: BasicGuest[];
   open: boolean;
   close: () => void;
   rsvp: () => void;

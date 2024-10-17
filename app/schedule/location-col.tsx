@@ -1,7 +1,7 @@
 import { Session } from "@/db/sessions";
 import { Day } from "@/db/days";
 import { Location } from "@/db/locations";
-import { Guest } from "@/db/guests";
+import { BasicGuest } from "@/db/guests";
 import { RSVP } from "@/db/rsvps";
 import { SessionBlock } from "./session-block";
 import { getNumHalfHours } from "@/utils/utils";
@@ -12,7 +12,7 @@ export function LocationCol(props: {
   sessions: Session[];
   location: Location;
   day: Day;
-  guests: Guest[];
+  guests: BasicGuest[];
   rsvps: RSVP[];
 }) {
   const { eventName, sessions, location, day, guests, rsvps } = props;

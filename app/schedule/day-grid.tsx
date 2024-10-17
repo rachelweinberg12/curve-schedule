@@ -9,7 +9,7 @@ import Image from "next/image";
 import { Tooltip } from "./tooltip";
 import { DateTime } from "luxon";
 import { Day } from "@/db/days";
-import { Guest } from "@/db/guests";
+import { BasicGuest } from "@/db/guests";
 import { RSVP } from "@/db/rsvps";
 import { Location } from "@/db/locations";
 
@@ -17,7 +17,7 @@ export function DayGrid(props: {
   eventName: string;
   locations: Location[];
   day: Day;
-  guests: Guest[];
+  guests: BasicGuest[];
   rsvps: RSVP[];
 }) {
   const { eventName, day, locations, guests, rsvps } = props;

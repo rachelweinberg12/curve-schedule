@@ -1,6 +1,6 @@
 import { Day } from "@/db/days";
 import { Location } from "@/db/locations";
-import { Guest } from "@/db/guests";
+import { BasicGuest } from "@/db/guests";
 import { Session, getSessions } from "@/db/sessions";
 import { DateTime } from "luxon";
 import { CONSTS } from "@/utils/constants";
@@ -9,7 +9,7 @@ import { base } from "@/db/db";
 type SessionParams = {
   title: string;
   description: string;
-  hosts: Guest[];
+  hosts: BasicGuest[];
   location: Location;
   day: Day;
   startTimeString: string;

@@ -4,7 +4,7 @@ import { UserIcon } from "@heroicons/react/24/solid";
 import { Session } from "@/db/sessions";
 import { Day } from "@/db/days";
 import { Location } from "@/db/locations";
-import { Guest } from "@/db/guests";
+import { BasicGuest } from "@/db/guests";
 import { RSVP } from "@/db/rsvps";
 import { Tooltip } from "./tooltip";
 import { DateTime } from "luxon";
@@ -19,7 +19,7 @@ export function SessionBlock(props: {
   session: Session;
   location: Location;
   day: Day;
-  guests: Guest[];
+  guests: BasicGuest[];
   rsvpsForEvent: RSVP[];
 }) {
   const { eventName, session, location, day, guests, rsvpsForEvent } = props;
@@ -104,7 +104,7 @@ export function RealSessionCard(props: {
   session: Session;
   numHalfHours: number;
   location: Location;
-  guests: Guest[];
+  guests: BasicGuest[];
   rsvpsForEvent: RSVP[];
 }) {
   const { session, numHalfHours, location, guests, rsvpsForEvent } = props;
