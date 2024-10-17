@@ -1,6 +1,5 @@
 import { getGuestByID } from "@/db/guests";
 import { ProfilePage } from "./profile-page";
-import { auth } from "@clerk/nextjs/server";
 import { getUserByEmail, getUserRecordID } from "@/db/auth";
 
 export default async function Page(props: { params: { recordID: string } }) {

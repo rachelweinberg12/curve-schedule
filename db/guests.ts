@@ -11,7 +11,15 @@ export type GuestProfile = {
   Name: string;
   Email: string;
   Bio: string;
+  Title: string;
   ID: string;
+  Type: "Speaker" | "Attendee" | "Staff" | "Facilitator";
+  Twitter: string;
+  LinkedIn: string;
+  Discord: string;
+  "Personal website": string;
+  Sessions: string[];
+  RSVPs: string[];
 };
 
 export async function getGuests() {
@@ -56,4 +64,31 @@ export async function getGuestByID(guestID: string) {
       guests.push({ ...record.fields });
     });
   return guests[0];
+}
+
+export async function getGuestProfiles() {
+  const guests: GuestProfile[] = [];
+  await base("Guests")
+    .select({
+      fields: [
+        "Name",
+        "Email",
+        "Bio",
+        "Title",
+        "Type",
+        "Twitter",
+        "LinkedIn",
+        "Discord",
+        "Personal website",
+        "Sessions",
+        "RSVPs",
+      ],
+    })
+    .eachPage(function page(records: any, fetchNextPage: any) {
+      records.forEach(function (record: any) {
+        guests.push({ ...record.fields, ID: record.id });
+      });
+      fetchNextPage();
+    });
+  return guests;
 }
