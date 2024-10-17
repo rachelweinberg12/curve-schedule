@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ExportScheduleModal, MapModal } from "./modals";
 import { CONSTS, NavItem } from "@/utils/constants";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Example() {
   return (
@@ -29,19 +30,28 @@ export default function Example() {
                 </Disclosure.Button>
               </div>
               <div className="flex justify-between w-full items-center">
-                <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                <div className="flex items-center gap-3">
+                  <h1 className="sm:text-2xl text-xl font-bold mr-5">
+                    {CONSTS.TITLE}
+                  </h1>
+                  <MapModal />
+                  <ExportScheduleModal />
+                </div>
+                <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-end">
                   {/* Desktop nav */}
                   <div className="hidden sm:block">
                     <div className="flex space-x-4">
                       {CONSTS.NAV_ITEMS.map((item) => (
                         <NavBarItem key={item.name} item={item} />
                       ))}
+                      <SignedOut>
+                        <SignInButton />
+                      </SignedOut>
+                      <SignedIn>
+                        <UserButton />
+                      </SignedIn>
                     </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <MapModal />
-                  <ExportScheduleModal />
                 </div>
               </div>
             </div>
@@ -73,7 +83,6 @@ function NavBarItem(props: { item: NavItem }) {
         "group flex gap-1 cursor-pointer items-center rounded-md px-3 py-2 text-sm font-medium"
       )}
     >
-      <item.icon className="block h-5 w-auto" />
       {item.name}
     </Link>
   );
@@ -94,7 +103,6 @@ function SmallNavBarItem(props: { item: NavItem }) {
         "flex gap-2 rounded-md px-3 py-2 text-base font-medium"
       )}
     >
-      <item.icon className="block h-5 w-auto" />
       {item.name}
     </Disclosure.Button>
   );

@@ -5,7 +5,7 @@ import NavBar from "./nav-bar";
 import { Context } from "./context";
 import clsx from "clsx";
 import { CONSTS } from "@/utils/constants";
-import Auth from "./auth";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -33,11 +33,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={fontVars}>
-      <body className="font-monteserrat">
-        <Context>
-          <Auth>
-            {CONSTS.MULTIPLE_EVENTS && <NavBar />}
+    <ClerkProvider>
+      <html lang="en" className={fontVars}>
+        <body className="font-monteserrat">
+          <Context>
+            <NavBar />
             <main
               className={clsx(
                 "lg:px-24 sm:px-10 p-6",
@@ -46,9 +46,9 @@ export default function RootLayout({
             >
               {children}
             </main>
-          </Auth>
-        </Context>
-      </body>
-    </html>
+          </Context>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

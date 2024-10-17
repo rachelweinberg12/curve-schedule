@@ -38,36 +38,8 @@ export function EventDisplay(props: {
   const multipleDays = event["Start"] !== event["End"];
   return (
     <div className="flex flex-col items-start w-full">
-      <h1 className="sm:text-4xl text-3xl font-bold mt-5">
-        {event.Name} Schedule
-      </h1>
-      <div className="flex text-gray-500 text-sm mt-1 gap-5 font-medium">
-        <span className="flex gap-1 items-center">
-          <CalendarIcon className="h-4 w-4 stroke-2" />
-          <span>
-            {DateTime.fromFormat(event.Start, "yyyy-MM-dd", {
-              zone: "America/Los_Angeles",
-            }).toFormat("LLL d")}
-            {multipleDays && (
-              <>
-                {" - "}
-                {DateTime.fromFormat(event.End, "yyyy-MM-dd", {
-                  zone: "America/Los_Angeles",
-                }).toFormat("LLL d")}
-              </>
-            )}
-          </span>
-        </span>
-        <a
-          className="flex gap-1 items-center hover:underline"
-          href={`https://${event.Website}`}
-        >
-          <LinkIcon className="h-4 w-4 stroke-2" />
-          <span>{event.Website}</span>
-        </a>
-      </div>
-      <p className="text-gray-900 mt-3 mb-5">{event.Description}</p>
-      <div className="mb-10 w-full">
+      <h1 className="sm:text-4xl text-3xl font-bold mt-12">Schedule</h1>
+      <div className="mb-10 mt-5 w-full">
         <ScheduleSettings guests={guests} />
       </div>
       {view !== "grid" && (
