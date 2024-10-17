@@ -1,21 +1,22 @@
+import { getUserRecordID } from "@/db/auth";
 import { base } from "@/db/db";
 
 type RSVPParams = {
   sessionId: string;
-  guestId: string;
   remove?: boolean;
 };
 
 export const dynamic = "force-dynamic"; // defaults to auto
 
 export async function POST(req: Request) {
-  const { sessionId, guestId, remove } = (await req.json()) as RSVPParams;
+  const { sessionId, remove } = (await req.json()) as RSVPParams;
+  const guestID = getUserRecordID();
 
   if (!remove) {
     await base("RSVPs").create(
       [
         {
-          fields: { Session: [sessionId], Guest: [guestId] },
+          fields: { Session: [sessionId], Guest: [guestID] },
         },
       ],
       function (err: string, records: any) {
@@ -29,10 +30,10 @@ export async function POST(req: Request) {
       }
     );
   } else {
-    console.log("REMOVING RSVP", { sessionId, guestId });
+    console.log("REMOVING RSVP", { sessionId, guestID });
     await base("RSVPs")
       .select({
-        filterByFormula: `AND({Session ID} = "${sessionId}", {Guest ID} = "${guestId}")`,
+        filterByFormula: `AND({Session ID} = "${sessionId}", {Guest ID} = "${guestID}")`,
       })
       .eachPage(function page(records: any, fetchNextPage: any) {
         console.log("RECORDS", { records });

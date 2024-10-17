@@ -9,7 +9,7 @@ import { RSVP } from "@/db/rsvps";
 import { DateTime } from "luxon";
 import Link from "next/link";
 import { useContext, useState } from "react";
-import { CurrentUserModal } from "../modals";
+import { SessionModal } from "../modals";
 import { UserContext } from "../context";
 
 export function SessionBlock(props: {
@@ -17,10 +17,9 @@ export function SessionBlock(props: {
   session: Session;
   location: Location;
   day: Day;
-  guests: BasicGuest[];
   rsvpsForEvent: RSVP[];
 }) {
-  const { eventName, session, location, day, guests, rsvpsForEvent } = props;
+  const { eventName, session, location, day, rsvpsForEvent } = props;
   const startTime = new Date(session["Start time"]).getTime();
   const endTime = new Date(session["End time"]).getTime();
   const sessionLength = endTime - startTime;
@@ -48,7 +47,6 @@ export function SessionBlock(props: {
           session={session}
           location={location}
           numHalfHours={numHalfHours}
-          guests={guests}
           rsvpsForEvent={rsvpsForEvent}
         />
       )}
@@ -102,10 +100,9 @@ export function RealSessionCard(props: {
   session: Session;
   numHalfHours: number;
   location: Location;
-  guests: BasicGuest[];
   rsvpsForEvent: RSVP[];
 }) {
-  const { session, numHalfHours, location, guests, rsvpsForEvent } = props;
+  const { session, numHalfHours, location, rsvpsForEvent } = props;
   const { user: currentUser } = useContext(UserContext);
   const [optimisticRSVPResponse, setOptimisticRSVPResponse] = useState<
     boolean | null
@@ -161,7 +158,7 @@ export function RealSessionCard(props: {
   );
   return (
     <div className={`row-span-${numHalfHours} my-0.5 overflow-hidden group`}>
-      <CurrentUserModal
+      <SessionModal
         close={() => setSessionModalOpen(false)}
         open={sessionModalOpen}
         // rsvp here should actually be rsvp
@@ -170,7 +167,6 @@ export function RealSessionCard(props: {
           rsvp(currentUser, session.ID, !!rsvpStatus);
           setOptimisticRSVPResponse(!rsvpStatus);
         }}
-        guests={guests}
         rsvpd={rsvpStatus}
         sessionInfoDisplay={<SessionInfoDisplay />}
       />

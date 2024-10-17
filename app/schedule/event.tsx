@@ -54,7 +54,6 @@ export function EventDisplay(props: {
               <DayGrid
                 day={day}
                 locations={locationsForEvent}
-                guests={guests}
                 rsvps={rsvps}
                 eventName={event.Name}
               />

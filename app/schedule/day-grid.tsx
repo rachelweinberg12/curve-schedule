@@ -17,10 +17,9 @@ export function DayGrid(props: {
   eventName: string;
   locations: Location[];
   day: Day;
-  guests: BasicGuest[];
   rsvps: RSVP[];
 }) {
-  const { eventName, day, locations, guests, rsvps } = props;
+  const { eventName, day, locations, rsvps } = props;
   const searchParams = useSearchParams();
   const locParams = searchParams?.getAll("loc");
   const locationsFromParams = locations.filter((loc) =>
@@ -151,7 +150,6 @@ export function DayGrid(props: {
                     sessions={day.Sessions.filter((session) =>
                       session["Location name"].includes(location.Name)
                     )}
-                    guests={guests}
                     rsvps={rsvps}
                     day={day}
                     location={location}

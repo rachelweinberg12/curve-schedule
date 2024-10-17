@@ -9,6 +9,9 @@ import {
 import { UserSelect } from "./user-select";
 import { UserContext } from "./context";
 import { BasicGuest } from "@/db/guests";
+import { useUser } from "@clerk/nextjs";
+import { CheckIcon } from "@heroicons/react/16/solid";
+import clsx from "clsx";
 
 export function MapModal() {
   const [open, setOpen] = useState(false);
@@ -34,36 +37,34 @@ export function MapModal() {
   );
 }
 
-export function CurrentUserModal(props: {
-  guests: BasicGuest[];
+export function SessionModal(props: {
   open: boolean;
   close: () => void;
   rsvp: () => void;
   sessionInfoDisplay?: React.ReactNode;
   rsvpd: boolean;
 }) {
-  const { guests, open, close, rsvp, sessionInfoDisplay, rsvpd } = props;
-  const { user } = useContext(UserContext);
+  const { open, close, rsvp, sessionInfoDisplay, rsvpd } = props;
+  const { user } = useUser();
   return (
     <Modal open={open} setOpen={close} hideClose={!!user}>
       {sessionInfoDisplay}
-      {
-        <div className="mt-2">
-          <span className="text-gray-500">RSVPing as...</span>
-          <UserSelect guests={guests} />
-        </div>
-      }
       {user && (
-        <button
-          type="button"
-          className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-rose-400 text-base font-medium text-white hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-400 sm:text-sm mt-4"
-          onClick={() => {
-            rsvp();
-            close();
-          }}
-        >
-          {rsvpd ? "Un-RSVP" : "RSVP"}
-        </button>
+        <div className="flex gap-2 items-center mt-3 text-sm justify-end">
+          RSVP'd
+          <button
+            type="button"
+            className={clsx(
+              "h-5 w-5 rounded-sm flex items-center justify-center",
+              rsvpd ? "text-white bg-rose-400" : "border border-gray-300"
+            )}
+            onClick={() => {
+              rsvp();
+            }}
+          >
+            {rsvpd && <CheckIcon className="h-4 w-4" />}
+          </button>
+        </div>
       )}
     </Modal>
   );

@@ -12,10 +12,9 @@ export function LocationCol(props: {
   sessions: Session[];
   location: Location;
   day: Day;
-  guests: BasicGuest[];
   rsvps: RSVP[];
 }) {
-  const { eventName, sessions, location, day, guests, rsvps } = props;
+  const { eventName, sessions, location, day, rsvps } = props;
   const sessionsWithBlanks = insertBlankSessions(
     sessions,
     new Date(day.Start),
@@ -41,7 +40,6 @@ export function LocationCol(props: {
               key={session["Start time"]}
               session={session}
               location={location}
-              guests={guests}
               rsvpsForEvent={filteredRSVPs}
             />
           );
