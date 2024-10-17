@@ -7,7 +7,6 @@ import { Input } from "./input";
 import { useState } from "react";
 import { Day } from "@/db/days";
 import { Event } from "@/db/events";
-import { BasicGuest } from "@/db/guests";
 import { Location } from "@/db/locations";
 import { RSVP } from "@/db/rsvps";
 import { CONSTS } from "@/utils/constants";
@@ -16,10 +15,9 @@ export function EventDisplay(props: {
   event: Event;
   days: Day[];
   locations: Location[];
-  guests: BasicGuest[];
   rsvps: RSVP[];
 }) {
-  const { event, days, locations, guests, rsvps } = props;
+  const { event, days, locations, rsvps } = props;
   const daysForEvent = days.filter(
     (day) =>
       !CONSTS.MULTIPLE_EVENTS ||

@@ -12,11 +12,10 @@ export default async function EventPage(props: { event: Event }) {
   const { event } = props;
   const cookieStore = cookies();
   const currentUser = cookieStore.get("user")?.value;
-  const [days, sessions, locations, guests, rsvps] = await Promise.all([
+  const [days, sessions, locations, rsvps] = await Promise.all([
     getDaysByEvent(event.Name),
     getSessionsByEvent(event.Name),
     getLocations(),
-    getGuests(),
     getRSVPsByUser(currentUser),
   ]);
   days.forEach((day) => {
@@ -36,7 +35,6 @@ export default async function EventPage(props: { event: Event }) {
         event={event}
         days={days}
         locations={locations}
-        guests={guests}
         rsvps={rsvps}
       />
     </Suspense>
