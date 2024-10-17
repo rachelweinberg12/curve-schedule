@@ -7,8 +7,11 @@ import Link from "next/link";
 import { ExportScheduleModal, MapModal } from "./modals";
 import { CONSTS, NavItem } from "@/utils/constants";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { useUserRecordID } from "@/utils/hooks";
 
-export default function Example() {
+export default function NavBar() {
+  const user = useUserRecordID();
+  const profileLink = `/${user}`;
   return (
     <Disclosure
       as="nav"
@@ -55,7 +58,7 @@ export default function Example() {
                       <SignedIn>
                         {/* TODO: change /profile to /recordID */}
                         <NavBarItem
-                          item={{ name: "Profile", href: "/profile" }}
+                          item={{ name: "Profile", href: profileLink }}
                         />
                       </SignedIn>
                       <SignInSignUp />
@@ -73,7 +76,9 @@ export default function Example() {
               ))}
               <SignedIn>
                 {/* TODO: change /profile to /recordID */}
-                <SmallNavBarItem item={{ name: "Profile", href: "/profile" }} />
+                <SmallNavBarItem
+                  item={{ name: "Profile", href: profileLink }}
+                />
               </SignedIn>
             </div>
           </Disclosure.Panel>
