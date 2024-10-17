@@ -1,7 +1,7 @@
 "use client";
 import clsx from "clsx";
 import { Fragment, useEffect, useState } from "react";
-import { Input } from "../input";
+import { Input } from "../schedule/input";
 import { format } from "date-fns";
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/16/solid";
@@ -14,6 +14,7 @@ import { Day } from "@/db/days";
 import { BasicGuest } from "@/db/guests";
 import { Location } from "@/db/locations";
 import { Session } from "@/db/sessions";
+import { useUserRecordID } from "@/utils/hooks";
 
 export function AddSessionForm(props: {
   eventName: string;
@@ -86,7 +87,7 @@ export function AddSessionForm(props: {
     });
     if (res.ok) {
       console.log("Session added successfully");
-      router.push(`/${eventName.replace(" ", "-")}/add-session/confirmation`);
+      router.push(`/add-session/confirmation`);
     } else {
       console.error("Failed to add session");
     }
@@ -95,7 +96,7 @@ export function AddSessionForm(props: {
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <h2 className="text-2xl font-bold">{eventName}: Add a session</h2>
+        <h2 className="text-2xl font-bold">Add a session</h2>
         <p className="text-sm text-gray-500 mt-2">
           Fill out this form to add a session to the schedule! Your session will
           be added to the schedule immediately, but we may reach out to you
@@ -110,7 +111,9 @@ export function AddSessionForm(props: {
         <Input value={title} onChange={(e) => setTitle(e.target.value)} />
       </div>
       <div className="flex flex-col gap-1">
-        <label className="font-medium">Description</label>
+        <label className="font-medium">
+          Description <RequiredStar />
+        </label>
         <textarea
           value={description}
           className="rounded-md text-sm resize-none h-24 border bg-white px-4 shadow-sm transition-colors invalid:border-red-500 invalid:text-red-900 invalid:placeholder-red-300 focus:outline-none disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 border-gray-300 placeholder-gray-400 focus:ring-2 focus:ring-rose-400 focus:outline-0 focus:border-none"
@@ -118,13 +121,10 @@ export function AddSessionForm(props: {
         />
       </div>
       <div className="flex flex-col gap-1">
-        <label className="font-medium">
-          Hosts
-          <RequiredStar />
-        </label>
+        <label className="font-medium">Co-hosts</label>
         <p className="text-sm text-gray-500">
-          You and any cohosts who have agreed to host this session with you. All
-          hosts will get an email confirmation when this form is submitted.
+          Any cohosts who have agreed to host this session with you. All hosts
+          will get an email confirmation when this form is submitted.
         </p>
         <SelectHosts guests={guests} hosts={hosts} setHosts={setHosts} />
       </div>
@@ -184,7 +184,6 @@ export function AddSessionForm(props: {
         disabled={
           !title ||
           !startTime ||
-          !hosts.length ||
           !location ||
           !day ||
           !duration ||
@@ -275,11 +274,13 @@ export function SelectHosts(props: {
 }) {
   const { guests, hosts, setHosts } = props;
   const [query, setQuery] = useState("");
+  const userRecordID = useUserRecordID();
   const filteredGuests = guests
     .filter((guest) =>
       guest["Name"].toLowerCase().includes(query.toLowerCase())
     )
     .filter((guest) => guest["Name"].trim().length > 0)
+    .filter((guest) => guest["ID"] !== userRecordID)
     .sort((a, b) => a["Name"].localeCompare(b["Name"]))
     .slice(0, 20);
   return (

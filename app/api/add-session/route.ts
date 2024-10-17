@@ -5,6 +5,7 @@ import { Session, getSessions } from "@/db/sessions";
 import { DateTime } from "luxon";
 import { CONSTS } from "@/utils/constants";
 import { base } from "@/db/db";
+import { getUserRecordID } from "@/db/auth";
 
 type SessionParams = {
   title: string;
@@ -38,6 +39,12 @@ export async function POST(req: Request) {
     startTimeString,
     duration,
   } = (await req.json()) as SessionParams;
+  const userRecordID = await getUserRecordID();
+  if (!userRecordID) {
+    return Response.error();
+  }
+  const hostIDs = hosts.map((host) => host.ID);
+  hostIDs.push(userRecordID);
   const dayStartDT = DateTime.fromJSDate(new Date(day.Start));
   const dayISOFormatted = dayStartDT.toFormat("yyyy-MM-dd");
   const [rawHour, rawMinute, ampm] = startTimeString.split(/[: ]/);
@@ -52,7 +59,7 @@ export async function POST(req: Request) {
   const session: SessionInsert = {
     Title: title,
     Description: description,
-    Hosts: hosts.map((host) => host.ID),
+    Hosts: hostIDs,
     Location: [location.ID],
     "Start time": startTimeStamp.toISOString(),
     "End time": new Date(

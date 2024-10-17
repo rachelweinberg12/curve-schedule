@@ -7,16 +7,12 @@ import { getGuestsByEvent } from "@/db/guests";
 import { getBookableLocations } from "@/db/locations";
 import { CONSTS } from "@/utils/constants";
 
-export default async function AddSession(props: {
-  params: { eventSlug: string };
-}) {
-  const { eventSlug } = props.params;
-  const eventName = eventSlug.replace(/-/g, " ");
+export default async function AddSession() {
   const [event, days, sessions, guests, locations] = await Promise.all([
-    getEventByName(eventName),
-    getDaysByEvent(eventName),
-    getSessionsByEvent(eventName),
-    getGuestsByEvent(eventName),
+    getEventByName(CONSTS.TITLE),
+    getDaysByEvent(CONSTS.TITLE),
+    getSessionsByEvent(CONSTS.TITLE),
+    getGuestsByEvent(CONSTS.TITLE),
     getBookableLocations(),
   ]);
   days.forEach((day) => {
@@ -41,7 +37,7 @@ export default async function AddSession(props: {
     <Suspense fallback={<div>Loading...</div>}>
       <div className="max-w-2xl mx-auto pb-24">
         <AddSessionForm
-          eventName={eventName}
+          eventName={CONSTS.TITLE}
           days={days}
           locations={filteredLocations}
           sessions={sessions}

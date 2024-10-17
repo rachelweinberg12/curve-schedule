@@ -1,7 +1,7 @@
 "use client";
 import { BasicGuest } from "@/db/guests";
 import { useContext } from "react";
-import { SelectHosts } from "./schedule/add-session/add-session-form";
+import { SelectHosts } from "./add-session/add-session-form";
 import { UserContext } from "./context";
 import { useRouter } from "next/navigation";
 
