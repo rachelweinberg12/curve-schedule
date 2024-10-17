@@ -3,6 +3,9 @@
 import { GuestProfile } from "@/db/guests";
 import { SimpleUser } from "@/db/auth";
 import { ProfileCard } from "./profile-card";
+import { checkStringForSearch } from "@/utils/utils";
+import { useState } from "react";
+import { Input } from "../schedule/input";
 
 export function PeopleDisplay(props: {
   users: SimpleUser[];
@@ -13,14 +16,24 @@ export function PeopleDisplay(props: {
     const account = users.find((user) => user.recordID === guest.ID);
     return { profile: guest, account };
   });
-  profilesAndAccounts.sort((a, b) => {
+  const [search, setSearch] = useState("");
+  const filteredGuests = profilesAndAccounts.filter((guest) =>
+    profileMatchesSearch(guest.profile, search)
+  );
+  const sortedFilteredGuests = filteredGuests.sort((a, b) => {
     const completenessA = assessProfileCompleteness(a.profile, a.account);
     const completenessB = assessProfileCompleteness(b.profile, b.account);
     return completenessB - completenessA;
   });
   return (
     <div>
-      {profilesAndAccounts.map((guest) => {
+      <Input
+        className="max-w-3xl w-full mb-5 mx-auto"
+        placeholder="Search people"
+        value={search}
+        onChange={(event) => setSearch(event.target.value)}
+      />
+      {sortedFilteredGuests.map((guest) => {
         return (
           <ProfileCard
             key={guest.profile.ID}
@@ -49,4 +62,12 @@ function assessProfileCompleteness(
   )
     completeness += 1;
   return completeness;
+}
+
+function profileMatchesSearch(profile: GuestProfile, search: string) {
+  return (
+    !search ||
+    checkStringForSearch(search, profile.Name) ||
+    checkStringForSearch(search, profile.Title ?? "")
+  );
 }

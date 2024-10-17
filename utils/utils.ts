@@ -21,3 +21,7 @@ export const dateOnDay = (date: Date, day: Day) => {
     date.getTime() <= new Date(day.End).getTime()
   );
 };
+
+export function checkStringForSearch(search: string, string: string) {
+  return string.toLowerCase().includes(search.toLowerCase());
+}

@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 import { getDaysByEvent } from "@/db/days";
 import { getSessionsByEvent } from "@/db/sessions";
 import { getLocations } from "@/db/locations";
-import { getGuests } from "@/db/guests";
 import { getRSVPsByUser } from "@/db/rsvps";
 import { Event } from "@/db/events";
 

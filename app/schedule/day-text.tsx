@@ -8,6 +8,7 @@ import { Day } from "@/db/days";
 import { RSVP } from "@/db/rsvps";
 import { Location } from "@/db/locations";
 import { Session } from "@/db/sessions";
+import { checkStringForSearch } from "@/utils/utils";
 
 export function DayText(props: {
   locations: Location[];
@@ -94,8 +95,4 @@ function sessionMatchesSearch(session: Session, search: string) {
     ) ||
     checkStringForSearch(search, session["Location name"].join(" ") ?? "")
   );
-}
-
-function checkStringForSearch(search: string, string: string) {
-  return string.toLowerCase().includes(search.toLowerCase());
 }
