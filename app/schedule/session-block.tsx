@@ -6,13 +6,11 @@ import { Day } from "@/db/days";
 import { Location } from "@/db/locations";
 import { BasicGuest } from "@/db/guests";
 import { RSVP } from "@/db/rsvps";
-import { Tooltip } from "./tooltip";
 import { DateTime } from "luxon";
 import Link from "next/link";
 import { useContext, useState } from "react";
 import { CurrentUserModal } from "../modals";
 import { UserContext } from "../context";
-import { useScreenWidth } from "@/utils/hooks";
 
 export function SessionBlock(props: {
   eventName: string;
@@ -117,28 +115,27 @@ export function RealSessionCard(props: {
       ? optimisticRSVPResponse
       : rsvpsForEvent.length > 0;
   const hostStatus = currentUser && session.Hosts?.includes(currentUser);
-  const lowerOpacity = !rsvpStatus && !hostStatus;
   const formattedHostNames = session["Host name"]?.join(", ") ?? "No hosts";
-  const [rsvpModalOpen, setRsvpModalOpen] = useState(false);
-  const screenWidth = useScreenWidth();
-  const onMobile = screenWidth < 640;
-
-  const handleClick = () => {
-    if (currentUser && !onMobile) {
-      rsvp(currentUser, session.ID, !!rsvpStatus);
-      setOptimisticRSVPResponse(!rsvpStatus);
-    } else {
-      setRsvpModalOpen(true);
-    }
-  };
+  const lowerOpacity = !rsvpStatus && !hostStatus;
+  const [sessionModalOpen, setSessionModalOpen] = useState(false);
 
   const numRSVPs = session["Num RSVPs"] + (optimisticRSVPResponse ? 1 : 0);
   const SessionInfoDisplay = () => (
     <>
       <h1 className="text-lg font-bold leading-tight">{session.Title}</h1>
-      <p className="text-xs text-gray-500 mb-2 mt-1">
-        Hosted by {formattedHostNames}
-      </p>
+      <div className="text-xs text-gray-500 mb-2 mt-1 flex gap-2">
+        {session.Hosts?.map((host, idx) => {
+          return session["Host name"] ? (
+            <Link
+              key={host}
+              href={`/people/${host}`}
+              className="bg-gray-100 px-1.5 py-0.5 rounded-sm"
+            >
+              {session["Host name"][idx]}
+            </Link>
+          ) : undefined;
+        })}
+      </div>
       <p className="text-sm whitespace-pre-line">{session.Description}</p>
       <div className="flex justify-between mt-2 gap-4 text-xs text-gray-500">
         <div className="flex gap-1">
@@ -163,13 +160,10 @@ export function RealSessionCard(props: {
     </>
   );
   return (
-    <Tooltip
-      content={onMobile ? undefined : <SessionInfoDisplay />}
-      className={`row-span-${numHalfHours} my-0.5 overflow-hidden group`}
-    >
+    <div className={`row-span-${numHalfHours} my-0.5 overflow-hidden group`}>
       <CurrentUserModal
-        close={() => setRsvpModalOpen(false)}
-        open={rsvpModalOpen}
+        close={() => setSessionModalOpen(false)}
+        open={sessionModalOpen}
         // rsvp here should actually be rsvp
         rsvp={() => {
           if (!currentUser) return;
@@ -192,7 +186,7 @@ export function RealSessionCard(props: {
               }-${600}`,
           !lowerOpacity && "text-white"
         )}
-        onClick={handleClick}
+        onClick={() => setSessionModalOpen(true)}
       >
         <p
           className={clsx(
@@ -224,6 +218,6 @@ export function RealSessionCard(props: {
           {numRSVPs}
         </div>
       </button>
-    </Tooltip>
+    </div>
   );
 }
