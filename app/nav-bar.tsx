@@ -31,9 +31,12 @@ export default function Example() {
               </div>
               <div className="flex justify-between w-full items-center">
                 <div className="flex items-center justify-between sm:justify-start w-full gap-3">
-                  <h1 className="sm:text-2xl hidden sm:block font-bold mr-5">
+                  <Link
+                    className="sm:text-2xl hidden sm:block font-bold mr-5"
+                    href="/"
+                  >
                     {CONSTS.TITLE}
-                  </h1>
+                  </Link>
                   <div className="sm:hidden block ml-2">
                     <SignInSignUp />
                   </div>
