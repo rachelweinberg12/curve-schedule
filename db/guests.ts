@@ -1,5 +1,6 @@
 import { CONSTS } from "@/utils/constants";
 import { base } from "./db";
+import { SimpleUser } from "./auth";
 
 export type BasicGuest = {
   Name: string;
@@ -20,6 +21,11 @@ export type GuestProfile = {
   "Personal website": string;
   Sessions: string[];
   RSVPs: string[];
+};
+
+export type GuestProfileAndAccount = {
+  profile: GuestProfile;
+  account?: SimpleUser;
 };
 
 export async function getGuests() {

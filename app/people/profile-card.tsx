@@ -4,36 +4,34 @@ import Image from "next/image";
 import clsx from "clsx";
 
 export function ProfileCard(props: {
-  guest: GuestProfile;
-  guestAccount?: SimpleUser;
+  profile: GuestProfile;
+  account?: SimpleUser;
 }) {
-  const { guest, guestAccount } = props;
+  const { profile, account } = props;
   return (
-    <li
-      key={guest.ID}
-      className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow"
+    <div
+      key={profile.ID}
+      className="flex w-full items-center justify-between space-x-6 p-6 rounded-lg shadow-sm"
     >
-      <div className="flex w-full items-center justify-between space-x-6 p-6">
-        <div className="flex-1 truncate">
-          <div className="flex items-center space-x-3">
-            <h3 className="truncate text-sm font-medium text-gray-900">
-              {guest.Name}
-            </h3>
-            <TypeTag type={guest.Type} />
-          </div>
-          <p className="mt-1 truncate text-sm text-gray-500">{guest.Title}</p>
+      <div className="flex-1 truncate">
+        <div className="flex items-center space-x-3">
+          <h3 className="truncate text-sm font-medium text-gray-900">
+            {profile.Name}
+          </h3>
+          <TypeTag type={profile.Type} />
         </div>
-        {guestAccount && (
-          <Image
-            alt={guest.Name}
-            src={guestAccount.imageUrl}
-            className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300"
-            height="100"
-            width="100"
-          />
-        )}
+        <p className="mt-1 truncate text-sm text-gray-500">{profile.Title}</p>
       </div>
-    </li>
+      {account && (
+        <Image
+          alt={profile.Name}
+          src={account.imageUrl}
+          className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300"
+          height="100"
+          width="100"
+        />
+      )}
+    </div>
   );
 }
 
