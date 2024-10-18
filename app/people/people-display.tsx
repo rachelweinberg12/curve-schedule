@@ -65,9 +65,10 @@ function assessProfileCompleteness(
   if (profile.Title) completeness += 1;
   if (account?.imageUrl) completeness += 1;
   if (
-    profile.Twitter ||
+    profile.X ||
     profile.LinkedIn ||
     profile.Discord ||
+    profile.Github ||
     profile["Personal website"]
   )
     completeness += 1;

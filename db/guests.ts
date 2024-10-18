@@ -15,9 +15,10 @@ export type GuestProfile = {
   Title: string;
   ID: string;
   Type: "Speaker" | "Attendee" | "Staff" | "Facilitator";
-  Twitter: string;
+  X: string;
   LinkedIn: string;
   Discord: string;
+  Github: string;
   "Personal website": string;
   Sessions: string[];
   RSVPs: string[];
@@ -82,9 +83,10 @@ export async function getGuestProfiles() {
         "Bio",
         "Title",
         "Type",
-        "Twitter",
+        "X",
         "LinkedIn",
         "Discord",
+        "Github",
         "Personal website",
         "Sessions",
         "RSVPs",

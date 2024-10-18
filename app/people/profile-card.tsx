@@ -3,6 +3,7 @@ import { SimpleUser } from "@/db/auth";
 import Image from "next/image";
 import { ColoredTag } from "../tags";
 import Link from "next/link";
+import { SocialLinks } from "./socials";
 
 export function ProfileCard(props: {
   profile: GuestProfile;
@@ -12,7 +13,7 @@ export function ProfileCard(props: {
   return (
     <div
       key={profile.ID}
-      className="flex w-full items-center justify-between space-x-6 p-6 rounded-lg shadow"
+      className="flex flex-col gap-3 divide-y divide-gray-300 p-6 rounded-lg shadow"
     >
       <Link
         href={`/${profile.ID}`}
@@ -42,6 +43,7 @@ export function ProfileCard(props: {
           />
         )}
       </Link>
+      <SocialLinks profile={profile} />
     </div>
   );
 }
