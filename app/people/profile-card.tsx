@@ -12,7 +12,7 @@ export function ProfileCard(props: {
   return (
     <div
       key={profile.ID}
-      className="flex w-full items-center justify-between space-x-6 p-6 rounded-lg shadow-sm"
+      className="flex w-full items-center justify-between space-x-6 p-6 rounded-lg shadow"
     >
       <Link
         href={`/${profile.ID}`}
