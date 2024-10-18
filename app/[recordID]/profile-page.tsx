@@ -10,7 +10,6 @@ import { SocialLinks } from "../people/socials";
 import Link from "next/link";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { ColoredTag, TypeTagColor } from "../tags";
-import { RSVP } from "@/db/rsvps";
 
 export function ProfilePage(props: {
   profile: GuestProfile;

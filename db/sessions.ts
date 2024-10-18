@@ -105,7 +105,8 @@ export async function getSessionsByHost(hostName: string) {
 
 export async function getSessionsByIDs(sessionIDs: string[]) {
   const sessions: Session[] = [];
-  const sessionIDsString = sessionIDs.map((id) => `"${id}"`).join(", ");
+  const sessionIDsString = sessionIDs.map((id) => `${id}`).join(", ");
+  console.log(sessionIDsString);
   await base("Sessions")
     .select({
       fields: [
@@ -121,7 +122,7 @@ export async function getSessionsByIDs(sessionIDs: string[]) {
         "Capacity",
         "Num RSVPs",
       ],
-      filterByFormula: `FIND({ID}, ${sessionIDsString}) > 0`,
+      filterByFormula: `FIND({ID}, "${sessionIDsString}") > 0`,
     })
     .eachPage(function page(records: any, fetchNextPage: any) {
       records.forEach(function (record: any) {

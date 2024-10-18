@@ -16,6 +16,8 @@ export default async function Page(props: { params: { recordID: string } }) {
   const rsvps = await getRSVPsByUser(recordID);
   const rsvpdSessionIDs = rsvps.map((rsvp) => rsvp["Session"]);
   const rsvpdSessions = await getSessionsByIDs(rsvpdSessionIDs);
+  console.log(rsvpdSessionIDs);
+  console.log(rsvpdSessions);
   return (
     <div className="max-w-4xl mx-auto">
       <ProfilePage
