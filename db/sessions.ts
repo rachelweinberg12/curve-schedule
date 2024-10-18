@@ -102,3 +102,32 @@ export async function getSessionsByHost(hostName: string) {
     });
   return sessions;
 }
+
+export async function getSessionsByIDs(sessionIDs: string[]) {
+  const sessions: Session[] = [];
+  const sessionIDsString = sessionIDs.map((id) => `"${id}"`).join(", ");
+  await base("Sessions")
+    .select({
+      fields: [
+        "Title",
+        "Description",
+        "Start time",
+        "End time",
+        "Hosts",
+        "Host name",
+        "Host email",
+        "Location",
+        "Location name",
+        "Capacity",
+        "Num RSVPs",
+      ],
+      filterByFormula: `FIND({ID}, ${sessionIDsString}) > 0`,
+    })
+    .eachPage(function page(records: any, fetchNextPage: any) {
+      records.forEach(function (record: any) {
+        sessions.push({ ...record.fields, ID: record.id });
+      });
+      fetchNextPage();
+    });
+  return sessions;
+}

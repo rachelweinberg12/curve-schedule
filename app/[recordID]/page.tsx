@@ -1,8 +1,9 @@
 import { getGuestByID } from "@/db/guests";
 import { ProfilePage } from "./profile-page";
 import { getUserByEmail, getUserRecordID } from "@/db/auth";
-import { getSessionsByHost } from "@/db/sessions";
+import { getSessionsByHost, getSessionsByIDs } from "@/db/sessions";
 import { getLocations } from "@/db/locations";
+import { getRSVPsByUser } from "@/db/rsvps";
 
 export default async function Page(props: { params: { recordID: string } }) {
   const { recordID } = props.params;
@@ -12,6 +13,9 @@ export default async function Page(props: { params: { recordID: string } }) {
   const locations = await getLocations();
   const userRecordID = getUserRecordID();
   const isUsersProfile = userRecordID === recordID;
+  const rsvps = await getRSVPsByUser(recordID);
+  const rsvpdSessionIDs = rsvps.map((rsvp) => rsvp["Session"]);
+  const rsvpdSessions = await getSessionsByIDs(rsvpdSessionIDs);
   return (
     <div className="max-w-4xl mx-auto">
       <ProfilePage
@@ -20,6 +24,7 @@ export default async function Page(props: { params: { recordID: string } }) {
         locations={locations}
         isUsersProfile={isUsersProfile}
         account={guestAccount}
+        rsvpdSessions={rsvpdSessions}
       />
     </div>
   );

@@ -10,6 +10,7 @@ import { SocialLinks } from "../people/socials";
 import Link from "next/link";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { ColoredTag, TypeTagColor } from "../tags";
+import { RSVP } from "@/db/rsvps";
 
 export function ProfilePage(props: {
   profile: GuestProfile;
@@ -17,10 +18,18 @@ export function ProfilePage(props: {
   locations: Location[];
   account?: SimpleUser;
   isUsersProfile: boolean;
+  rsvpdSessions: Session[];
 }) {
-  const { profile, sessionsHosting, locations, account, isUsersProfile } =
-    props;
-  const sortedSessions = sortSessions(sessionsHosting, locations);
+  const {
+    profile,
+    sessionsHosting,
+    locations,
+    account,
+    isUsersProfile,
+    rsvpdSessions,
+  } = props;
+  const sortedHostingSessions = sortSessions(sessionsHosting, locations);
+  const sortedRSVPSessions = sortSessions(rsvpdSessions, locations);
 
   return (
     <div className="flex flex-col gap-4">
@@ -63,7 +72,21 @@ export function ProfilePage(props: {
       <div>
         <h2 className="text-lg font-bold">Hosted Sessions</h2>
         <div className="flex flex-col gap-1">
-          {sortedSessions.map((session) => (
+          {sortedHostingSessions.map((session) => (
+            <SessionText
+              key={`${session["Title"]} + ${session["Start time"]} + ${session["End time"]}`}
+              session={session}
+              locations={locations.filter((loc) =>
+                session["Location name"].includes(loc.Name)
+              )}
+            />
+          ))}
+        </div>
+      </div>
+      <div>
+        <h2 className="text-lg font-bold">RSVP'd Sessions</h2>
+        <div className="flex flex-col gap-1">
+          {sortedRSVPSessions.map((session) => (
             <SessionText
               key={`${session["Title"]} + ${session["Start time"]} + ${session["End time"]}`}
               session={session}
