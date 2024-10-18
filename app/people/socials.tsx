@@ -3,6 +3,7 @@ import { LinkIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { GuestProfile } from "@/db/guests";
 import clsx from "clsx";
+import { profileHasSocials } from "./people-display";
 
 type Social = {
   name: keyof GuestProfile;
@@ -85,8 +86,12 @@ const SOCIALS: Social[] = [
   },
 ];
 
-function SocialLink(props: { name: string; username: string }) {
-  const { name, username } = props;
+function SocialLink(props: {
+  name: string;
+  username: string;
+  sizeClass?: string;
+}) {
+  const { name, username, sizeClass } = props;
   const social = SOCIALS.find((social) => social.name === name);
   const [copied, setCopied] = useState(false);
   const copyToClipboard = async () => {
@@ -110,7 +115,7 @@ function SocialLink(props: { name: string; username: string }) {
         target="_blank"
         className="flex items-center gap-1 text-gray-500 hover:text-gray-700"
       >
-        <social.icon className="h-5 w-5" />
+        <social.icon className={clsx(sizeClass ?? "h-5 w-5")} />
       </a>
     );
   } else {
@@ -120,7 +125,7 @@ function SocialLink(props: { name: string; username: string }) {
           onClick={copyToClipboard}
           className="flex items-center gap-1 text-gray-500 hover:text-gray-700"
         >
-          <social.icon className="h-5 w-5" />
+          <social.icon className={clsx(sizeClass ?? "h-5 w-5")} />
         </button>
         {copied && (
           <span className="absolute top-[-40px] left-1/2 transform -translate-x-1/2 rounded bg-white text-sm px-2 py-1 border shadow-md border-gray-100 animate-fade-in-out w-fit text-nowrap">
@@ -132,23 +137,31 @@ function SocialLink(props: { name: string; username: string }) {
   }
 }
 
-export function SocialLinks(props: { profile: GuestProfile }) {
-  const { profile } = props;
-  return (
-    <div className="flex gap-4 items-center">
-      {SOCIALS.map((social) => {
-        if (profile[social.name]) {
-          return (
-            <SocialLink
-              key={social.name}
-              name={social.name}
-              username={profile[social.name] as string}
-            />
-          );
-        } else {
-          return null;
-        }
-      })}
-    </div>
-  );
+export function SocialLinks(props: {
+  profile: GuestProfile;
+  sizeClass?: string;
+}) {
+  const { profile, sizeClass } = props;
+  if (profileHasSocials(profile)) {
+    return (
+      <div className="flex gap-4 items-center pt-3">
+        {SOCIALS.map((social) => {
+          if (profile[social.name]) {
+            return (
+              <SocialLink
+                key={social.name}
+                name={social.name}
+                username={profile[social.name] as string}
+                sizeClass={sizeClass}
+              />
+            );
+          } else {
+            return null;
+          }
+        })}
+      </div>
+    );
+  } else {
+    return null;
+  }
 }

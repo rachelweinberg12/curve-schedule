@@ -43,7 +43,7 @@ export function ProfileCard(props: {
           />
         )}
       </Link>
-      <SocialLinks profile={profile} />
+      <SocialLinks profile={profile} sizeClass="h-4 w-4" />
     </div>
   );
 }

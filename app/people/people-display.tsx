@@ -56,6 +56,16 @@ export function PeopleDisplay(props: {
   );
 }
 
+export function profileHasSocials(profile: GuestProfile) {
+  return (
+    profile.X ||
+    profile.LinkedIn ||
+    profile.Discord ||
+    profile.Github ||
+    profile["Personal website"]
+  );
+}
+
 function assessProfileCompleteness(
   profile: GuestProfile,
   account?: SimpleUser
@@ -64,14 +74,7 @@ function assessProfileCompleteness(
   if (profile.Name) completeness += 1;
   if (profile.Title) completeness += 1;
   if (account?.imageUrl) completeness += 1;
-  if (
-    profile.X ||
-    profile.LinkedIn ||
-    profile.Discord ||
-    profile.Github ||
-    profile["Personal website"]
-  )
-    completeness += 1;
+  if (profileHasSocials(profile)) completeness += 1;
   return completeness;
 }
 
