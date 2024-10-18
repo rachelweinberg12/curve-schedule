@@ -13,12 +13,14 @@ export default async function Page(props: { params: { recordID: string } }) {
   const userRecordID = getUserRecordID();
   const isUsersProfile = userRecordID === recordID;
   return (
-    <ProfilePage
-      profile={guest}
-      sessionsHosting={sessionsHosting}
-      locations={locations}
-      isUsersProfile={isUsersProfile}
-      account={guestAccount}
-    />
+    <div className="max-w-4xl mx-auto">
+      <ProfilePage
+        profile={guest}
+        sessionsHosting={sessionsHosting}
+        locations={locations}
+        isUsersProfile={isUsersProfile}
+        account={guestAccount}
+      />
+    </div>
   );
 }

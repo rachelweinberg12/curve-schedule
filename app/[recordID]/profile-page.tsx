@@ -8,6 +8,8 @@ import { sortSessions } from "../schedule/day-text";
 import { SimpleUser } from "@/db/auth";
 import { SocialLinks } from "../people/socials";
 import Link from "next/link";
+import { PencilIcon } from "@heroicons/react/24/outline";
+import { ColoredTag, TypeTagColor } from "../tags";
 
 export function ProfilePage(props: {
   profile: GuestProfile;
@@ -22,46 +24,55 @@ export function ProfilePage(props: {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-4">
-        {account && (
-          <Image
-            src={account.imageUrl}
-            alt={profile.Name}
-            height="100"
-            width="100"
-            className="rounded-full sm:h-40 sm:w-40 h-28 w-28"
-          />
-        )}
-        <div>
-          <h1 className="text-2xl font-bold">{profile.Name}</h1>
-          <p className="text-gray-600">{profile.Title}</p>
-          {isUsersProfile && <em className="text-sm text-gray-500">(This is your profile)</em>}
+      <div className="flex items-start justify-between">
+        <div className="flex gap-4">
+          {account && (
+            <Image
+              src={account.imageUrl}
+              alt={profile.Name}
+              height="100"
+              width="100"
+              className="rounded-full sm:h-28 sm:w-28 h-16 w-16"
+            />
+          )}
+          <div>
+            <div className="flex gap-3 items-center">
+              <h1 className="text-2xl font-bold">{profile.Name}</h1>{" "}
+              {profile.Type !== "Attendee" &&
+                profile.Type !== "Facilitator" && (
+                  <ColoredTag
+                    text={profile.Type}
+                    color={TypeTagColor[profile.Type]}
+                  />
+                )}
+            </div>
+            <p className="text-gray-600 mb-3">{profile.Title}</p>
+            <SocialLinks profile={profile} />
+          </div>
         </div>
+        {isUsersProfile && (
+          <Link
+            href={`/${profile.ID}/edit`}
+            className="relative inline-flex items-center justify-center rounded-md p-1.5 bg-rose-400 text-white hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rose-400"
+          >
+            <PencilIcon className="h-5 w-5 stroke-2" />
+          </Link>
+        )}
       </div>
-      <div className="flex flex-col gap-1">
-        <h2 className="text-lg font-bold">Bio</h2>
-        <p>{profile.Bio}</p>
-      </div>
-      <div className="flex flex-col gap-1">
-        <h2 className="text-lg font-bold">Social Links</h2>
-        <SocialLinks profile={profile} />
-      </div>
-      {isUsersProfile && (
-        <Link href={`/${profile.ID}/edit`} className="bg-rose-400 text-white font-semibold py-2 rounded shadow hover:bg-rose-500 active:bg-rose-500 mx-auto px-12 text-center">
-          Edit Profile
-        </Link>
-      )}
-      <div className="flex flex-col gap-1">
+      <hr className="border-gray-200 my-3" />
+      <div>
         <h2 className="text-lg font-bold">Hosted Sessions</h2>
-        {sortedSessions.map((session) => (
-          <SessionText
-            key={`${session["Title"]} + ${session["Start time"]} + ${session["End time"]}`}
-            session={session}
-            locations={locations.filter((loc) =>
-              session["Location name"].includes(loc.Name)
-            )}
-          />
-        ))}
+        <div className="flex flex-col gap-1">
+          {sortedSessions.map((session) => (
+            <SessionText
+              key={`${session["Title"]} + ${session["Start time"]} + ${session["End time"]}`}
+              session={session}
+              locations={locations.filter((loc) =>
+                session["Location name"].includes(loc.Name)
+              )}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

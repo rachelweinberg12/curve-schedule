@@ -1,7 +1,7 @@
 import { GuestProfile } from "@/db/guests";
 import { SimpleUser } from "@/db/auth";
 import Image from "next/image";
-import { ColoredTag } from "../tags";
+import { ColoredTag, TypeTagColor } from "../tags";
 import Link from "next/link";
 import { SocialLinks } from "./socials";
 
@@ -47,10 +47,3 @@ export function ProfileCard(props: {
     </div>
   );
 }
-
-const TypeTagColor = {
-  Speaker: "yellow",
-  Attendee: "green",
-  Facilitator: "teal",
-  Staff: "purple",
-};

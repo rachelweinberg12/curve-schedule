@@ -26,3 +26,10 @@ export function ColoredTag(props: { text: string; color: string }) {
     </div>
   );
 }
+
+export const TypeTagColor = {
+  Speaker: "yellow",
+  Attendee: "green",
+  Facilitator: "teal",
+  Staff: "purple",
+};

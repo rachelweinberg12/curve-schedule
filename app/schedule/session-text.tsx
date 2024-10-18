@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { DateTime } from "luxon";
 import { Session } from "@/db/sessions";
 import { Location } from "@/db/locations";
@@ -10,7 +9,7 @@ export function SessionText(props: {
 }) {
   const { session, locations } = props;
   return (
-    <div className="px-1.5 rounded h-full min-h-10 pt-5 pb-8">
+    <div className="px-1.5 rounded h-full min-h-10 pt-4 pb-6">
       <h1 className="font-bold leading-tight">{session.Title}</h1>
       <div className="flex flex-col sm:flex-row justify-between mt-2 sm:items-center gap-2">
         <div className="flex gap-3 text-xs text-gray-500 items-center">
