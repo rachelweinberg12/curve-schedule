@@ -10,6 +10,7 @@ import { SocialLinks } from "../people/socials";
 import Link from "next/link";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { ColoredTag, TypeTagColor } from "../tags";
+import { generateSlug } from "@/utils/utils";
 
 export function ProfilePage(props: {
   profile: GuestProfile;
@@ -29,6 +30,7 @@ export function ProfilePage(props: {
   } = props;
   const sortedHostingSessions = sortSessions(sessionsHosting, locations);
   const sortedRSVPSessions = sortSessions(rsvpdSessions, locations);
+  const userSlug = generateSlug(profile.Name);
 
   return (
     <div className="flex flex-col gap-4">
@@ -60,7 +62,7 @@ export function ProfilePage(props: {
         </div>
         {isUsersProfile && (
           <Link
-            href={`/${profile.ID}/edit`}
+            href={`/${userSlug}/edit`}
             className="relative inline-flex items-center justify-center rounded-md p-1.5 bg-rose-400 text-white hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rose-400"
           >
             <PencilIcon className="h-5 w-5 stroke-2" />

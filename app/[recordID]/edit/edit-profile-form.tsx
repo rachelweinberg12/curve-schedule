@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { GuestProfile } from "@/db/guests";
 import { Input, Textarea } from "@/app/input";
+import { generateSlug } from "@/utils/utils";
 
 export default function EditProfileForm({
   profile,
@@ -29,7 +30,8 @@ export default function EditProfileForm({
         body: JSON.stringify(editedProfile),
       });
       if (response.ok) {
-        router.push(`/${profile.ID}`);
+        const userSlug = generateSlug(editedProfile.Name);
+        router.push(`/${userSlug}`);
       } else {
         console.error("Failed to update profile");
       }

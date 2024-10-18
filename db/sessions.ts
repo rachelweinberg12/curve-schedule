@@ -106,7 +106,6 @@ export async function getSessionsByHost(hostName: string) {
 export async function getSessionsByIDs(sessionIDs: string[]) {
   const sessions: Session[] = [];
   const sessionIDsString = sessionIDs.map((id) => `${id}`).join(", ");
-  console.log(sessionIDsString);
   await base("Sessions")
     .select({
       fields: [

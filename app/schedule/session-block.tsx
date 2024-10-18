@@ -119,11 +119,7 @@ export function RealSessionCard(props: {
       <div className="text-xs text-gray-500 mb-2 mt-1 flex gap-2">
         {session.Hosts?.map((host, idx) => {
           return session["Host name"] ? (
-            <PersonLink
-              key={host}
-              recordID={host}
-              name={session["Host name"][idx]}
-            />
+            <PersonLink key={host} name={session["Host name"][idx]} />
           ) : undefined;
         })}
       </div>

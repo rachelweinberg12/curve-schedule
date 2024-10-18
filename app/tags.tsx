@@ -1,11 +1,13 @@
+import { generateSlug } from "@/utils/utils";
 import clsx from "clsx";
 import Link from "next/link";
 
-export function PersonLink(props: { recordID: string; name: string }) {
-  const { recordID, name } = props;
+export function PersonLink(props: { name: string }) {
+  const { name } = props;
+  const userSlug = generateSlug(name);
   return (
     <Link
-      href={`/${recordID}`}
+      href={`/${userSlug}`}
       className="bg-gray-100 px-1.5 py-0.5 rounded-sm hover:bg-gray-200"
     >
       {name}

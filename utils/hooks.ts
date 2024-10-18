@@ -30,3 +30,9 @@ export function useUserRecordID() {
   const userRecordID = useUserReturn.user?.publicMetadata.record_id;
   return userRecordID as string | undefined;
 }
+
+export function useUserSlug() {
+  const useUserReturn = useUser();
+  const userSlug = useUserReturn.user?.publicMetadata.slug;
+  return userSlug as string | undefined;
+}

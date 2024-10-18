@@ -16,11 +16,7 @@ export function SessionText(props: {
           <div className="flex gap-2">
             {session.Hosts?.map((host, idx) => {
               return session["Host name"] ? (
-                <PersonLink
-                  key={host}
-                  recordID={host}
-                  name={session["Host name"][idx]}
-                />
+                <PersonLink key={host} name={session["Host name"][idx]} />
               ) : undefined;
             })}
           </div>

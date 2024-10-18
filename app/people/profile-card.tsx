@@ -4,19 +4,21 @@ import Image from "next/image";
 import { ColoredTag, TypeTagColor } from "../tags";
 import Link from "next/link";
 import { SocialLinks } from "./socials";
+import { generateSlug } from "@/utils/utils";
 
 export function ProfileCard(props: {
   profile: GuestProfile;
   account?: SimpleUser;
 }) {
   const { profile, account } = props;
+  const userSlug = generateSlug(profile.Name);
   return (
     <div
       key={profile.ID}
       className="flex flex-col gap-3 divide-y divide-gray-300 p-6 rounded-lg shadow"
     >
       <Link
-        href={`/${profile.ID}`}
+        href={`/${userSlug}`}
         className="flex w-full items-center justify-between"
       >
         <div className="flex-1 truncate">

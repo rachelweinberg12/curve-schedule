@@ -7,11 +7,11 @@ import Link from "next/link";
 import { ExportScheduleModal, MapModal } from "./modals";
 import { CONSTS, NavItem } from "@/utils/constants";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { useUserRecordID } from "@/utils/hooks";
+import { useUserSlug } from "@/utils/hooks";
 
 export default function NavBar() {
-  const user = useUserRecordID();
-  const profileLink = `/${user}`;
+  const userSlug = useUserSlug();
+  const profileLink = `/${userSlug}`;
   return (
     <Disclosure
       as="nav"
@@ -56,7 +56,6 @@ export default function NavBar() {
                         <NavBarItem key={item.name} item={item} />
                       ))}
                       <SignedIn>
-                        {/* TODO: change /profile to /recordID */}
                         <NavBarItem
                           item={{ name: "Profile", href: profileLink }}
                         />
@@ -75,7 +74,6 @@ export default function NavBar() {
                 <SmallNavBarItem key={item.name} item={item} />
               ))}
               <SignedIn>
-                {/* TODO: change /profile to /recordID */}
                 <SmallNavBarItem
                   item={{ name: "Profile", href: profileLink }}
                 />

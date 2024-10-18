@@ -1,4 +1,4 @@
-import { getGuestByID } from "@/db/guests";
+import { getGuestBySlug } from "@/db/guests";
 import { ProfilePage } from "./profile-page";
 import { getUserByEmail, getUserRecordID } from "@/db/auth";
 import { getSessionsByHost, getSessionsByIDs } from "@/db/sessions";
@@ -7,17 +7,18 @@ import { getRSVPsByUser } from "@/db/rsvps";
 
 export default async function Page(props: { params: { recordID: string } }) {
   const { recordID } = props.params;
-  const guest = await getGuestByID(recordID);
+  const guest = await getGuestBySlug(recordID);
+  if (!guest) {
+    return <div>Profile not found</div>;
+  }
   const guestAccount = await getUserByEmail(guest.Email);
   const sessionsHosting = await getSessionsByHost(guest.Name);
   const locations = await getLocations();
   const userRecordID = getUserRecordID();
-  const isUsersProfile = userRecordID === recordID;
-  const rsvps = await getRSVPsByUser(recordID);
+  const isUsersProfile = userRecordID === guest.ID;
+  const rsvps = await getRSVPsByUser(guest.ID);
   const rsvpdSessionIDs = rsvps.map((rsvp) => rsvp["Session"]);
   const rsvpdSessions = await getSessionsByIDs(rsvpdSessionIDs);
-  console.log(rsvpdSessionIDs);
-  console.log(rsvpdSessions);
   return (
     <div className="max-w-4xl mx-auto">
       <ProfilePage

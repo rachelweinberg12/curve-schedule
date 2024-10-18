@@ -22,7 +22,7 @@ export async function getUserByEmail(email: string) {
   return simpleUser;
 }
 
-type Metadata = undefined | { record_id: string };
+type Metadata = undefined | { record_id: string; slug: string };
 export function getUserRecordID() {
   const { sessionClaims } = auth();
   const metadata = sessionClaims?.metadata as Metadata;
