@@ -18,21 +18,21 @@ export function ProfilePage(props: {
     props;
   const sortedSessions = sortSessions(sessionsHosting, locations);
   return (
-    <div>
+    <div className="flex flex-col items-center">
       {account && (
         <Image
           src={account.imageUrl}
           alt={profile.Name}
           height="100"
           width="100"
-          className="rounded-full"
+          className="rounded-full sm:h-40 sm:w-40 h-28 w-28"
         />
       )}
-      <h1>{profile.Name}</h1>
-      <p>{profile.Bio}</p>
-      {isUsersProfile && <p>This is your profile</p>}
-      <h2 className="text-lg font-bold">Hosted Sessions</h2>
-      <>
+      <h1 className="text-lg font-bold mt-3">{profile.Name}</h1>
+      <p>{profile.Title}</p>
+      {isUsersProfile && <em>(This is your profile)</em>}
+      <div>
+        <h2 className="text-lg font-bold mt-10">Hosted Sessions</h2>
         {sortedSessions.map((session) => (
           <SessionText
             key={`${session["Title"]} + ${session["Start time"]} + ${session["End time"]}`}
@@ -42,7 +42,7 @@ export function ProfilePage(props: {
             )}
           />
         ))}
-      </>
+      </div>
     </div>
   );
 }

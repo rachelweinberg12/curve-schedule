@@ -2,6 +2,7 @@ import { GuestProfile } from "@/db/guests";
 import { SimpleUser } from "@/db/auth";
 import Image from "next/image";
 import { ColoredTag } from "../tags";
+import Link from "next/link";
 
 export function ProfileCard(props: {
   profile: GuestProfile;
@@ -13,31 +14,41 @@ export function ProfileCard(props: {
       key={profile.ID}
       className="flex w-full items-center justify-between space-x-6 p-6 rounded-lg shadow-sm"
     >
-      <div className="flex-1 truncate">
-        <div className="flex items-center space-x-3">
-          <h3 className="truncate text-sm font-medium text-gray-900">
-            {profile.Name}
-          </h3>
-          <ColoredTag text={profile.Type} color={TypeTagColor[profile.Type]} />
+      <Link
+        href={`/${profile.ID}`}
+        className="flex w-full items-center justify-between"
+      >
+        <div className="flex-1 truncate">
+          <div className="flex items-center space-x-3">
+            <h3 className="truncate text-sm font-medium text-gray-900">
+              {profile.Name}
+            </h3>
+            {profile.Type !== "Attendee" && profile.Type !== "Facilitator" && (
+              <ColoredTag
+                text={profile.Type}
+                color={TypeTagColor[profile.Type]}
+              />
+            )}
+          </div>
+          <p className="mt-1 truncate text-sm text-gray-500">{profile.Title}</p>
         </div>
-        <p className="mt-1 truncate text-sm text-gray-500">{profile.Title}</p>
-      </div>
-      {account && (
-        <Image
-          alt={profile.Name}
-          src={account.imageUrl}
-          className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300"
-          height="100"
-          width="100"
-        />
-      )}
+        {account && (
+          <Image
+            alt={profile.Name}
+            src={account.imageUrl}
+            className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300"
+            height="100"
+            width="100"
+          />
+        )}
+      </Link>
     </div>
   );
 }
 
 const TypeTagColor = {
-  Speaker: "green",
-  Attendee: "yellow",
+  Speaker: "yellow",
+  Attendee: "green",
   Facilitator: "teal",
   Staff: "purple",
 };
