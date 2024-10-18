@@ -1,7 +1,7 @@
 "use client";
 import clsx from "clsx";
 import { Fragment, useEffect, useState } from "react";
-import { Input } from "../schedule/input";
+import { Input, Textarea } from "../input";
 import { format } from "date-fns";
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/16/solid";
@@ -17,13 +17,12 @@ import { Session } from "@/db/sessions";
 import { useUserRecordID } from "@/utils/hooks";
 
 export function AddSessionForm(props: {
-  eventName: string;
   days: Day[];
   sessions: Session[];
   locations: Location[];
   guests: BasicGuest[];
 }) {
-  const { eventName, days, sessions, locations, guests } = props;
+  const { days, sessions, locations, guests } = props;
   const searchParams = useSearchParams();
   const dayParam = searchParams?.get("day");
   const timeParam = searchParams?.get("time");
@@ -114,9 +113,8 @@ export function AddSessionForm(props: {
         <label className="font-medium">
           Description <RequiredStar />
         </label>
-        <textarea
+        <Textarea
           value={description}
-          className="rounded-md text-sm resize-none h-24 border bg-white px-4 shadow-sm transition-colors invalid:border-red-500 invalid:text-red-900 invalid:placeholder-red-300 focus:outline-none disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 border-gray-300 placeholder-gray-400 focus:ring-2 focus:ring-rose-400 focus:outline-0 focus:border-none"
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>

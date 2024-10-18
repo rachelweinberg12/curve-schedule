@@ -31,3 +31,18 @@ export const Input = forwardRef(
     );
   }
 );
+
+export const Textarea = forwardRef(
+  (props: JSX.IntrinsicElements["textarea"], ref: Ref<HTMLTextAreaElement>) => {
+    return (
+      <textarea
+        ref={ref}
+        className={clsx(
+          "rounded-md text-sm resize-none h-24 border bg-white px-4 shadow-sm transition-colors invalid:border-red-500 invalid:text-red-900 invalid:placeholder-red-300 focus:outline-none disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 border-gray-300 placeholder-gray-400 focus:ring-2 focus:ring-rose-400 focus:outline-0 focus:border-none",
+          props.className
+        )}
+        {...props}
+      />
+    );
+  }
+);

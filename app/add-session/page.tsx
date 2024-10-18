@@ -37,7 +37,6 @@ export default async function AddSession() {
     <Suspense fallback={<div>Loading...</div>}>
       <div className="max-w-2xl mx-auto pb-24">
         <AddSessionForm
-          eventName={CONSTS.TITLE}
           days={days}
           locations={filteredLocations}
           sessions={sessions}

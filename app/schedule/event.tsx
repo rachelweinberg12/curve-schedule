@@ -3,7 +3,7 @@ import { ScheduleSettings } from "./schedule-settings";
 import { DayGrid } from "./day-grid";
 import { useSearchParams } from "next/navigation";
 import { DayText } from "./day-text";
-import { Input } from "./input";
+import { Input } from "../input";
 import { useState } from "react";
 import { Day } from "@/db/days";
 import { Event } from "@/db/events";
