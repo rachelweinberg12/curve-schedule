@@ -31,6 +31,7 @@ export function AddSessionForm(props: {
     dayParam && timeParam
       ? convertParamDateTime(dayParam, timeParam)
       : undefined;
+  console.log(initDateTime);
   const initDay = initDateTime
     ? days.find((d) => dateOnDay(initDateTime, d))
     : undefined;

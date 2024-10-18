@@ -49,12 +49,7 @@ export function EventDisplay(props: {
         {daysForEvent.map((day) => (
           <div key={day.Start}>
             {view === "grid" ? (
-              <DayGrid
-                day={day}
-                locations={locationsForEvent}
-                rsvps={rsvps}
-                eventName={event.Name}
-              />
+              <DayGrid day={day} locations={locationsForEvent} rsvps={rsvps} />
             ) : (
               <DayText
                 day={day}

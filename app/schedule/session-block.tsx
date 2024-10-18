@@ -13,13 +13,12 @@ import { useUserRecordID } from "@/utils/hooks";
 import { PersonLink } from "../tags";
 
 export function SessionBlock(props: {
-  eventName: string;
   session: Session;
   location: Location;
   day: Day;
   rsvpsForEvent: RSVP[];
 }) {
-  const { eventName, session, location, day, rsvpsForEvent } = props;
+  const { session, location, day, rsvpsForEvent } = props;
   const startTime = new Date(session["Start time"]).getTime();
   const endTime = new Date(session["End time"]).getTime();
   const sessionLength = endTime - startTime;
@@ -33,7 +32,6 @@ export function SessionBlock(props: {
     startTime < new Date(day["End bookings"]).getTime();
   return isBookable ? (
     <BookableSessionCard
-      eventName={eventName}
       session={session}
       location={location}
       numHalfHours={numHalfHours}
@@ -58,21 +56,19 @@ export function BookableSessionCard(props: {
   location: Location;
   session: Session;
   numHalfHours: number;
-  eventName: string;
 }) {
-  const { numHalfHours, session, location, eventName } = props;
+  const { numHalfHours, session, location } = props;
   const dayParam = DateTime.fromISO(session["Start time"])
     .setZone("America/Los_Angeles")
     .toFormat("MM-dd");
   const timeParam = DateTime.fromISO(session["Start time"])
     .setZone("America/Los_Angeles")
     .toFormat("HH:mm");
-  const eventSlug = eventName.replace(" ", "-");
   return (
     <div className={`row-span-${numHalfHours} my-0.5 min-h-10`}>
       <Link
         className="rounded font-roboto h-full w-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
-        href={`/${eventSlug}/add-session?location=${location.Name}&time=${timeParam}&day=${dayParam}`}
+        href={`/add-session?location=${location.Name}&time=${timeParam}&day=${dayParam}`}
       >
         <PlusIcon className="h-4 w-4 text-gray-400" />
       </Link>

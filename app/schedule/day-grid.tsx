@@ -9,17 +9,15 @@ import Image from "next/image";
 import { Tooltip } from "./tooltip";
 import { DateTime } from "luxon";
 import { Day } from "@/db/days";
-import { BasicGuest } from "@/db/guests";
 import { RSVP } from "@/db/rsvps";
 import { Location } from "@/db/locations";
 
 export function DayGrid(props: {
-  eventName: string;
   locations: Location[];
   day: Day;
   rsvps: RSVP[];
 }) {
-  const { eventName, day, locations, rsvps } = props;
+  const { day, locations, rsvps } = props;
   const searchParams = useSearchParams();
   const locParams = searchParams?.getAll("loc");
   const locationsFromParams = locations.filter((loc) =>
@@ -153,7 +151,6 @@ export function DayGrid(props: {
                     rsvps={rsvps}
                     day={day}
                     location={location}
-                    eventName={eventName}
                   />
                 );
               })}
