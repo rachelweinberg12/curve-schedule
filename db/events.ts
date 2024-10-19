@@ -11,26 +11,18 @@ export type Event = {
   "Location names"?: string[];
 };
 
-const eventFields = [
-  "Name",
-  "Description",
-  "Website",
-  "Start",
-  "End",
-];
+const eventFields = ["Name", "Description", "Website", "Start", "End"];
 
-const fieldsIfMultipleEvents = [
-  "Guests",
-  "Location names"
-];
+const fieldsIfMultipleEvents = ["Guests", "Location names"];
 
 export async function getEvents() {
   const events: Event[] = [];
+  console.log("Getting events");
   await base("Events")
     .select({
       fields: [
         ...eventFields,
-        ...(CONSTS.MULTIPLE_EVENTS ? fieldsIfMultipleEvents : [])
+        ...(CONSTS.MULTIPLE_EVENTS ? fieldsIfMultipleEvents : []),
       ],
     })
     .eachPage(function page(records: any, fetchNextPage: any) {
@@ -41,6 +33,7 @@ export async function getEvents() {
       });
       fetchNextPage();
     });
+  console.log("Got events", events);
   return events;
 }
 
@@ -50,7 +43,7 @@ export async function getEventByName(name: string) {
     .select({
       fields: [
         ...eventFields,
-        ...(CONSTS.MULTIPLE_EVENTS ? fieldsIfMultipleEvents : [])
+        ...(CONSTS.MULTIPLE_EVENTS ? fieldsIfMultipleEvents : []),
       ],
       filterByFormula: `{Name} = "${name}"`,
     })
