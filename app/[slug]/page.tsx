@@ -5,9 +5,9 @@ import { getSessionsByHost, getSessionsByIDs } from "@/db/sessions";
 import { getLocations } from "@/db/locations";
 import { getRSVPsByUser } from "@/db/rsvps";
 
-export default async function Page(props: { params: { recordID: string } }) {
-  const { recordID } = props.params;
-  const guest = await getGuestBySlug(recordID);
+export default async function Page(props: { params: { slug: string } }) {
+  const { slug } = props.params;
+  const guest = await getGuestBySlug(slug);
   if (!guest) {
     return <div>Profile not found</div>;
   }

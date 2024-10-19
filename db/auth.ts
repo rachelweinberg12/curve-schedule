@@ -30,6 +30,13 @@ export function getUserRecordID() {
   return userRecordID;
 }
 
+export function getUserSlug() {
+  const { sessionClaims } = auth();
+  const metadata = sessionClaims?.metadata as Metadata;
+  const userSlug = metadata?.slug;
+  return userSlug;
+}
+
 export async function getUsers() {
   const userList = await clerkClient.users.getUserList();
   const simpleUsers = userList.data.map((user) => ({

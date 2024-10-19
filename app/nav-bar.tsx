@@ -6,7 +6,13 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ExportScheduleModal, MapModal } from "./modals";
 import { CONSTS, NavItem } from "@/utils/constants";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 import { useUserSlug } from "@/utils/hooks";
 
 export default function NavBar() {
@@ -41,7 +47,7 @@ export default function NavBar() {
                     {CONSTS.TITLE}
                   </Link>
                   <div className="sm:hidden block ml-2">
-                    <SignInSignUp />
+                    <SignInOrProfile />
                   </div>
                   <div className="flex gap-3 mr-14 sm:mr-0">
                     <MapModal />
@@ -60,7 +66,7 @@ export default function NavBar() {
                           item={{ name: "Profile", href: profileLink }}
                         />
                       </SignedIn>
-                      <SignInSignUp />
+                      <SignInOrProfile />
                     </div>
                   </div>
                 </div>
@@ -125,10 +131,20 @@ function SmallNavBarItem(props: { item: NavItem }) {
   );
 }
 
-const SignInSignUp = () => (
+const SignInOrProfile = () => (
   <>
     <SignedOut>
-      <SignInButton />
+      {/* Maybe add back */}
+      {/* <SignUpButton>
+        <button className="text-sm text-nowrap relative inline-flex items-center justify-center font-medium rounded-md px-3 py-2 text-gray-400 hover:bg-gray-100 focus:outline-none">
+          Sign up
+        </button>
+      </SignUpButton> */}
+      <SignInButton>
+        <button className="text-sm text-nowrap relative inline-flex items-center justify-center font-medium rounded-md px-3 py-2 bg-rose-400 text-white hover:bg-rose-500 focus:outline-none">
+          Sign in
+        </button>
+      </SignInButton>
     </SignedOut>
     <SignedIn>
       <UserButton />
