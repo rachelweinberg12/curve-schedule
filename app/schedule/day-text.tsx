@@ -45,7 +45,7 @@ export function DayText(props: {
     );
   }
   return (
-    <div className="flex flex-col max-w-3xl mx-auto">
+    <div className="flex flex-col max-w-3xl">
       <h2 className="text-2xl font-bold w-full text-left">
         {DateTime.fromISO(day.Start)
           .setZone("America/Los_Angeles")
