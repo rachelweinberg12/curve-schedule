@@ -4,6 +4,7 @@ import { Fragment, useContext, useRef, useState } from "react";
 import Image from "next/image";
 import {
   ArrowTopRightOnSquareIcon,
+  ArrowUpTrayIcon,
   MapIcon,
 } from "@heroicons/react/24/outline";
 import { UserSelect } from "./user-select";
@@ -69,10 +70,7 @@ export function ExportScheduleModal() {
         className="relative inline-flex items-center justify-center rounded-md p-1.5 bg-rose-400 text-white hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rose-400"
         onClick={() => setOpen(true)}
       >
-        <ArrowTopRightOnSquareIcon
-          className="h-5 w-5 stroke-2"
-          aria-hidden="true"
-        />
+        <ArrowUpTrayIcon className="h-5 w-5 stroke-2" aria-hidden="true" />
       </button>
       <Modal open={open} setOpen={setOpen}>
         <h1 className="text-2xl font-bold">Export schedule</h1>
