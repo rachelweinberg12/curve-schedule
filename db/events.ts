@@ -18,6 +18,7 @@ const fieldsIfMultipleEvents = ["Guests", "Location names"];
 export async function getEvents() {
   const events: Event[] = [];
   console.log("Getting events");
+  console.log(base);
   await base("Events")
     .select({
       fields: [
