@@ -52,7 +52,9 @@ export function SessionModal(props: {
     <Modal open={open} setOpen={close} hideClose={!!user}>
       {sessionInfoDisplay}
       {user && !hosting && (
-        <RSVPButton rsvp={rsvp} rsvpd={rsvpd} hostStatus={hosting} />
+        <div className="mt-3 flex justify-end">
+          <RSVPButton rsvp={rsvp} rsvpd={rsvpd} />
+        </div>
       )}
     </Modal>
   );

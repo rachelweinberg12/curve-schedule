@@ -27,7 +27,26 @@ export function SessionText(props: {
     : false;
   return (
     <div className="px-1.5 rounded h-full min-h-10 pt-4 pb-6">
-      <h1 className="font-bold leading-tight">{session.Title}</h1>
+      <div className="flex justify-between">
+        <div className="flex gap-2">
+          <h1 className="font-bold leading-tight">{session.Title}</h1>
+          <div className="flex items-center gap-1">
+            {locations.map((loc) => (
+              <ColoredTag key={loc.Name} color={loc.Color} text={loc.Name} />
+            ))}
+          </div>
+        </div>
+        {rsvpsForEvent && !hostStatus && (
+          <RSVPButton
+            rsvp={() => {
+              if (!userRecordID) return;
+              rsvp(session.ID, !!rsvpStatus);
+              setOptimisticRSVPResponse(!rsvpStatus);
+            }}
+            rsvpd={rsvpStatus}
+          />
+        )}
+      </div>
       <div className="flex flex-col sm:flex-row justify-between mt-2 sm:items-center gap-2">
         <div className="flex gap-3 text-xs text-gray-500 items-center">
           <div className="flex gap-2">
@@ -50,24 +69,8 @@ export function SessionText(props: {
             </span>
           </div>
         </div>
-        <div className="flex items-center gap-1">
-          {locations.map((loc) => (
-            <ColoredTag key={loc.Name} color={loc.Color} text={loc.Name} />
-          ))}
-        </div>
       </div>
       <p className="text-sm whitespace-pre-line mt-2">{session.Description}</p>
-      {rsvpsForEvent && (
-        <RSVPButton
-          rsvp={() => {
-            if (!userRecordID) return;
-            rsvp(session.ID, !!rsvpStatus);
-            setOptimisticRSVPResponse(!rsvpStatus);
-          }}
-          rsvpd={rsvpStatus}
-          hostStatus={hostStatus}
-        />
-      )}
     </div>
   );
 }

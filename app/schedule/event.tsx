@@ -55,7 +55,8 @@ export function EventDisplay(props: {
                 day={day}
                 search={search}
                 locations={locationsForEvent}
-                rsvps={view === "rsvp" ? rsvps : []}
+                rsvps={rsvps}
+                filterByRSVP={view === "rsvp"}
               />
             )}
           </div>

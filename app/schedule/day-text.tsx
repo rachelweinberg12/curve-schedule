@@ -15,8 +15,9 @@ export function DayText(props: {
   day: Day;
   search: string;
   rsvps: RSVP[];
+  filterByRSVP?: boolean;
 }) {
-  const { day, locations, search, rsvps } = props;
+  const { day, locations, search, rsvps, filterByRSVP } = props;
   const searchParams = useSearchParams();
   const { user: currentUser } = useContext(UserContext);
   const locParams = searchParams?.getAll("loc");
@@ -35,7 +36,7 @@ export function DayText(props: {
   let sessions = sortSessions(includedSessions, locations);
 
   // If RSVPs are present, only show sessions that the user has RSVP'd to
-  if (rsvps.length > 0) {
+  if (filterByRSVP) {
     const rsvpSet = new Set(rsvps.map((rsvp) => rsvp.Session[0]));
     sessions = sessions.filter(
       (session) =>
@@ -53,18 +54,22 @@ export function DayText(props: {
       <div className="flex flex-col divide-y divide-gray-300">
         {sessions.length > 0 ? (
           <>
-            {sessions.map((session) => (
-              <SessionText
-                key={`${session["Title"]} + ${session["Start time"]} + ${session["End time"]}`}
-                session={session}
-                locations={locations.filter((loc) =>
-                  session["Location name"].includes(loc.Name)
-                )}
-                rsvpsForEvent={rsvps.filter(
-                  (rsvp) => rsvp.Session[0] === session.ID
-                )}
-              />
-            ))}
+            {sessions.map((session) => {
+              const rsvpsForEvent = rsvps.filter(
+                (rsvp) => rsvp.Session[0] === session.ID
+              );
+              console.log(rsvps.length, rsvpsForEvent);
+              return (
+                <SessionText
+                  key={`${session["Title"]} + ${session["Start time"]} + ${session["End time"]}`}
+                  session={session}
+                  locations={locations.filter((loc) =>
+                    session["Location name"].includes(loc.Name)
+                  )}
+                  rsvpsForEvent={rsvpsForEvent}
+                />
+              );
+            })}
           </>
         ) : (
           <p className="text-gray-500 italic text-sm w-full text-left">

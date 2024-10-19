@@ -13,28 +13,26 @@ export async function rsvp(sessionId: string, remove = false) {
   });
 }
 
-export function RSVPButton(props: {
-  rsvp: () => void;
-  rsvpd: boolean;
-  hostStatus: boolean;
-}) {
-  const { rsvp, rsvpd, hostStatus } = props;
+export function RSVPButton(props: { rsvp: () => void; rsvpd: boolean }) {
+  const { rsvp, rsvpd } = props;
   return (
-    <Switch
-      checked={rsvpd}
-      onChange={rsvp}
-      className={clsx(
-        "group relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparenttransition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-rose-400 focus:ring-offset-2",
-        rsvpd ? "bg-rose-400" : "bg-gray-200"
-      )}
-      disabled={hostStatus}
-    >
-      <span
+    <div className="flex items-center gap-1">
+      <label className="text-sm text-gray-500">RSVP</label>
+      <Switch
+        checked={rsvpd}
+        onChange={rsvp}
         className={clsx(
-          "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out",
-          rsvpd ? "translate-x-5" : "translate-x-0"
+          "group relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparenttransition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-rose-400",
+          rsvpd ? "bg-rose-400" : "bg-gray-200"
         )}
-      />
-    </Switch>
+      >
+        <span
+          className={clsx(
+            "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out",
+            rsvpd ? "translate-x-5" : "translate-x-0"
+          )}
+        />
+      </Switch>
+    </div>
   );
 }
