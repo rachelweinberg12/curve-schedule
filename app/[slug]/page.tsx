@@ -11,12 +11,15 @@ export default async function Page(props: { params: { slug: string } }) {
   if (!guest) {
     return <div>Profile not found</div>;
   }
-  const guestAccount = await getUserByEmail(guest.Email);
-  const sessionsHosting = await getSessionsByHost(guest.Name);
-  const locations = await getLocations();
-  const userRecordID = getUserRecordID();
+  const [guestAccount, sessionsHosting, locations, userRecordID, rsvps] =
+    await Promise.all([
+      getUserByEmail(guest.Email),
+      getSessionsByHost(guest.Name),
+      getLocations(),
+      getUserRecordID(),
+      getRSVPsByUser(guest.ID),
+    ]);
   const isUsersProfile = userRecordID === guest.ID;
-  const rsvps = await getRSVPsByUser(guest.ID);
   const rsvpdSessionIDs = rsvps.map((rsvp) => rsvp["Session"]);
   const rsvpdSessions = await getSessionsByIDs(rsvpdSessionIDs);
   return (
