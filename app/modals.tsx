@@ -12,6 +12,7 @@ import { BasicGuest } from "@/db/guests";
 import { useUser } from "@clerk/nextjs";
 import { CheckIcon } from "@heroicons/react/16/solid";
 import clsx from "clsx";
+import { RSVPButton } from "./rsvp-button";
 
 export function MapModal() {
   const [open, setOpen] = useState(false);
@@ -51,21 +52,7 @@ export function SessionModal(props: {
     <Modal open={open} setOpen={close} hideClose={!!user}>
       {sessionInfoDisplay}
       {user && !hosting && (
-        <div className="flex gap-2 items-center mt-3 text-sm justify-end">
-          RSVP'd
-          <button
-            type="button"
-            className={clsx(
-              "h-5 w-5 rounded-sm flex items-center justify-center",
-              rsvpd ? "text-white bg-rose-400" : "border border-gray-300"
-            )}
-            onClick={() => {
-              rsvp();
-            }}
-          >
-            {rsvpd && <CheckIcon className="h-4 w-4" />}
-          </button>
-        </div>
+        <RSVPButton rsvp={rsvp} rsvpd={rsvpd} hostStatus={hosting} />
       )}
     </Modal>
   );

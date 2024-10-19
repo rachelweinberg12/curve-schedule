@@ -11,6 +11,7 @@ import { useState } from "react";
 import { SessionModal } from "../modals";
 import { useUserRecordID } from "@/utils/hooks";
 import { PersonLink } from "../tags";
+import { rsvp } from "../rsvp-button";
 
 export function SessionBlock(props: {
   session: Session;
@@ -79,16 +80,6 @@ export function BookableSessionCard(props: {
 function BlankSessionCard(props: { numHalfHours: number }) {
   const { numHalfHours } = props;
   return <div className={`row-span-${numHalfHours} my-0.5 min-h-12`} />;
-}
-
-async function rsvp(sessionId: string, remove = false) {
-  await fetch("/api/toggle-rsvp", {
-    method: "POST",
-    body: JSON.stringify({
-      sessionId,
-      remove,
-    }),
-  });
 }
 
 export function RealSessionCard(props: {

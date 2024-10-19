@@ -1,13 +1,30 @@
+"use client";
 import { DateTime } from "luxon";
 import { Session } from "@/db/sessions";
 import { Location } from "@/db/locations";
 import { PersonLink, ColoredTag } from "../tags";
+import { RSVP } from "@/db/rsvps";
+import { useUserRecordID } from "@/utils/hooks";
+import { useState } from "react";
+import { rsvp, RSVPButton } from "../rsvp-button";
 
 export function SessionText(props: {
   session: Session;
   locations: Location[];
+  rsvpsForEvent?: RSVP[];
 }) {
-  const { session, locations } = props;
+  const { session, locations, rsvpsForEvent } = props;
+  const userRecordID = useUserRecordID();
+  const [optimisticRSVPResponse, setOptimisticRSVPResponse] = useState<
+    boolean | null
+  >(null);
+  const rsvpStatus =
+    optimisticRSVPResponse !== null
+      ? optimisticRSVPResponse
+      : !!rsvpsForEvent && rsvpsForEvent.length > 0;
+  const hostStatus = userRecordID
+    ? !!session.Hosts?.includes(userRecordID)
+    : false;
   return (
     <div className="px-1.5 rounded h-full min-h-10 pt-4 pb-6">
       <h1 className="font-bold leading-tight">{session.Title}</h1>
@@ -40,6 +57,17 @@ export function SessionText(props: {
         </div>
       </div>
       <p className="text-sm whitespace-pre-line mt-2">{session.Description}</p>
+      {rsvpsForEvent && (
+        <RSVPButton
+          rsvp={() => {
+            if (!userRecordID) return;
+            rsvp(session.ID, !!rsvpStatus);
+            setOptimisticRSVPResponse(!rsvpStatus);
+          }}
+          rsvpd={rsvpStatus}
+          hostStatus={hostStatus}
+        />
+      )}
     </div>
   );
 }

@@ -60,6 +60,9 @@ export function DayText(props: {
                 locations={locations.filter((loc) =>
                   session["Location name"].includes(loc.Name)
                 )}
+                rsvpsForEvent={rsvps.filter(
+                  (rsvp) => rsvp.Session[0] === session.ID
+                )}
               />
             ))}
           </>
