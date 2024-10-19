@@ -89,8 +89,7 @@ export function ProfilePage(props: {
       {rsvpdSessions.length > 0 && (
         <div>
           <hr className="border-gray-200 my-6" />
-
-          <h2 className="text-lg font-bold">RSVP'd Sessions</h2>
+          <h2 className="text-lg font-bold">RSVP&apos;d Sessions</h2>
           <div className="flex flex-col gap-1">
             {sortedRSVPSessions.map((session) => (
               <SessionText
