@@ -5,9 +5,5 @@ import { PeopleDisplay } from "./people-display";
 export default async function PeoplePage() {
   const users = await getUsers();
   const guests = await getGuestProfiles();
-  return (
-    <div>
-      <PeopleDisplay users={users} guests={guests} />
-    </div>
-  );
+  return <PeopleDisplay users={users} guests={guests} />;
 }

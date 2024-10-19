@@ -33,7 +33,7 @@ export function ProfilePage(props: {
   const userSlug = generateSlug(profile.Name);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div>
       <div className="flex items-start justify-between">
         <div className="flex gap-4">
           {account && (
@@ -69,7 +69,7 @@ export function ProfilePage(props: {
           </Link>
         )}
       </div>
-      <hr className="border-gray-200 my-3" />
+      <hr className="border-gray-200 my-6" />
       {sessionsHosting.length > 0 && (
         <div>
           <h2 className="text-lg font-bold">Hosted Sessions</h2>
@@ -88,6 +88,8 @@ export function ProfilePage(props: {
       )}
       {rsvpdSessions.length > 0 && (
         <div>
+          <hr className="border-gray-200 my-6" />
+
           <h2 className="text-lg font-bold">RSVP'd Sessions</h2>
           <div className="flex flex-col gap-1">
             {sortedRSVPSessions.map((session) => (
