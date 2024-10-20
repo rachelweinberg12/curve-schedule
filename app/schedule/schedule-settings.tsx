@@ -58,10 +58,10 @@ function SelectView(props: {
         <button
           key={v.name}
           className={clsx(
-            "flex gap-1 items-center rounded-md text-xs sm:text-sm py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rose-400",
+            "flex gap-1 items-center rounded-md text-xs sm:text-sm py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500",
             view === v.name
-              ? "bg-rose-400 text-white"
-              : "text-gray-400 hover:bg-gray-50 ring-1 ring-inset ring-gray-300"
+              ? "bg-orange-500 text-white"
+              : "text-gray-400 hover:bg-gray-900 ring-1 ring-inset ring-gray-500"
           )}
           onClick={() => {
             if (view === v.name) return;

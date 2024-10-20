@@ -22,7 +22,7 @@ export function RSVPButton(props: { rsvp: () => void; rsvpd: boolean }) {
         checked={rsvpd}
         onChange={rsvp}
         className={clsx(
-          "group relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparenttransition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-rose-400",
+          "group relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparenttransition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500",
           rsvpd ? "bg-rose-400" : "bg-gray-200"
         )}
       >

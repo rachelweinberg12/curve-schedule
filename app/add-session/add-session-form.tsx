@@ -179,7 +179,7 @@ export function AddSessionForm(props: {
       </div>
       <button
         type="submit"
-        className="bg-rose-400 text-white font-semibold py-2 rounded shadow disabled:bg-gray-200 disabled:text-gray-400 disabled:shadow-none hover:bg-rose-500 active:bg-rose-500 mx-auto px-12"
+        className="bg-orange-500 text-white font-semibold py-2 rounded shadow disabled:bg-gray-200 disabled:text-gray-400 disabled:shadow-none hover:bg-orange-600 mx-auto px-12"
         disabled={
           !title ||
           !startTime ||
@@ -197,7 +197,7 @@ export function AddSessionForm(props: {
   );
 }
 
-const RequiredStar = () => <span className="text-rose-500 mx-1">*</span>;
+const RequiredStar = () => <span className="text-orange-600 mx-1">*</span>;
 
 type StartTime = {
   formattedTime: string;
@@ -293,14 +293,14 @@ export function SelectHosts(props: {
         multiple
       >
         <div className="relative mt-1">
-          <Combobox.Button className="relative w-full min-h-12 h-fit rounded-md border px-4 shadow-sm transition-colors focus:outline-none border-gray-300 focus:ring-2 focus:ring-rose-400 focus:outline-0 focus:border-none bg-white py-2 pl-3 pr-10 text-left placeholder:text-gray-400">
+          <Combobox.Button className="relative w-full min-h-12 h-fit rounded-md border px-4 shadow-sm transition-colors focus:outline-none border-gray-700 focus:ring-2 focus:ring-orange-500 focus:outline-0 focus:border-none bg-gray-800 py-2 pl-3 pr-10 text-left placeholder:text-gray-400">
             <div className="flex flex-wrap gap-1 items-center">
               {hosts.length > 0 && (
                 <>
                   {hosts.map((host) => (
                     <span
                       key={host.ID}
-                      className="py-1 px-2 bg-gray-100 rounded text-nowrap text-sm flex items-center gap-1"
+                      className="py-1 px-2 bg-gray-700 rounded text-nowrap text-sm flex items-center gap-1"
                     >
                       {host.Name}
                       <button
@@ -344,8 +344,8 @@ export function SelectHosts(props: {
                       clsx(
                         "relative cursor-pointer select-none py-2 pl-10 pr-4 z-10",
                         active
-                          ? "bg-rose-100 text-rose-900"
-                          : "text-gray-900 bg-white"
+                          ? "bg-orange-900 text-orange-100"
+                          : "text-white bg-gray-800"
                       )
                     }
                     value={guest}
@@ -356,13 +356,13 @@ export function SelectHosts(props: {
                           className={clsx(
                             "block truncate",
                             selected ? "font-medium" : "font-normal",
-                            disabled ? "text-gray-400" : "text-gray-900"
+                            disabled ? "text-gray-500" : "text-white"
                           )}
                         >
                           {guest.Name}
                         </span>
                         {selected ? (
-                          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-rose-400">
+                          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-orange-500">
                             <CheckIcon className="h-5 w-5" />
                           </span>
                         ) : null}
@@ -404,11 +404,11 @@ function SelectDuration(props: {
               type="radio"
               checked={value === duration}
               onChange={() => setDuration(value)}
-              className="h-4 w-4 border-gray-300 text-rose-400 focus:ring-rose-400"
+              className="h-4 w-4 border-gray-700 text-rose-400 focus:ring-orange-500"
             />
             <label
               htmlFor={label}
-              className="ml-3 block text-sm font-medium leading-6 text-gray-900"
+              className="ml-3 block text-sm font-medium leading-6 text-white"
             >
               {label}
             </label>
@@ -437,11 +437,11 @@ function SelectDay(props: {
                 type="radio"
                 checked={d.Start === day.Start}
                 onChange={() => setDay(d)}
-                className="h-4 w-4 border-gray-300 text-rose-400 focus:ring-rose-400"
+                className="h-4 w-4 border-gray-700 text-rose-400 focus:ring-orange-500"
               />
               <label
                 htmlFor={formattedDay}
-                className="ml-3 block text-sm font-medium leading-6 text-gray-900"
+                className="ml-3 block text-sm font-medium leading-6 text-white"
               >
                 {formattedDay}
               </label>

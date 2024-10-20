@@ -68,7 +68,7 @@ export function BookableSessionCard(props: {
   return (
     <div className={`row-span-${numHalfHours} my-0.5 min-h-10`}>
       <Link
-        className="rounded font-roboto h-full w-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+        className="rounded font-roboto h-full w-full bg-gray-600 hover:bg-gray-700 flex items-center justify-center"
         href={`/add-session?location=${location.Name}&time=${timeParam}&day=${dayParam}`}
       >
         <PlusIcon className="h-4 w-4 text-gray-400" />
@@ -155,14 +155,8 @@ export function RealSessionCard(props: {
       <button
         className={clsx(
           "py-1 px-1 rounded font-roboto h-full min-h-10 cursor-pointer flex flex-col relative w-full",
-          lowerOpacity
-            ? `bg-${location.Color}-${200} border-2 border-${
-                location.Color
-              }-${400}`
-            : `bg-${location.Color}-${500} border-2 border-${
-                location.Color
-              }-${600}`,
-          !lowerOpacity && "text-white"
+          `bg-${location.Color}-700 border-2 border-${location.Color}-800`,
+          lowerOpacity && "bg-opacity-40 border-opacity-50"
         )}
         onClick={() => setSessionModalOpen(true)}
       >
@@ -189,7 +183,8 @@ export function RealSessionCard(props: {
         <div
           className={clsx(
             "absolute py-[1px] px-1 rounded-tl text-[10px] bottom-0 right-0 flex gap-0.5 items-center",
-            `bg-${location.Color}-400`
+            `bg-${location.Color}-800`,
+            lowerOpacity && "bg-opacity-50"
           )}
         >
           <UserIcon className="h-.5 w-2.5" />

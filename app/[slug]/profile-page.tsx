@@ -63,7 +63,7 @@ export function ProfilePage(props: {
         {isUsersProfile && (
           <Link
             href={`/${userSlug}/edit`}
-            className="relative inline-flex items-center justify-center rounded-md p-1.5 bg-rose-400 text-white hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rose-400"
+            className="relative inline-flex items-center justify-center rounded-md p-1.5 bg-orange-500 text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500"
           >
             <PencilIcon className="h-5 w-5 stroke-2" />
           </Link>

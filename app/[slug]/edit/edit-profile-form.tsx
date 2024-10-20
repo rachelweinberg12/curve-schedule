@@ -88,7 +88,7 @@ export default function EditProfileForm({
         )}
         <button
           type="submit"
-          className="bg-rose-400 text-white font-semibold py-2 rounded shadow hover:bg-rose-500 active:bg-rose-500 mx-auto px-12"
+          className="bg-orange-500 text-white font-semibold py-2 rounded shadow hover:bg-orange-600 mx-auto px-12"
         >
           Save Changes
         </button>

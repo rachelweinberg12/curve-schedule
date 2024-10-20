@@ -1,18 +1,9 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useContext, useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import Image from "next/image";
-import {
-  ArrowTopRightOnSquareIcon,
-  ArrowUpTrayIcon,
-  MapIcon,
-} from "@heroicons/react/24/outline";
-import { UserSelect } from "./user-select";
-import { UserContext } from "./context";
-import { BasicGuest } from "@/db/guests";
+import { ArrowUpTrayIcon, MapIcon } from "@heroicons/react/24/outline";
 import { useUser } from "@clerk/nextjs";
-import { CheckIcon } from "@heroicons/react/16/solid";
-import clsx from "clsx";
 import { RSVPButton } from "./rsvp-button";
 
 export function MapModal() {
@@ -21,7 +12,7 @@ export function MapModal() {
     <div>
       <button
         type="button"
-        className="relative inline-flex items-center justify-center rounded-md p-1.5 bg-rose-400 text-white hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rose-400"
+        className="relative inline-flex items-center justify-center rounded-md p-1.5 bg-orange-500 text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500"
         onClick={() => setOpen(true)}
       >
         <MapIcon className="h-5 w-5 stroke-2" aria-hidden="true" />
@@ -67,7 +58,7 @@ export function ExportScheduleModal() {
     <div>
       <button
         type="button"
-        className="relative inline-flex items-center justify-center rounded-md p-1.5 bg-rose-400 text-white hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rose-400"
+        className="relative inline-flex items-center justify-center rounded-md p-1.5 bg-orange-500 text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500"
         onClick={() => setOpen(true)}
       >
         <ArrowUpTrayIcon className="h-5 w-5 stroke-2" aria-hidden="true" />
@@ -148,7 +139,7 @@ export function Modal(props: {
                     <div className="mt-4">
                       <button
                         type="button"
-                        className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-rose-400 text-base font-medium text-white hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-400 sm:text-sm"
+                        className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-500 text-base font-medium text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 sm:text-sm"
                         onClick={() => setOpen(false)}
                       >
                         Close

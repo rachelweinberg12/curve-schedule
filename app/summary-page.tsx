@@ -44,10 +44,10 @@ export default async function SummaryPage(props: { events: Event[] }) {
                   <span>{event.Website}</span>
                 </a>
               </div>
-              <p className="text-gray-900 mt-2">{event.Description}</p>
+              <p className="text-white mt-2">{event.Description}</p>
               <Link
                 href={`/${event.Name.replace(" ", "-")}`}
-                className="font-semibold text-rose-400 hover:text-rose-500 flex gap-1 items-center text-sm justify-end mt-2"
+                className="font-semibold text-orange-500 hover:text-orange-600 flex gap-1 items-center text-sm justify-end mt-2"
               >
                 View schedule
                 <ArrowRightIcon className="h-4 w-4" />

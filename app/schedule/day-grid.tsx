@@ -93,7 +93,7 @@ export function DayGrid(props: {
           >
             <div
               className={clsx(
-                "grid divide-x divide-gray-100 w-full overflow-visible",
+                "grid divide-x divide-gray-500 w-full overflow-visible",
                 `grid-cols-[repeat(${numLocations},minmax(120px,2fr))]`
               )}
             >
@@ -105,7 +105,7 @@ export function DayGrid(props: {
                 >
                   <div
                     key={loc.Name}
-                    className="p-1 border-b border-gray-100 flex flex-col justify-between h-full"
+                    className="p-1 border-b border-gray-500 flex flex-col justify-between h-full"
                   >
                     <div>
                       <h3 className="font-semibold text-xs sm:text-sm">
@@ -133,7 +133,7 @@ export function DayGrid(props: {
             </div>
             <div
               className={clsx(
-                "grid divide-x divide-gray-100 relative w-full",
+                "grid divide-x divide-gray-500 relative w-full",
                 `grid-cols-[repeat(${numLocations},minmax(120px,2fr))]`
               )}
             >
@@ -174,14 +174,14 @@ function TimestampCol(props: { start: Date; end: Date }) {
   return (
     <div
       className={clsx(
-        "grid h-full min-w-14 border-r border-t border-gray-100",
+        "grid h-full min-w-14 border-r border-t border-gray-500",
         `grid-rows-[repeat(${numHalfHours},44px)]`
       )}
     >
       {Array.from({ length: numHalfHours }).map((_, i) => (
         <div
           key={i}
-          className="border-b border-gray-100 text-[10px] p-1 text-right h-[44px]"
+          className="border-b border-gray-500 text-[10px] p-1 text-right h-[44px]"
         >
           {DateTime.fromMillis(start.getTime() + i * 30 * 60 * 1000)
             .setZone("America/Los_Angeles")

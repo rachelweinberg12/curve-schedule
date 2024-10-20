@@ -8,7 +8,7 @@ export function PersonLink(props: { name: string }) {
   return (
     <Link
       href={`/${userSlug}`}
-      className="bg-gray-100 px-1.5 py-0.5 rounded-sm hover:bg-gray-200"
+      className="bg-gray-700 px-1.5 py-0.5 rounded-sm hover:bg-gray-600"
     >
       {name}
     </Link>
@@ -21,7 +21,7 @@ export function ColoredTag(props: { text: string; color: string }) {
     <div
       className={clsx(
         "flex items-center gap-2 rounded-full py-0.5 px-2 text-xs font-semibold w-fit",
-        `text-${color}-500 bg-${color}-100 border-2 border-${color}-400`
+        `text-${color}-700 bg-${color}-500 border-2 bg-opacity-10 border-${color}-700`
       )}
     >
       {text}

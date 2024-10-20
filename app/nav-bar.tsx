@@ -6,20 +6,13 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ExportScheduleModal, MapModal } from "./modals";
 import { CONSTS, NavItem } from "@/utils/constants";
-import {
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
-import { useUserSlug } from "@/utils/hooks";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function NavBar() {
   return (
     <Disclosure
       as="nav"
-      className="bg-white border-b border-gray-300 fixed w-full z-30"
+      className="bg-gray-900 border-b border-gray-700 fixed w-full z-30"
     >
       {({ open }) => (
         <>
@@ -27,7 +20,7 @@ export default function NavBar() {
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-rose-400 hover:bg-rose-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rose-400">
+                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-rose-400 hover:bg-rose-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500">
                   <span className="absolute -inset-0.5" />
                   {open ? (
                     <XMarkIcon className="block h-6 w-6 stroke-2" />
@@ -97,8 +90,8 @@ function NavBarItem(props: { item: NavItem }) {
       href={item.href}
       className={clsx(
         isCurrentPage
-          ? "bg-rose-50 text-rose-400"
-          : "text-gray-400 hover:bg-gray-100",
+          ? "bg-orange-600 text-orange-700 bg-opacity-20"
+          : "text-gray-400 hover:bg-gray-700",
         "group flex gap-1 cursor-pointer items-center rounded-md px-3 py-2 text-sm font-medium text-nowrap"
       )}
     >
@@ -117,7 +110,7 @@ function SmallNavBarItem(props: { item: NavItem }) {
       href={item.href}
       className={clsx(
         isCurrentPage
-          ? "bg-rose-50 text-rose-400"
+          ? "bg-orange-50 text-orange-500"
           : "text-gray-400 hover:bg-gray-100",
         "flex gap-2 rounded-md px-3 py-2 text-base font-medium"
       )}
@@ -131,7 +124,7 @@ const SignInOrProfile = () => (
   <>
     <SignedOut>
       <SignInButton>
-        <button className="text-sm text-nowrap relative inline-flex items-center justify-center font-medium rounded-md px-3 py-2 bg-rose-400 text-white hover:bg-rose-500 focus:outline-none">
+        <button className="text-sm text-nowrap relative inline-flex items-center justify-center font-medium rounded-md px-3 py-2 bg-orange-500 text-white hover:bg-orange-600 focus:outline-none">
           Sign in
         </button>
       </SignInButton>

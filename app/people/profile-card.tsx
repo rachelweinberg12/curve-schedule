@@ -15,7 +15,7 @@ export function ProfileCard(props: {
   return (
     <div
       key={profile.ID}
-      className="flex flex-col gap-3 divide-y divide-gray-300 p-6 rounded-lg shadow"
+      className="flex flex-col gap-3 divide-y divide-gray-300 p-6 rounded-lg shadow bg-gray-900"
     >
       <Link
         href={`/${userSlug}`}
@@ -23,7 +23,7 @@ export function ProfileCard(props: {
       >
         <div className="truncate">
           <div className="flex items-center space-x-3">
-            <h3 className="truncate text-sm font-medium text-gray-900">
+            <h3 className="truncate text-sm font-medium text-white">
               {profile.Name}
             </h3>
             {profile.Type !== "Attendee" && profile.Type !== "Facilitator" && (

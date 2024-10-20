@@ -92,14 +92,14 @@ export function Tooltip(props: {
         role="tooltip"
         ref={refs.setFloating}
         style={{ position: strategy, top: y ?? 0, left: x ?? 0 }}
-        className="z-20 max-w-lg w-72 whitespace-normal rounded bg-white px-2 py-1 border shadow-md border-gray-100"
+        className="z-20 max-w-lg w-72 whitespace-normal rounded bg-gray-900 px-2 py-1 border shadow-md border-gray-700"
         suppressHydrationWarning={suppressHydrationWarning}
         {...getFloatingProps()}
       >
         {content}
         <div
           ref={arrowRef}
-          className="absolute h-2 w-2 rotate-45 bg-white"
+          className="absolute h-2 w-2 rotate-45 bg-gray-900"
           style={{
             top: arrowY != null ? arrowY : "",
             left: arrowX != null ? arrowX : "",

@@ -19,9 +19,9 @@ export function MyListbox(props: {
   return (
     <Listbox value={currValue} onChange={setCurrValue}>
       <div className="relative mt-1">
-        <Listbox.Button className="h-12 rounded-md border px-4 shadow-sm transition-colors invalid:border-red-500 invalid:text-red-900 focus:outline-none relative w-full cursor-pointer border-gray-300 focus:ring-2 focus:ring-rose-400 focus:outline-0 focus:border-none bg-white py-2 pl-3 pr-10 text-left">
+        <Listbox.Button className="h-12 rounded-md border px-4 shadow-sm transition-colors invalid:border-red-500 invalid:text-red-900 focus:outline-none relative w-full cursor-pointer border-gray-700 focus:ring-2 focus:ring-orange-500 focus:outline-0 focus:border-none bg-white py-2 pl-3 pr-10 text-left">
           {currValue ? (
-            <span className="text-gray-900 truncate flex items-center justify-between">
+            <span className="text-white truncate flex items-center justify-between">
               {currValue}
               {currOption?.helperText && (
                 <span className="inline text-xs text-gray-400 truncate">
@@ -52,8 +52,8 @@ export function MyListbox(props: {
                     clsx(
                       "relative cursor-pointer select-none py-2 pl-10 pr-4 z-10 disabled:text-gray-400 disabled:cursor-default",
                       active
-                        ? "bg-rose-100 text-rose-900"
-                        : "text-gray-900 bg-white"
+                        ? "bg-orange-900 text-orange-100"
+                        : "text-white bg-gray-800"
                     )
                   }
                   disabled={!option.available}
@@ -64,7 +64,7 @@ export function MyListbox(props: {
                         className={clsx(
                           "flex items-end justify-between truncate",
                           selected ? "font-medium" : "font-normal",
-                          disabled ? "text-gray-400" : "text-gray-900"
+                          disabled ? "text-gray-400" : "text-white"
                         )}
                       >
                         {option.value}
