@@ -19,9 +19,9 @@ export function ProfileCard(props: {
     >
       <Link
         href={`/${userSlug}`}
-        className="flex w-full items-center justify-between"
+        className="flex w-full items-start justify-between"
       >
-        <div className="flex-1 truncate">
+        <div className="truncate">
           <div className="flex items-center space-x-3">
             <h3 className="truncate text-sm font-medium text-gray-900">
               {profile.Name}
