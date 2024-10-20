@@ -16,8 +16,6 @@ import {
 import { useUserSlug } from "@/utils/hooks";
 
 export default function NavBar() {
-  const userSlug = useUserSlug();
-  const profileLink = `/${userSlug}`;
   return (
     <Disclosure
       as="nav"
@@ -63,7 +61,7 @@ export default function NavBar() {
                       ))}
                       <SignedIn>
                         <NavBarItem
-                          item={{ name: "Profile", href: profileLink }}
+                          item={{ name: "My profile", href: "/me" }}
                         />
                       </SignedIn>
                       <SignInOrProfile />
@@ -80,9 +78,7 @@ export default function NavBar() {
                 <SmallNavBarItem key={item.name} item={item} />
               ))}
               <SignedIn>
-                <SmallNavBarItem
-                  item={{ name: "Profile", href: profileLink }}
-                />
+                <SmallNavBarItem item={{ name: "My profile", href: "/me" }} />
               </SignedIn>
             </div>
           </Disclosure.Panel>
@@ -103,7 +99,7 @@ function NavBarItem(props: { item: NavItem }) {
         isCurrentPage
           ? "bg-rose-50 text-rose-400"
           : "text-gray-400 hover:bg-gray-100",
-        "group flex gap-1 cursor-pointer items-center rounded-md px-3 py-2 text-sm font-medium"
+        "group flex gap-1 cursor-pointer items-center rounded-md px-3 py-2 text-sm font-medium text-nowrap"
       )}
     >
       {item.name}

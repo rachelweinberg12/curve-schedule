@@ -1,12 +1,23 @@
 import { getGuestBySlug } from "@/db/guests";
 import { ProfilePage } from "./profile-page";
-import { getUserByEmail, getUserRecordID } from "@/db/auth";
+import { getUserByEmail, getUserRecordID, getUserSlug } from "@/db/auth";
 import { getSessionsByHost, getSessionsByIDs } from "@/db/sessions";
 import { getLocations } from "@/db/locations";
 import { getRSVPsByUser } from "@/db/rsvps";
+import { redirect } from "next/navigation";
 
 export default async function Page(props: { params: { slug: string } }) {
   const { slug } = props.params;
+
+  // If the slug is "me", redirect to the user's actual slug
+  if (slug === "me") {
+    const userSlug = getUserSlug();
+    if (!userSlug) {
+      return redirect("/sign-in");
+    }
+    return redirect(`/${userSlug}`);
+  }
+
   const guest = await getGuestBySlug(slug);
   if (!guest) {
     return <div>Profile not found</div>;
