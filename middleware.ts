@@ -1,12 +1,16 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { clerkSecretKey } from "@/utils/clerk-config";
 
-const isPublicRoute = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)"]);
+const isPrivateRout = createRouteMatcher(["/add-session-form(.*)"]);
 
-export default clerkMiddleware((auth, request) => {
-  if (!isPublicRoute(request)) {
-    auth().protect();
-  }
-});
+export default clerkMiddleware(
+  (auth, request) => {
+    if (isPrivateRout(request)) {
+      auth().protect();
+    }
+  },
+  { secretKey: clerkSecretKey }
+);
 
 export const config = {
   matcher: [

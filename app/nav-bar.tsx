@@ -133,7 +133,9 @@ function SmallNavBarItem(props: { item: NavItem }) {
 
 const SignInOrProfile = () => (
   <>
+    <p>outside of SignedOut</p>
     <SignedOut>
+      <p>in SignedOut</p>
       {/* Maybe add back */}
       {/* <SignUpButton>
         <button className="text-sm text-nowrap relative inline-flex items-center justify-center font-medium rounded-md px-3 py-2 text-gray-400 hover:bg-gray-100 focus:outline-none">
@@ -141,6 +143,7 @@ const SignInOrProfile = () => (
         </button>
       </SignUpButton> */}
       <SignInButton>
+        <p>in SignInButton</p>
         <button className="text-sm text-nowrap relative inline-flex items-center justify-center font-medium rounded-md px-3 py-2 bg-rose-400 text-white hover:bg-rose-500 focus:outline-none">
           Sign in
         </button>

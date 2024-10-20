@@ -1,6 +1,5 @@
 import { EventDisplay } from "./event";
 import { Suspense } from "react";
-import { cookies } from "next/headers";
 import { getDaysByEvent } from "@/db/days";
 import { getSessionsByEvent } from "@/db/sessions";
 import { getLocations } from "@/db/locations";

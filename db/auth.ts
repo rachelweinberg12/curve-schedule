@@ -1,4 +1,4 @@
-import { auth, clerkClient, EmailAddress } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
 export type SimpleUser = {
   id: string;

@@ -6,6 +6,7 @@ import { Context } from "./context";
 import clsx from "clsx";
 import { CONSTS } from "@/utils/constants";
 import { ClerkProvider } from "@clerk/nextjs";
+import { clerkPublishableKey } from "@/utils/clerk-config";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -33,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider publishableKey={clerkPublishableKey}>
       <html lang="en" className={fontVars}>
         <body className="font-monteserrat">
           <Context>
