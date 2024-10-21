@@ -48,7 +48,7 @@ export function SessionText(props: {
         )}
       </div>
       <div className="flex flex-col sm:flex-row justify-between mt-2 sm:items-center gap-2">
-        <div className="flex gap-3 text-xs text-gray-500 items-center">
+        <div className="flex gap-3 text-xs text-gray-400 items-center">
           <div className="flex gap-2">
             {session.Hosts?.map((host, idx) => {
               return session["Host name"] ? (

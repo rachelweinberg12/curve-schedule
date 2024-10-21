@@ -72,7 +72,7 @@ export function DayText(props: {
             })}
           </>
         ) : (
-          <p className="text-gray-500 italic text-sm w-full text-left">
+          <p className="text-gray-400 italic text-sm w-full text-left">
             No sessions
           </p>
         )}

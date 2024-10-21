@@ -56,7 +56,7 @@ export function ProfilePage(props: {
                   />
                 )}
             </div>
-            <p className="text-gray-600 mb-3">{profile.Title}</p>
+            <p className="text-gray-400 mb-3">{profile.Title}</p>
             <SocialLinks profile={profile} />
           </div>
         </div>
@@ -69,7 +69,7 @@ export function ProfilePage(props: {
           </Link>
         )}
       </div>
-      <hr className="border-gray-200 my-6" />
+      <hr className="border-gray-700 my-6" />
       {sessionsHosting.length > 0 && (
         <div>
           <h2 className="text-lg font-bold">Hosted Sessions</h2>
@@ -88,7 +88,7 @@ export function ProfilePage(props: {
       )}
       {rsvpdSessions.length > 0 && (
         <div>
-          <hr className="border-gray-200 my-6" />
+          <hr className="border-gray-700 my-6" />
           <h2 className="text-lg font-bold">RSVP&apos;d Sessions</h2>
           <div className="flex flex-col gap-1">
             {sortedRSVPSessions.map((session) => (
