@@ -11,6 +11,7 @@ import Link from "next/link";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { ColoredTag, TypeTagColor } from "../tags";
 import { generateSlug } from "@/utils/utils";
+import { Markdown } from "../markdown";
 
 export function ProfilePage(props: {
   profile: GuestProfile;
@@ -78,9 +79,10 @@ export function ProfilePage(props: {
           {["Bio", "Exp topics", "Curious topics", "Goals"].map((field) => (
             <div key={field} className="my-2">
               <h2 className="font-bold">{field}</h2>
-              <span className="pl-2">
-                {profile[field as keyof GuestProfile]}
-              </span>
+              <Markdown
+                className="pl-2"
+                text={profile[field as keyof GuestProfile]?.toString()}
+              />
             </div>
           ))}
         </div>
