@@ -19,7 +19,7 @@ export function MyListbox(props: {
   return (
     <Listbox value={currValue} onChange={setCurrValue}>
       <div className="relative mt-1">
-        <Listbox.Button className="h-12 rounded-md border px-4 shadow-sm transition-colors invalid:border-red-500 invalid:text-red-900 focus:outline-none relative w-full cursor-pointer border-gray-700 focus:ring-2 focus:ring-orange-500 focus:outline-0 focus:border-none bg-white py-2 pl-3 pr-10 text-left">
+        <Listbox.Button className="h-12 rounded-md border px-4 shadow-sm transition-colors invalid:border-red-500 invalid:text-red-900 focus:outline-none relative border-gray-500 w-full cursor-pointer focus:ring-2 focus:ring-orange-500 focus:outline-0 focus:border-none bg-gray-800 py-2 pl-3 pr-10 text-left">
           {currValue ? (
             <span className="text-white truncate flex items-center justify-between">
               {currValue}
@@ -42,7 +42,7 @@ export function MyListbox(props: {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Listbox.Options className="absolute mt-1 max-h-60 w-72 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+          <Listbox.Options className="absolute mt-1 max-h-60 w-72 overflow-auto rounded-md bg-gray-800 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800">
             {options.map((option) => {
               return (
                 <Listbox.Option
@@ -75,7 +75,7 @@ export function MyListbox(props: {
                         )}
                       </span>
                       {selected ? (
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-rose-400">
+                        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-orange-500">
                           <CheckIcon className="h-5 w-5" />
                         </span>
                       ) : null}

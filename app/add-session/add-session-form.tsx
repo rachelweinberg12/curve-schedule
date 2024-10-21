@@ -179,7 +179,7 @@ export function AddSessionForm(props: {
       </div>
       <button
         type="submit"
-        className="bg-orange-500 text-white font-semibold py-2 rounded shadow disabled:bg-gray-200 disabled:text-gray-400 disabled:shadow-none hover:bg-orange-600 mx-auto px-12"
+        className="bg-orange-500 text-white font-semibold py-2 rounded shadow disabled:bg-gray-700 disabled:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none hover:bg-orange-600 mx-auto px-12"
         disabled={
           !title ||
           !startTime ||
@@ -293,7 +293,7 @@ export function SelectHosts(props: {
         multiple
       >
         <div className="relative mt-1">
-          <Combobox.Button className="relative w-full min-h-12 h-fit rounded-md border px-4 shadow-sm transition-colors focus:outline-none border-gray-700 focus:ring-2 focus:ring-orange-500 focus:outline-0 focus:border-none bg-gray-800 py-2 pl-3 pr-10 text-left placeholder:text-gray-400">
+          <Combobox.Button className="relative w-full min-h-12 h-fit rounded-md border px-4 shadow-sm transition-colors focus:outline-none border-gray-500 focus:ring-2 focus:ring-orange-500 focus:outline-0 focus:border-none bg-gray-800 py-2 pl-3 pr-10 text-left placeholder:text-gray-400">
             <div className="flex flex-wrap gap-1 items-center">
               {hosts.length > 0 && (
                 <>
@@ -317,7 +317,7 @@ export function SelectHosts(props: {
               <Combobox.Input
                 onChange={(event) => setQuery(event.target.value)}
                 value={query}
-                className="border-none focus:ring-0 px-0 py-1 text-sm focus:w-fit w-0 placeholder:text-gray-400"
+                className="border-none focus:ring-0 px-0 py-1 text-sm focus:w-fit w-0 placeholder:text-gray-400 bg-gray-800"
               />
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -331,7 +331,7 @@ export function SelectHosts(props: {
             leaveTo="opacity-0"
             afterLeave={() => setQuery("")}
           >
-            <Combobox.Options className="absolute mt-1 max-h-60 z-10 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+            <Combobox.Options className="absolute mt-1 max-h-60 z-10 w-full overflow-auto rounded-md bg-gray-800 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800">
               {filteredGuests.length === 0 && query !== "" ? (
                 <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                   Nothing found.
@@ -404,7 +404,7 @@ function SelectDuration(props: {
               type="radio"
               checked={value === duration}
               onChange={() => setDuration(value)}
-              className="h-4 w-4 border-gray-700 text-rose-400 focus:ring-orange-500"
+              className="h-4 w-4 border-gray-700 text-orange-500 focus:ring-orange-500"
             />
             <label
               htmlFor={label}
@@ -437,7 +437,7 @@ function SelectDay(props: {
                 type="radio"
                 checked={d.Start === day.Start}
                 onChange={() => setDay(d)}
-                className="h-4 w-4 border-gray-700 text-rose-400 focus:ring-orange-500"
+                className="h-4 w-4 border-gray-700 text-orange-500 focus:ring-orange-500"
               />
               <label
                 htmlFor={formattedDay}

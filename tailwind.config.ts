@@ -48,6 +48,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [require("@tailwindcss/forms"), require("tailwind-scrollbar")],
 };
 export default config;
