@@ -23,6 +23,10 @@ export type GuestProfile = {
   "Personal website": string;
   Sessions: string[];
   RSVPs: string[];
+  "Exp topics"?: string;
+  "Curious topics"?: string;
+  Goals?: string;
+  "Private notes"?: string;
 };
 
 export type GuestProfileAndAccount = {

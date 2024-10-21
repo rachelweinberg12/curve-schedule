@@ -22,6 +22,9 @@ export async function POST(req: Request) {
           LinkedIn: updatedProfile.LinkedIn,
           Github: updatedProfile.Github,
           Discord: updatedProfile.Discord,
+          "Exp topics": updatedProfile["Exp topics"],
+          "Curious topics": updatedProfile["Curious topics"],
+          Goals: updatedProfile.Goals,
         },
       },
     ]);
@@ -29,6 +32,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error updating profile:", error);
-    return NextResponse.json({ error: "Failed to update profile" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to update profile" },
+      { status: 500 }
+    );
   }
 }
