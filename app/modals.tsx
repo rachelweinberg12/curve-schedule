@@ -71,19 +71,19 @@ export function ExportScheduleModal() {
         <div className="flex flex-col gap-4 mt-3 pl-4">
           <a
             href="https://calendar.google.com/calendar/u/0?cid=fo6ng9e5sji2mli6eisk5lctpk9eb8da@import.calendar.google.com"
-            className="text-rose-400 hover:underline"
+            className="text-orange-500 hover:underline"
           >
             Google Calendar link
           </a>
           <a
             href="https://calendar.google.com/calendar/ical/fo6ng9e5sji2mli6eisk5lctpk9eb8da%40import.calendar.google.com/public/basic.ics"
-            className="text-rose-400 hover:underline"
+            className="text-orange-500 hover:underline"
           >
             iCal link
           </a>
           <a
             href="https://calendar.google.com/calendar/embed?src=fo6ng9e5sji2mli6eisk5lctpk9eb8da%40import.calendar.google.com&ctz=America%2FLos_Angeles"
-            className="text-rose-400 hover:underline"
+            className="text-orange-500 hover:underline"
           >
             Public generic link
           </a>
@@ -102,7 +102,7 @@ export function Modal(props: {
   const { open, setOpen, children, hideClose } = props;
   const fakeRef = useRef(null);
   return (
-    <div>
+    <div className="bg-gray-800">
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"
@@ -133,7 +133,7 @@ export function Modal(props: {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <Dialog.Panel className="relative mb-10 transform overflow-visible rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+                <Dialog.Panel className="relative mb-10 transform overflow-visible rounded-lg bg-gray-800 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
                   {children}
                   {!hideClose && (
                     <div className="mt-4">
