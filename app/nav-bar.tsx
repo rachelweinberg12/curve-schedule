@@ -12,7 +12,7 @@ export default function NavBar() {
   return (
     <Disclosure
       as="nav"
-      className="bg-gray-900 border-b border-gray-700 fixed w-full z-30"
+      className="bg-gray-800 border-b border-gray-700 fixed w-full z-30"
     >
       {({ open }) => (
         <>
@@ -20,7 +20,7 @@ export default function NavBar() {
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-rose-400 hover:bg-rose-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500">
+                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none">
                   <span className="absolute -inset-0.5" />
                   {open ? (
                     <XMarkIcon className="block h-6 w-6 stroke-2" />
@@ -90,8 +90,8 @@ function NavBarItem(props: { item: NavItem }) {
       href={item.href}
       className={clsx(
         isCurrentPage
-          ? "bg-orange-600 text-orange-700 bg-opacity-20"
-          : "text-gray-400 hover:bg-gray-700",
+          ? "bg-gray-900 text-white"
+          : "text-gray-300 hover:bg-gray-700 hover:text-white",
         "group flex gap-1 cursor-pointer items-center rounded-md px-3 py-2 text-sm font-medium text-nowrap"
       )}
     >
@@ -110,8 +110,8 @@ function SmallNavBarItem(props: { item: NavItem }) {
       href={item.href}
       className={clsx(
         isCurrentPage
-          ? "bg-orange-50 text-orange-500"
-          : "text-gray-400 hover:bg-gray-100",
+          ? "bg-gray-900 text-white"
+          : "text-gray-300 hover:bg-gray-700 hover:text-white",
         "flex gap-2 rounded-md px-3 py-2 text-base font-medium"
       )}
     >
