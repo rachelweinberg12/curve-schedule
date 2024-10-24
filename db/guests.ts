@@ -26,6 +26,7 @@ export type GuestProfile = {
   "Exp topics": string;
   "Curious topics": string;
   "Private notes": string;
+  "Shirt size": "XS" | "S" | "M" | "L" | "XL" | "2XL" | "3XXL" | "";
 };
 
 export type GuestProfileAndAccount = {

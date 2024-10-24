@@ -24,6 +24,8 @@ export async function POST(req: Request) {
           Discord: updatedProfile.Discord,
           "Exp topics": updatedProfile["Exp topics"],
           "Curious topics": updatedProfile["Curious topics"],
+          "Shirt size": updatedProfile["Shirt size"],
+          "Private notes": updatedProfile["Private notes"],
         },
       },
     ]);

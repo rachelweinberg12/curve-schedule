@@ -5,6 +5,8 @@ import { GuestProfile } from "@/db/guests";
 import { Input, Textarea } from "@/app/input";
 import { generateSlug } from "@/utils/utils";
 
+const shirtSizes = ["XS", "S", "M", "L", "XL", "2XL", "3XL"];
+
 export default function EditProfileForm({
   profile,
 }: {
@@ -112,6 +114,42 @@ export default function EditProfileForm({
             </div>
           )
         )}
+        <div className="flex flex-col gap-1">
+          <label htmlFor="private-notes" className="font-medium">
+            Private Notes
+          </label>
+          <Textarea
+            id="private-notes"
+            name="Private notes"
+            rows={4}
+            value={editedProfile["Private notes"]}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="font-medium">Shirt Size</label>
+          <div className="mt-2 space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
+            {shirtSizes.map((size) => (
+              <div key={size} className="flex items-center">
+                <input
+                  id={`shirt-size-${size}`}
+                  name="Shirt size"
+                  type="radio"
+                  value={size}
+                  checked={editedProfile["Shirt size"] === size}
+                  onChange={handleChange}
+                  className="h-4 w-4 border-gray-300 text-orange-600 focus:ring-orange-500"
+                />
+                <label
+                  htmlFor={`shirt-size-${size}`}
+                  className="ml-3 block text-sm font-medium text-gray-700"
+                >
+                  {size}
+                </label>
+              </div>
+            ))}
+          </div>
+        </div>
         <button
           type="submit"
           className="bg-orange-500 text-white font-semibold py-2 rounded shadow hover:bg-orange-600 mx-auto px-12"
