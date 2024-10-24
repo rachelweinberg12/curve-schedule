@@ -96,18 +96,6 @@ export default function EditProfileForm({
             rows={4}
           />
         </div>
-        <div className="flex flex-col gap-1">
-          <label htmlFor="Goals" className="font-medium">
-            What are some goals you have for the event?
-          </label>
-          <Textarea
-            id="Goals"
-            name="Goals"
-            value={editedProfile.Goals}
-            onChange={handleChange}
-            rows={4}
-          />
-        </div>
         {["X", "Personal website", "LinkedIn", "Github", "Discord"].map(
           (field) => (
             <div key={field} className="flex flex-col gap-1">

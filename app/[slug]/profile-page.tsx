@@ -70,13 +70,10 @@ export function ProfilePage(props: {
           </Link>
         )}
       </div>
-      {(profile.Bio ||
-        profile["Exp topics"] ||
-        profile["Curious topics"] ||
-        profile.Goals) && (
+      {(profile.Bio || profile["Exp topics"] || profile["Curious topics"]) && (
         <div>
           <hr className="border-gray-700 my-6" />
-          {["Bio", "Exp topics", "Curious topics", "Goals"].map((field) => (
+          {["Bio", "Exp topics", "Curious topics"].map((field) => (
             <div key={field} className="my-2">
               <h2 className="font-bold">{field}</h2>
               <Markdown

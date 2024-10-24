@@ -23,10 +23,9 @@ export type GuestProfile = {
   "Personal website": string;
   Sessions: string[];
   RSVPs: string[];
-  "Exp topics"?: string;
-  "Curious topics"?: string;
-  Goals?: string;
-  "Private notes"?: string;
+  "Exp topics": string;
+  "Curious topics": string;
+  "Private notes": string;
 };
 
 export type GuestProfileAndAccount = {
@@ -95,6 +94,9 @@ export async function getGuestProfiles() {
         "Personal website",
         "Sessions",
         "RSVPs",
+        "Exp topics",
+        "Curious topics",
+        "Private notes",
       ],
     })
     .eachPage(function page(records: any, fetchNextPage: any) {
