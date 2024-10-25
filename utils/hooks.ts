@@ -36,3 +36,41 @@ export function useUserSlug() {
   const userSlug = useUserReturn.user?.publicMetadata.slug;
   return userSlug as string | undefined;
 }
+
+const isServer = typeof window === "undefined";
+export const useLocalStorage = <type>(initialValue: type, key?: string) => {
+  const [state, setState] = useState<type>(initialValue);
+
+  const initialize = () => {
+    try {
+      const initialValueString = JSON.stringify(initialValue);
+      const value = key ? window.localStorage.getItem(key) : initialValueString;
+      return value ? JSON.parse(value) : initialValue;
+    } catch (error) {
+      console.log(error);
+      return initialValue;
+    }
+  };
+
+  useEffect(() => {
+    if (!isServer) {
+      setValue(initialize());
+    }
+  }, []);
+
+  const setValue = (value: type) => {
+    try {
+      setState(value);
+      if (typeof window !== "undefined" && key) {
+        window.localStorage.setItem(key, JSON.stringify(value));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  return { value: state, setValue };
+};
+
+export function clearLocalStorageItem(key: string) {
+  window.localStorage.removeItem(key);
+}

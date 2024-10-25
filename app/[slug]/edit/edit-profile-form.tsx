@@ -6,6 +6,7 @@ import { Input, Textarea } from "@/app/input";
 import { generateSlug } from "@/utils/utils";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import { useLocalStorage } from "@/utils/hooks";
 
 const shirtSizes = ["XS", "S", "M", "L", "XL", "2XL", "3XL"];
 
@@ -14,7 +15,10 @@ export function EditProfileForm(props: {
   imageUrl?: string;
 }) {
   const { profile, imageUrl } = props;
-  const [editedProfile, setEditedProfile] = useState(profile);
+  const { value: editedProfile, setValue: setEditedProfile } = useLocalStorage(
+    profile,
+    "editedProfile"
+  );
   const [updatedImage, setUpdatedImage] = useState<File | null>(null);
   const router = useRouter();
 
