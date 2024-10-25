@@ -185,11 +185,11 @@ export function EditProfileForm(props: {
             ))}
           </div>
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col">
           <label htmlFor="private-notes" className="font-medium">
             Anything else the organizers should know?
           </label>
-          <span className="text-sm text-gray-500">
+          <span className="text-sm text-gray-400 mb-1">
             Please let us know here if you have any dietary restrictions, other
             allergies, or accessibility needs we should know about.
           </span>
