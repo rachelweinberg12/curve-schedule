@@ -41,6 +41,7 @@ export function EditProfileForm(props: {
       if (response.ok) {
         const userSlug = generateSlug(editedProfile.Name);
         router.push(`/${userSlug}`);
+        router.refresh();
       } else {
         console.error("Failed to update profile");
       }
