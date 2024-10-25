@@ -156,7 +156,7 @@ export function RealSessionCard(props: {
         className={clsx(
           "py-1 px-1 rounded font-roboto h-full min-h-10 cursor-pointer flex flex-col relative w-full",
           `bg-${location.Color}-700 border-2 border-${location.Color}-800`,
-          lowerOpacity && "bg-opacity-40 border-opacity-50"
+          lowerOpacity && "bg-opacity-40"
         )}
         onClick={() => setSessionModalOpen(true)}
       >
