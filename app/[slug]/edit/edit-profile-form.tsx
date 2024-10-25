@@ -111,8 +111,8 @@ export function EditProfileForm(props: {
         </div>
         <div className="flex flex-col gap-1">
           <label htmlFor="Exp topics" className="font-medium">
-            What topics are you&apos;re well-versed in and opinionated on, which
-            you&apos;d like to discuss?
+            What topics are you well-versed in and opinionated on? (which
+            you&apos;d like to discuss)
           </label>
           <Textarea
             id="Exp topics"
@@ -125,8 +125,8 @@ export function EditProfileForm(props: {
         </div>
         <div className="flex flex-col gap-1">
           <label htmlFor="Curious topics" className="font-medium">
-            What topics are you confused, uncertain, or curious about, which
-            you&apos;d like to discuss?
+            What topics are you confused, uncertain, or curious about? (which
+            you&apos;d like to discuss)
           </label>
           <Textarea
             id="Curious topics"

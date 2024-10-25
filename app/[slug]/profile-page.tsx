@@ -82,8 +82,7 @@ export function ProfilePage(props: {
           {profile["Exp topics"] && (
             <div className="my-2">
               <h2 className="font-bold">
-                What topics are you&apos;re well-versed in and opinionated on,
-                which you&apos;d like to discuss?
+                What topics are you well-versed in and opinionated on?
               </h2>
               <Markdown className="pl-2" text={profile["Exp topics"]} />
             </div>
@@ -91,8 +90,7 @@ export function ProfilePage(props: {
           {profile["Curious topics"] && (
             <div className="my-2">
               <h2 className="font-bold">
-                What topics are you confused, uncertain, or curious about, which
-                you&apos;d like to discuss?
+                What topics are you confused, uncertain, or curious about?
               </h2>
               <Markdown className="pl-2" text={profile["Curious topics"]} />
             </div>
