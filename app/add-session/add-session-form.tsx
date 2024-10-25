@@ -117,6 +117,7 @@ export function AddSessionForm(props: {
         <Textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          richText
         />
       </div>
       <div className="flex flex-col gap-1">

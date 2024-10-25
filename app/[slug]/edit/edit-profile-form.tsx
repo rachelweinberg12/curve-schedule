@@ -105,6 +105,7 @@ export function EditProfileForm(props: {
             value={editedProfile.Bio}
             onChange={handleChange}
             rows={4}
+            richText
           />
         </div>
         <div className="flex flex-col gap-1">
@@ -118,6 +119,7 @@ export function EditProfileForm(props: {
             value={editedProfile["Exp topics"]}
             onChange={handleChange}
             rows={4}
+            richText
           />
         </div>
         <div className="flex flex-col gap-1">
@@ -131,6 +133,7 @@ export function EditProfileForm(props: {
             value={editedProfile["Curious topics"]}
             onChange={handleChange}
             rows={4}
+            richText
           />
         </div>
         <hr className="border-gray-700 my-3" />
