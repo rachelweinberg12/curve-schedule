@@ -22,7 +22,7 @@ export function LocationCol(props: {
   );
   const numHalfHours = getNumHalfHours(new Date(day.Start), new Date(day.End));
   return (
-    <div className={"px-0.5"}>
+    <div className="px-0.5">
       <div
         className={clsx(
           "grid h-full",

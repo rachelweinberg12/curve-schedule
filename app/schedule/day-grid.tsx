@@ -88,7 +88,7 @@ export function DayGrid(props: {
         <div className="flex items-end relative w-full overflow-visible">
           <TimestampCol start={start} end={end} />
           <div
-            className="overflow-x-auto overflow-y-clip flex-shrink scrollbar-none"
+            className="overflow-x-auto overflow-y-clip flex-shrink scrollbar-none w-full"
             ref={scrollableDivRef}
           >
             <div
