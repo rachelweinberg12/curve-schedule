@@ -33,21 +33,12 @@ export function MapModal() {
 export function SessionModal(props: {
   open: boolean;
   close: () => void;
-  rsvp: () => void;
   sessionInfoDisplay?: React.ReactNode;
-  rsvpd: boolean;
-  hosting: boolean;
 }) {
-  const { open, close, rsvp, sessionInfoDisplay, rsvpd, hosting } = props;
-  const { user } = useUser();
+  const { open, close, sessionInfoDisplay } = props;
   return (
-    <Modal open={open} setOpen={close} hideClose={!!user}>
+    <Modal open={open} setOpen={close} hideClose>
       {sessionInfoDisplay}
-      {user && !hosting && (
-        <div className="mt-3 flex justify-end">
-          <RSVPButton rsvp={rsvp} rsvpd={rsvpd} />
-        </div>
-      )}
     </Modal>
   );
 }

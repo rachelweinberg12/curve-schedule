@@ -10,10 +10,11 @@ import clsx from "clsx";
 export function LocationCol(props: {
   sessions: Session[];
   location: Location;
+  allLocations: Location[];
   day: Day;
   rsvps: RSVP[];
 }) {
-  const { sessions, location, day, rsvps } = props;
+  const { sessions, location, allLocations, day, rsvps } = props;
   const sessionsWithBlanks = insertBlankSessions(
     sessions,
     new Date(day.Start),
@@ -38,6 +39,7 @@ export function LocationCol(props: {
               key={session["Start time"]}
               session={session}
               location={location}
+              allLocations={allLocations}
               rsvpsForEvent={filteredRSVPs}
             />
           );

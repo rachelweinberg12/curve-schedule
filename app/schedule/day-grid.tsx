@@ -151,6 +151,7 @@ export function DayGrid(props: {
                     rsvps={rsvps}
                     day={day}
                     location={location}
+                    allLocations={locations}
                   />
                 );
               })}

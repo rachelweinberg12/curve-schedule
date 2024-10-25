@@ -20,7 +20,7 @@ export function ColoredTag(props: { text: string; color: string }) {
   return (
     <div
       className={clsx(
-        "flex items-center gap-2 rounded-full py-0.5 px-2 text-xs font-semibold w-fit",
+        "flex items-center gap-2 rounded-full py-0.5 px-2 text-xs font-semibold w-fit text-nowrap",
         `text-${color}-500 bg-${color}-500 border-2 bg-opacity-10 border-${color}-500`
       )}
     >

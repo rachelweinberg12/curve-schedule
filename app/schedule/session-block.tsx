@@ -12,14 +12,17 @@ import { SessionModal } from "../modals";
 import { useUserRecordID } from "@/utils/hooks";
 import { PersonLink } from "../tags";
 import { rsvp } from "../rsvp-button";
+import { Markdown } from "../markdown";
+import { SessionText } from "./session-text";
 
 export function SessionBlock(props: {
   session: Session;
   location: Location;
+  allLocations: Location[];
   day: Day;
   rsvpsForEvent: RSVP[];
 }) {
-  const { session, location, day, rsvpsForEvent } = props;
+  const { session, location, allLocations, day, rsvpsForEvent } = props;
   const startTime = new Date(session["Start time"]).getTime();
   const endTime = new Date(session["End time"]).getTime();
   const sessionLength = endTime - startTime;
@@ -45,6 +48,7 @@ export function SessionBlock(props: {
         <RealSessionCard
           session={session}
           location={location}
+          allLocations={allLocations}
           numHalfHours={numHalfHours}
           rsvpsForEvent={rsvpsForEvent}
         />
@@ -86,9 +90,11 @@ export function RealSessionCard(props: {
   session: Session;
   numHalfHours: number;
   location: Location;
+  allLocations: Location[];
   rsvpsForEvent: RSVP[];
 }) {
-  const { session, numHalfHours, location, rsvpsForEvent } = props;
+  const { session, numHalfHours, location, allLocations, rsvpsForEvent } =
+    props;
   const userRecordID = useUserRecordID();
   const [optimisticRSVPResponse, setOptimisticRSVPResponse] = useState<
     boolean | null
@@ -104,53 +110,20 @@ export function RealSessionCard(props: {
   const lowerOpacity = !rsvpStatus && !hostStatus;
   const [sessionModalOpen, setSessionModalOpen] = useState(false);
   const numRSVPs = session["Num RSVPs"] + (optimisticRSVPResponse ? 1 : 0);
-  const SessionInfoDisplay = () => (
-    <>
-      <h1 className="text-lg font-bold leading-tight">{session.Title}</h1>
-      <div className="text-xs text-gray-500 mb-2 mt-1 flex gap-2">
-        {session.Hosts?.map((host, idx) => {
-          return session["Host name"] ? (
-            <PersonLink key={host} name={session["Host name"][idx]} />
-          ) : undefined;
-        })}
-      </div>
-      <p className="text-sm whitespace-pre-line">{session.Description}</p>
-      <div className="flex justify-between mt-2 gap-4 text-xs text-gray-500">
-        <div className="flex gap-1">
-          <UserIcon className="h-4 w-4" />
-          <span>
-            {numRSVPs} RSVPs (max capacity {session.Capacity})
-          </span>
-        </div>
-        <div className="flex gap-1">
-          <ClockIcon className="h-4 w-4" />
-          <span>
-            {DateTime.fromISO(session["Start time"])
-              .setZone("America/Los_Angeles")
-              .toFormat("h:mm a")}{" "}
-            -{" "}
-            {DateTime.fromISO(session["End time"])
-              .setZone("America/Los_Angeles")
-              .toFormat("h:mm a")}
-          </span>
-        </div>
-      </div>
-    </>
-  );
   return (
     <div className={`row-span-${numHalfHours} my-0.5 overflow-hidden group`}>
       <SessionModal
         close={() => setSessionModalOpen(false)}
         open={sessionModalOpen}
-        // rsvp here should actually be rsvp
-        rsvp={() => {
-          if (!userRecordID) return;
-          rsvp(session.ID, !!rsvpStatus);
-          setOptimisticRSVPResponse(!rsvpStatus);
-        }}
-        rsvpd={rsvpStatus}
-        hosting={hostStatus}
-        sessionInfoDisplay={<SessionInfoDisplay />}
+        sessionInfoDisplay={
+          <SessionText
+            session={session}
+            locations={allLocations.filter(
+              (loc) => !!session["Location name"].includes(loc.Name)
+            )}
+            rsvpsForEvent={rsvpsForEvent}
+          />
+        }
       />
       <button
         className={clsx(

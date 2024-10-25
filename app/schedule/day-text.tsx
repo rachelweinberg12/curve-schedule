@@ -51,7 +51,7 @@ export function DayText(props: {
           .setZone("America/Los_Angeles")
           .toFormat("EEEE, MMMM d")}{" "}
       </h2>
-      <div className="flex flex-col divide-y divide-gray-300">
+      <div className="flex flex-col divide-y divide-gray-700">
         {sessions.length > 0 ? (
           <>
             {sessions.map((session) => {

@@ -17,7 +17,7 @@ export function RSVPButton(props: { rsvp: () => void; rsvpd: boolean }) {
   const { rsvp, rsvpd } = props;
   return (
     <div className="flex items-center gap-1">
-      <label className="text-sm text-gray-400">RSVP</label>
+      <label className="text-xs text-gray-400">RSVP</label>
       <Switch
         checked={rsvpd}
         onChange={rsvp}
