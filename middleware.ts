@@ -1,7 +1,7 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { clerkPublishableKey, clerkSecretKey } from "./utils/clerk-config";
 
-const isPrivateRoute = createRouteMatcher(["/add-session(.*)"]);
+const isPrivateRoute = createRouteMatcher(["/add-session(.*)", "/people(.*)"]);
 
 export default clerkMiddleware(
   (auth, request) => {
