@@ -25,6 +25,7 @@ export function Markdown(props: { className: string; text?: string }) {
         a: ({ node, ...props }) => (
           <a className="text-orange-500 underline" {...props} />
         ),
+        p: ({ node, ...props }) => <p className="my-2" {...props} />,
       }}
       className={clsx(className, "text-sm")}
     >

@@ -45,8 +45,10 @@ export default function EditProfileForm({
   return (
     <div className="flex flex-col gap-4 max-w-3xl mx-auto">
       <div>
-        <h2 className="text-2xl font-bold">Edit profile</h2>
+        <h2 className="text-3xl font-bold">Edit profile</h2>
       </div>
+      <hr className="border-gray-700 my-3" />
+      <h3 className="text-xl font-bold">General</h3>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
           <label htmlFor="Title" className="font-medium">
@@ -98,6 +100,8 @@ export default function EditProfileForm({
             rows={4}
           />
         </div>
+        <hr className="border-gray-700 my-3" />
+        <h3 className="text-xl font-bold">Socials</h3>
         {["X", "Personal website", "LinkedIn", "Github", "Discord"].map(
           (field) => (
             <div key={field} className="flex flex-col gap-1">
@@ -114,20 +118,10 @@ export default function EditProfileForm({
             </div>
           )
         )}
-        <div className="flex flex-col gap-1">
-          <label htmlFor="private-notes" className="font-medium">
-            Private Notes
-          </label>
-          <Textarea
-            id="private-notes"
-            name="Private notes"
-            rows={4}
-            value={editedProfile["Private notes"]}
-            onChange={handleChange}
-          />
-        </div>
+        <hr className="border-gray-700 my-3" />
+        <h3 className="text-xl font-bold">Private, for organizers only</h3>
         <div className="mb-4">
-          <label className="font-medium">Shirt Size</label>
+          <label className="font-medium">Shirt size</label>
           <div className="mt-2 space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
             {shirtSizes.map((size) => (
               <div key={size} className="flex items-center">
@@ -149,6 +143,22 @@ export default function EditProfileForm({
               </div>
             ))}
           </div>
+        </div>
+        <div className="flex flex-col gap-1">
+          <label htmlFor="private-notes" className="font-medium">
+            Anything else the organizers should know?
+          </label>
+          <span className="text-sm text-gray-500">
+            Please let us know here if you have any dietary restrictions, other
+            allergies, or accessibility needs we should know about.
+          </span>
+          <Textarea
+            id="private-notes"
+            name="Private notes"
+            rows={4}
+            value={editedProfile["Private notes"]}
+            onChange={handleChange}
+          />
         </div>
         <button
           type="submit"

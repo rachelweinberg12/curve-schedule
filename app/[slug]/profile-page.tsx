@@ -73,15 +73,30 @@ export function ProfilePage(props: {
       {(profile.Bio || profile["Exp topics"] || profile["Curious topics"]) && (
         <div>
           <hr className="border-gray-700 my-6" />
-          {["Bio", "Exp topics", "Curious topics"].map((field) => (
-            <div key={field} className="my-2">
-              <h2 className="font-bold">{field}</h2>
-              <Markdown
-                className="pl-2"
-                text={profile[field as keyof GuestProfile]?.toString()}
-              />
+          {profile.Bio && (
+            <div className="my-2">
+              <h2 className="font-bold">Bio</h2>
+              <Markdown className="pl-2" text={profile.Bio} />
             </div>
-          ))}
+          )}
+          {profile["Exp topics"] && (
+            <div className="my-2">
+              <h2 className="font-bold">
+                What topics are you&apos;re well-versed in and opinionated on,
+                which you&apos;d like to discuss?
+              </h2>
+              <Markdown className="pl-2" text={profile["Exp topics"]} />
+            </div>
+          )}
+          {profile["Curious topics"] && (
+            <div className="my-2">
+              <h2 className="font-bold">
+                What topics are you confused, uncertain, or curious about, which
+                you&apos;d like to discuss?
+              </h2>
+              <Markdown className="pl-2" text={profile["Curious topics"]} />
+            </div>
+          )}
         </div>
       )}
       {sessionsHosting.length > 0 && (
