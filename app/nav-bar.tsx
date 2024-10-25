@@ -1,6 +1,10 @@
 "use client";
 import { Disclosure } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  InformationCircleIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -43,6 +47,13 @@ export default function NavBar() {
                   <div className="flex gap-3 mr-14 sm:mr-0">
                     <MapModal />
                     <ExportScheduleModal />
+                    <a
+                      href="https://www.notion.so/The-Curve-Attendee-Guide-1271a4eebe968003b1d2e2365342e905?pvs=4"
+                      target="_blank"
+                      className="relative inline-flex items-center justify-center rounded-md p-1.5 bg-orange-500 text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500"
+                    >
+                      <InformationCircleIcon className="h-5 w-5 stroke-2" />
+                    </a>
                   </div>
                 </div>
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-end">
