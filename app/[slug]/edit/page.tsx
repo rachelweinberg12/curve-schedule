@@ -1,6 +1,6 @@
 import { getGuestBySlug } from "@/db/guests";
-import { getUserSlug } from "@/db/auth";
-import EditProfileForm from "./edit-profile-form";
+import { getUserSessionClaims, getUserSlug } from "@/db/auth";
+import { EditProfileForm } from "./edit-profile-form";
 import { redirect } from "next/navigation";
 
 export default async function EditProfilePage(props: {
@@ -21,12 +21,14 @@ export default async function EditProfilePage(props: {
   if (!guest) {
     return <div>Profile not found</div>;
   }
-  const userSlug = getUserSlug();
-  const isUsersProfile = userSlug === slug;
+  const userSessionClaims = getUserSessionClaims();
+  const isUsersProfile = userSessionClaims.metadata?.slug === slug;
 
   if (!isUsersProfile) {
     return <div>You are not authorized to edit this profile.</div>;
   }
 
-  return <EditProfileForm profile={guest} />;
+  return (
+    <EditProfileForm profile={guest} imageUrl={userSessionClaims.imageUrl} />
+  );
 }

@@ -4,15 +4,18 @@ import { useRouter } from "next/navigation";
 import { GuestProfile } from "@/db/guests";
 import { Input, Textarea } from "@/app/input";
 import { generateSlug } from "@/utils/utils";
+import { UserCircleIcon } from "@heroicons/react/24/solid";
+import Image from "next/image";
 
 const shirtSizes = ["XS", "S", "M", "L", "XL", "2XL", "3XL"];
 
-export default function EditProfileForm({
-  profile,
-}: {
+export function EditProfileForm(props: {
   profile: GuestProfile;
+  imageUrl?: string;
 }) {
+  const { profile, imageUrl } = props;
   const [editedProfile, setEditedProfile] = useState(profile);
+  const [updatedImage, setUpdatedImage] = useState<File | null>(null);
   const router = useRouter();
 
   const handleChange = (
@@ -24,12 +27,16 @@ export default function EditProfileForm({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const formData = new FormData();
+      if (updatedImage) {
+        formData.append("updatedImage", updatedImage);
+      }
+      Object.entries(editedProfile).forEach(([key, value]) => {
+        formData.append(key, value as string);
+      });
       const response = await fetch("/api/update-profile", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(editedProfile),
+        body: formData,
       });
       if (response.ok) {
         const userSlug = generateSlug(editedProfile.Name);
@@ -50,6 +57,32 @@ export default function EditProfileForm({
       <hr className="border-gray-700 my-3" />
       <h3 className="text-xl font-bold">General</h3>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <div className="h-24 w-24">
+          {updatedImage || imageUrl ? (
+            <Image
+              width={100}
+              height={100}
+              className="my-0 h-24 w-24 rounded-full object-cover"
+              src={
+                updatedImage
+                  ? URL.createObjectURL(updatedImage)
+                  : (imageUrl as string)
+              }
+              alt="Your profile image"
+            />
+          ) : (
+            <UserCircleIcon className="w-24 h-24" />
+          )}
+        </div>
+        <input
+          type="file"
+          id="image"
+          name="image"
+          accept="image/png, image/jpeg"
+          onChange={(event) => {
+            setUpdatedImage(event.target.files ? event.target.files[0] : null);
+          }}
+        />
         <div className="flex flex-col gap-1">
           <label htmlFor="Title" className="font-medium">
             Title

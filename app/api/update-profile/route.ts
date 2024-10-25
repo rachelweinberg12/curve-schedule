@@ -1,31 +1,43 @@
 import { NextResponse } from "next/server";
 import { base } from "@/db/db";
-import { getUserRecordID } from "@/db/auth";
+import { getUserSessionClaims } from "@/db/auth";
+import { auth, createClerkClient } from "@clerk/nextjs/server";
+import { clerkSecretKey } from "@/utils/clerk-config";
 
 export async function POST(req: Request) {
-  const userRecordID = await getUserRecordID();
-  if (!userRecordID) {
+  const { userId } = auth();
+  if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-
-  const updatedProfile = await req.json();
+  const userSessionClaims = getUserSessionClaims();
 
   try {
+    const formData = await req.formData();
+    const updatedImage = formData.get("updatedImage");
+
+    // Update Clerk profile image if a new image is provided
+    if (updatedImage) {
+      const clerkClient = createClerkClient({ secretKey: clerkSecretKey });
+      await clerkClient.users.updateUserProfileImage(userId, {
+        file: updatedImage as Blob,
+      });
+    }
+
     await base("Guests").update([
       {
-        id: userRecordID,
+        id: userSessionClaims.metadata?.record_id,
         fields: {
-          Title: updatedProfile.Title,
-          Bio: updatedProfile.Bio,
-          X: updatedProfile.X,
-          "Personal website": updatedProfile["Personal website"],
-          LinkedIn: updatedProfile.LinkedIn,
-          Github: updatedProfile.Github,
-          Discord: updatedProfile.Discord,
-          "Exp topics": updatedProfile["Exp topics"],
-          "Curious topics": updatedProfile["Curious topics"],
-          "Shirt size": updatedProfile["Shirt size"],
-          "Private notes": updatedProfile["Private notes"],
+          Title: formData.get("Title"),
+          Bio: formData.get("Bio"),
+          X: formData.get("X"),
+          "Personal website": formData.get("Personal website"),
+          LinkedIn: formData.get("LinkedIn"),
+          Github: formData.get("Github"),
+          Discord: formData.get("Discord"),
+          "Exp topics": formData.get("Exp topics"),
+          "Curious topics": formData.get("Curious topics"),
+          "Shirt size": formData.get("Shirt size"),
+          "Private notes": formData.get("Private notes"),
         },
       },
     ]);

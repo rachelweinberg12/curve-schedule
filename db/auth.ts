@@ -23,6 +23,11 @@ export async function getUserByEmail(email: string) {
 }
 
 type Metadata = undefined | { record_id: string; slug: string };
+type SessionClaims = {
+  metadata: Metadata;
+  imageUrl?: string;
+  clerkID?: string;
+};
 export function getUserRecordID() {
   const { sessionClaims } = auth();
   const metadata = sessionClaims?.metadata as Metadata;
@@ -35,6 +40,11 @@ export function getUserSlug() {
   const metadata = sessionClaims?.metadata as Metadata;
   const userSlug = metadata?.slug;
   return userSlug;
+}
+
+export function getUserSessionClaims() {
+  const { sessionClaims } = auth();
+  return sessionClaims as unknown as SessionClaims;
 }
 
 export async function getUsers() {
