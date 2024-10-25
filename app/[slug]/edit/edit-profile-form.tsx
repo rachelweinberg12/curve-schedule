@@ -7,6 +7,7 @@ import { generateSlug } from "@/utils/utils";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { useLocalStorage } from "@/utils/hooks";
+import { SparklesIcon } from "@heroicons/react/24/solid";
 
 const shirtSizes = ["XS", "S", "M", "L", "XL", "2XL", "3XL"];
 
@@ -20,12 +21,41 @@ export function EditProfileForm(props: {
     "editedProfile"
   );
   const [updatedImage, setUpdatedImage] = useState<File | null>(null);
+  const [isGeneratingBio, setIsGeneratingBio] = useState(false);
+  console.log(editedProfile.Bio);
+
   const router = useRouter();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setEditedProfile({ ...editedProfile, [e.target.name]: e.target.value });
+  };
+
+  const handleGenerateBio = async () => {
+    setIsGeneratingBio(true);
+    try {
+      const response = await fetch("/api/generate-bio", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: editedProfile.Name,
+          title: editedProfile.Title,
+        }),
+      });
+      if (response.ok) {
+        const { bio } = await response.json();
+        setEditedProfile({ ...editedProfile, Bio: bio });
+      } else {
+        console.error("Failed to generate bio");
+      }
+    } catch (error) {
+      console.error("Error generating bio:", error);
+    } finally {
+      setIsGeneratingBio(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -101,15 +131,26 @@ export function EditProfileForm(props: {
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="Bio" className="font-medium">
-            Bio
-          </label>
+          <div className="flex justify-between w-full items-end">
+            <label htmlFor="Bio" className="font-medium">
+              Bio
+            </label>
+            <button
+              type="button"
+              onClick={handleGenerateBio}
+              disabled={isGeneratingBio}
+              className="bg-orange-500 text-white text-sm font-semibold py-1 rounded shadow hover:bg-orange-600 px-3 flex items-center gap-2 disabled:opacity-50"
+            >
+              <SparklesIcon className="h-5 w-5" />
+              {isGeneratingBio ? "Generating..." : "Generate"}
+            </button>
+          </div>
           <Textarea
             id="Bio"
             name="Bio"
             value={editedProfile.Bio}
             onChange={handleChange}
-            rows={4}
+            rows={5}
             richText
           />
         </div>
@@ -123,7 +164,7 @@ export function EditProfileForm(props: {
             name="Exp topics"
             value={editedProfile["Exp topics"]}
             onChange={handleChange}
-            rows={4}
+            rows={5}
             richText
           />
         </div>
@@ -137,7 +178,7 @@ export function EditProfileForm(props: {
             name="Curious topics"
             value={editedProfile["Curious topics"]}
             onChange={handleChange}
-            rows={4}
+            rows={5}
             richText
           />
         </div>
