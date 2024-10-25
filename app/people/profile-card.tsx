@@ -15,7 +15,7 @@ export function ProfileCard(props: {
   return (
     <div
       key={profile.ID}
-      className="flex flex-col gap-3 divide-y divide-gray-300 p-6 rounded-lg shadow bg-gray-900"
+      className="flex flex-col gap-3 divide-y divide-gray-700 p-6 rounded-lg shadow bg-gray-900"
     >
       <Link
         href={`/${userSlug}`}
