@@ -43,7 +43,7 @@ export function ProfilePage(props: {
               alt={profile.Name}
               height="100"
               width="100"
-              className="rounded-full sm:h-28 sm:w-28 h-16 w-16"
+              className="rounded-full sm:h-28 sm:w-28 h-16 w-16 object-cover"
             />
           )}
           <div>
