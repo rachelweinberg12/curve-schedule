@@ -29,13 +29,12 @@ export function checkStringForSearch(search: string, string: string) {
 export function convertCamelToRegular(name: string) {
   return (
     name
-      // Add a space before each uppercase letter, unless it follows another uppercase letter (like in Bar-On).
+      // Add a space before each uppercase letter, unless it follows a character that's not a letter (like in Bar-On).
       .replace(/([a-z])([A-Z])/g, "$1 $2")
-      // Add a space before a hyphen if it's preceded by a lowercase letter and followed by an uppercase letter.
-      .replace(/([a-z])-([A-Z])/g, "$1- $2")
   );
 }
 
 export function generateSlug(name: string): string {
-  return name.replace(/\s+/g, "").replace(/[^a-zA-Z0-9]/g, "");
+  // Remove all spaces
+  return name.replaceAll(" ", "");
 }
