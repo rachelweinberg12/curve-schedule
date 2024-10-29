@@ -15,7 +15,7 @@ export function ProfileCard(props: {
   return (
     <div
       key={profile.ID}
-      className="flex flex-col gap-3 divide-y divide-gray-700 p-6 rounded-lg shadow bg-gray-900"
+      className="flex flex-col p-6 rounded-lg shadow bg-gray-900"
     >
       <Link
         href={`/${userSlug}`}
@@ -33,7 +33,9 @@ export function ProfileCard(props: {
               />
             )}
           </div>
-          <p className="mt-1 truncate text-sm text-gray-500">{profile.Title}</p>
+          <p className="mt-1 truncate text-sm text-gray-400 mr-2">
+            {profile.Title}
+          </p>
         </div>
         {account && (
           <Image

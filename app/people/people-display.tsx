@@ -34,9 +34,9 @@ export function PeopleDisplay(props: {
     return priorityB - priorityA;
   });
   return (
-    <div className="mx-auto max-w-5xl">
+    <div className="mx-auto max-w-6xl">
       <Input
-        className="max-w-5xl w-full mb-5 mx-auto"
+        className="max-w-6xl w-full mb-5 mx-auto"
         placeholder="Search people"
         value={search}
         onChange={(event) => setSearch(event.target.value)}

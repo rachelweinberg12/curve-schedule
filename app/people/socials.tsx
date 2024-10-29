@@ -113,7 +113,7 @@ function SocialLink(props: {
       <a
         href={formattedUsername}
         target="_blank"
-        className="flex items-center gap-1 text-gray-500 hover:text-gray-700"
+        className="flex items-center gap-1 text-gray-400 hover:text-gray-600"
       >
         <social.icon className={clsx(sizeClass ?? "h-5 w-5")} />
       </a>
@@ -123,7 +123,7 @@ function SocialLink(props: {
       <div className="relative inline-block">
         <button
           onClick={copyToClipboard}
-          className="flex items-center gap-1 text-gray-500 hover:text-gray-700"
+          className="flex items-center gap-1 text-gray-400 hover:text-gray-600"
         >
           <social.icon className={clsx(sizeClass ?? "h-5 w-5")} />
         </button>
