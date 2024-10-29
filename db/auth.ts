@@ -22,7 +22,7 @@ export async function getUserByEmail(email: string) {
   return simpleUser;
 }
 
-type Metadata = undefined | { record_id: string; slug: string };
+export type Metadata = { record_id: string; slug: string; volunteer?: boolean };
 type SessionClaims = {
   metadata: Metadata;
   imageUrl?: string;

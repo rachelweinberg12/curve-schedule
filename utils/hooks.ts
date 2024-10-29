@@ -1,3 +1,4 @@
+import { Metadata } from "@/db/auth";
 import { useUser } from "@clerk/nextjs";
 import { useEffect, useLayoutEffect, useState } from "react";
 
@@ -29,6 +30,12 @@ export function useUserRecordID() {
   const useUserReturn = useUser();
   const userRecordID = useUserReturn.user?.publicMetadata.record_id;
   return userRecordID as string | undefined;
+}
+
+export function useUserMetadata() {
+  const useUserReturn = useUser();
+  const userMetadata = useUserReturn.user?.publicMetadata;
+  return userMetadata as Metadata | undefined;
 }
 
 export function useUserSlug() {

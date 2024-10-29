@@ -4,7 +4,7 @@ import { Session } from "@/db/sessions";
 import { Location } from "@/db/locations";
 import { PersonLink, ColoredTag } from "../tags";
 import { RSVP } from "@/db/rsvps";
-import { useUserRecordID } from "@/utils/hooks";
+import { useUserMetadata } from "@/utils/hooks";
 import { useState } from "react";
 import { rsvp, RSVPButton } from "../rsvp-button";
 import { Markdown } from "../markdown";
@@ -15,7 +15,9 @@ export function SessionText(props: {
   rsvpsForEvent?: RSVP[];
 }) {
   const { session, locations, rsvpsForEvent } = props;
-  const userRecordID = useUserRecordID();
+  const userMetadata = useUserMetadata();
+  const { record_id: userRecordID, volunteer: isUserVolunteer } =
+    userMetadata ?? {};
   const [optimisticRSVPResponse, setOptimisticRSVPResponse] = useState<
     boolean | null
   >(null);
@@ -62,7 +64,7 @@ export function SessionText(props: {
             .setZone("America/Los_Angeles")
             .toFormat("h:mm a")}
         </span>
-        {rsvpsForEvent && !hostStatus && (
+        {rsvpsForEvent && !hostStatus && !isUserVolunteer && (
           <RSVPButton
             rsvp={() => {
               if (!userRecordID) return;
