@@ -55,7 +55,10 @@ export function SessionText(props: {
       />
       <div className="flex justify-between mt-2 gap-4 text-xs text-gray-500">
         <span>
-          {DateTime.fromISO(session["Start time"]).toFormat("EEEE")},{" "}
+          {DateTime.fromISO(session["Start time"])
+            .setZone("America/Los_Angeles")
+            .toFormat("EEEE")}
+          ,{" "}
           {DateTime.fromISO(session["Start time"])
             .setZone("America/Los_Angeles")
             .toFormat("h:mm a")}{" "}
