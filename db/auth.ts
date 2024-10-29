@@ -48,11 +48,33 @@ export function getUserSessionClaims() {
 }
 
 export async function getUsers() {
-  const userList = await clerkClient.users.getUserList();
-  const simpleUsers = userList.data.map((user) => ({
-    id: user.id,
-    imageUrl: user.imageUrl,
-    recordID: user.publicMetadata.record_id,
-  })) as SimpleUser[];
-  return simpleUsers;
+  let allUsers: SimpleUser[] = [];
+  let pageNumber = 1;
+
+  while (true) {
+    const userList = await clerkClient.users.getUserList({
+      limit: 100, // maximum allowed by Clerk
+      offset: (pageNumber - 1) * 100,
+    });
+
+    if (userList.data.length === 0) {
+      break;
+    }
+
+    const simpleUsers = userList.data.map((user) => ({
+      id: user.id,
+      imageUrl: user.imageUrl,
+      recordID: user.publicMetadata.record_id,
+    })) as SimpleUser[];
+
+    allUsers = [...allUsers, ...simpleUsers];
+
+    if (userList.data.length < 100) {
+      break;
+    }
+
+    pageNumber++;
+  }
+
+  return allUsers;
 }

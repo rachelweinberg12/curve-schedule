@@ -37,11 +37,11 @@ export function ProfileCard(props: {
         </div>
         {account && (
           <Image
-            alt={profile.Name}
             src={account.imageUrl}
-            className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300"
-            height="100"
-            width="100"
+            alt={profile.Name}
+            height="50"
+            width="50"
+            className="rounded-full h-10 w-10 object-cover"
           />
         )}
       </Link>
