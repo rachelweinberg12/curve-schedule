@@ -15,7 +15,7 @@ export type GuestProfile = {
   Bio: string;
   Title: string;
   ID: string;
-  Type: "Speaker" | "Attendee" | "Staff" | "Facilitator";
+  Type: "Speaker" | "Attendee" | "Staff" | "Facilitator" | "Volunteer";
   X: string;
   LinkedIn: string;
   Discord: string;

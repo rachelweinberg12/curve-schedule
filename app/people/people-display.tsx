@@ -23,15 +23,15 @@ export function PeopleDisplay(props: {
   const sortedAlphabet = filteredGuests.sort((a, b) =>
     a.profile.Name.localeCompare(b.profile.Name)
   );
-  const sortedByPriority = sortedAlphabet.sort((a, b) => {
-    const priorityA = assessProfilePriority(a.profile);
-    const priorityB = assessProfilePriority(b.profile);
-    return priorityB - priorityA;
-  });
-  const sortedByCompleteness = sortedByPriority.sort((a, b) => {
+  const sortedByCompleteness = sortedAlphabet.sort((a, b) => {
     const completenessA = assessProfileCompleteness(a.profile, a.account);
     const completenessB = assessProfileCompleteness(b.profile, b.account);
     return completenessB - completenessA;
+  });
+  const sortedByPriority = sortedByCompleteness.sort((a, b) => {
+    const priorityA = assessProfilePriority(a.profile);
+    const priorityB = assessProfilePriority(b.profile);
+    return priorityB - priorityA;
   });
   return (
     <div className="mx-auto max-w-5xl">
@@ -42,7 +42,7 @@ export function PeopleDisplay(props: {
         onChange={(event) => setSearch(event.target.value)}
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {sortedByCompleteness.map((guest) => {
+        {sortedByPriority.map((guest) => {
           return (
             <ProfileCard
               key={guest.profile.ID}
@@ -81,8 +81,8 @@ function assessProfileCompleteness(
 function assessProfilePriority(profile: GuestProfile) {
   if (profile.Type === "Speaker") return 4;
   if (profile.Type === "Staff") return 3;
-  if (profile.Type === "Facilitator") return 2;
-  return 1;
+  if (profile.Type === "Volunteer") return 1;
+  return 2;
 }
 
 function profileMatchesSearch(profile: GuestProfile, search: string) {
