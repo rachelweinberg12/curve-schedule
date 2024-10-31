@@ -53,7 +53,7 @@ export function SessionText(props: {
         className="text-sm whitespace-pre-line mt-2"
         text={session.Description}
       />
-      <div className="flex justify-between mt-2 gap-4 text-xs text-gray-500">
+      <div className="flex justify-between mt-2 gap-4 text-xs text-gray-400 items-center">
         <span>
           {DateTime.fromISO(session["Start time"])
             .setZone("America/Los_Angeles")
