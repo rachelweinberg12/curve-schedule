@@ -5,7 +5,7 @@ import { SimpleUser } from "@/db/auth";
 import { ProfileCard } from "./profile-card";
 import { checkStringForSearch } from "@/utils/utils";
 import { useState } from "react";
-import { Input } from "../input";
+import { Input } from "@/components/input";
 
 export function PeopleDisplay(props: {
   users: SimpleUser[];

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ClockIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import { UserIcon } from "@heroicons/react/24/solid";
 import { Session } from "@/db/sessions";
 import { Day } from "@/db/days";
@@ -10,9 +10,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { SessionModal } from "../modals";
 import { useUserRecordID } from "@/utils/hooks";
-import { PersonLink } from "../tags";
-import { rsvp } from "../rsvp-button";
-import { Markdown } from "../markdown";
 import { SessionText } from "./session-text";
 
 export function SessionBlock(props: {

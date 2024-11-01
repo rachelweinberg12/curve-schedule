@@ -9,9 +9,9 @@ import { SimpleUser } from "@/db/auth";
 import { SocialLinks } from "../people/socials";
 import Link from "next/link";
 import { PencilIcon } from "@heroicons/react/24/outline";
-import { ColoredTag, TypeTagColor } from "../tags";
+import { ColoredTag, TypeTagColor } from "@/components/tags";
 import { generateSlug } from "@/utils/utils";
-import { Markdown } from "../markdown";
+import { Markdown } from "@/components/markdown";
 
 export function ProfilePage(props: {
   profile: GuestProfile;

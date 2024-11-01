@@ -34,3 +34,7 @@ export const TypeTagColor = {
   Staff: "purple",
   Volunteer: "green",
 };
+
+export const RequiredStar = () => (
+  <span className="text-orange-600 mx-1">*</span>
+);

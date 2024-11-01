@@ -1,7 +1,7 @@
 import { GuestProfile } from "@/db/guests";
 import { SimpleUser } from "@/db/auth";
 import Image from "next/image";
-import { ColoredTag, TypeTagColor } from "../tags";
+import { ColoredTag, TypeTagColor } from "@/components/tags";
 import Link from "next/link";
 import { SocialLinks } from "./socials";
 import { generateSlug } from "@/utils/utils";

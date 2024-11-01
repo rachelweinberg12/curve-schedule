@@ -1,7 +1,12 @@
 import { Day } from "@/db/days";
 import { Location } from "@/db/locations";
 import { BasicGuest } from "@/db/guests";
-import { Session, getSessions } from "@/db/sessions";
+import {
+  Session,
+  SessionInsert,
+  getSessions,
+  validateSession,
+} from "@/db/sessions";
 import { DateTime } from "luxon";
 import { CONSTS } from "@/utils/constants";
 import { base } from "@/db/db";
@@ -15,16 +20,6 @@ type SessionParams = {
   day: Day;
   startTimeString: string;
   duration: number;
-};
-type SessionInsert = {
-  Title: string;
-  Description: string;
-  "Start time": string;
-  "End time": string;
-  Hosts: string[];
-  Location: string[];
-  Event?: string[];
-  "Attendee scheduled": boolean;
 };
 
 export const dynamic = "force-dynamic"; // defaults to auto
@@ -95,33 +90,3 @@ export async function POST(req: Request) {
     return Response.error();
   }
 }
-
-const validateSession = (
-  session: SessionInsert,
-  existingSessions: Session[]
-) => {
-  const sessionStart = new Date(session["Start time"]);
-  const sessionEnd = new Date(session["End time"]);
-  const sessionStartsBeforeEnds = sessionStart < sessionEnd;
-  const sessionStartsAfterNow = sessionStart > new Date();
-  const sessionsHere = existingSessions.filter((s) => {
-    return s["Location"][0] === session["Location"][0];
-  });
-  const concurrentSessions = sessionsHere.filter((s) => {
-    const sStart = new Date(s["Start time"]);
-    const sEnd = new Date(s["End time"]);
-    return (
-      (sStart < sessionStart && sEnd > sessionStart) ||
-      (sStart < sessionEnd && sEnd > sessionEnd) ||
-      (sStart > sessionStart && sEnd < sessionEnd)
-    );
-  });
-  const sessionValid =
-    sessionStartsBeforeEnds &&
-    sessionStartsAfterNow &&
-    concurrentSessions.length === 0 &&
-    session["Title"] &&
-    session["Location"][0] &&
-    session["Hosts"][0];
-  return sessionValid;
-};

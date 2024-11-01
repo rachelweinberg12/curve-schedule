@@ -2,12 +2,14 @@
 import { DateTime } from "luxon";
 import { Session } from "@/db/sessions";
 import { Location } from "@/db/locations";
-import { PersonLink, ColoredTag } from "../tags";
+import { PersonLink, ColoredTag } from "@/components/tags";
 import { RSVP } from "@/db/rsvps";
 import { useUserMetadata } from "@/utils/hooks";
 import { useState } from "react";
-import { rsvp, RSVPButton } from "../rsvp-button";
-import { Markdown } from "../markdown";
+import { rsvp, RSVPButton } from "@/components/rsvp-button";
+import { Markdown } from "@/components/markdown";
+import Link from "next/link";
+import { PencilIcon } from "@heroicons/react/24/outline";
 
 export function SessionText(props: {
   session: Session;
@@ -28,6 +30,7 @@ export function SessionText(props: {
   const hostStatus = userRecordID
     ? !!session.Hosts?.includes(userRecordID)
     : false;
+  console.log(hostStatus);
   return (
     <div className="px-1.5 h-full min-h-10 pt-4 pb-6">
       <div className="flex justify-between items-start">
@@ -76,6 +79,15 @@ export function SessionText(props: {
             }}
             rsvpd={rsvpStatus}
           />
+        )}
+        {hostStatus && (
+          <Link
+            href={`/edit-session/${session.ID}`}
+            className="px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded text-white"
+            title="Edit session"
+          >
+            edit
+          </Link>
         )}
       </div>
     </div>
