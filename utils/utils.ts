@@ -28,14 +28,6 @@ export function checkStringForSearch(search: string, string: string) {
   return string.toLowerCase().includes(search.toLowerCase());
 }
 
-export function convertCamelToRegular(name: string) {
-  return (
-    name
-      // Add a space before each uppercase letter, unless it follows a character that's not a letter (like in Bar-On).
-      .replace(/([a-z])([A-Z])/g, "$1 $2")
-  );
-}
-
 export function generateSlug(name: string): string {
   // Remove all spaces
   return name.replaceAll(" ", "");

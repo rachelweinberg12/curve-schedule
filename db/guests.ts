@@ -1,7 +1,6 @@
 import { CONSTS } from "@/utils/constants";
 import { base } from "./db";
 import { SimpleUser } from "./auth";
-import { convertCamelToRegular } from "@/utils/utils";
 
 export type BasicGuest = {
   Name: string;
@@ -113,10 +112,9 @@ export async function getGuestBySlug(
   slug: string
 ): Promise<GuestProfile | null> {
   const guests: GuestProfile[] = [];
-  const guestName = convertCamelToRegular(slug);
   await base("Guests")
     .select({
-      filterByFormula: `{Name} = '${guestName}'`,
+      filterByFormula: `{Slug} = '${slug}'`,
     })
     .eachPage(function page(records: any, fetchNextPage: any) {
       records.forEach(function (record: any) {
