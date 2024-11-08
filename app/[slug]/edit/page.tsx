@@ -17,7 +17,8 @@ export default async function EditProfilePage(props: {
     slug = userSlug;
   }
 
-  const guest = await getGuestBySlug(slug);
+  const decodedSlug = decodeURIComponent(slug);
+  const guest = await getGuestBySlug(decodedSlug);
   if (!guest) {
     return <div>Profile not found</div>;
   }

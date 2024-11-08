@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 
 export default async function Page(props: { params: { slug: string } }) {
   const { slug } = props.params;
+  const decodedSlug = decodeURIComponent(slug);
 
   // If the slug is "me", redirect to the user's actual slug
   if (slug === "me") {
@@ -18,7 +19,7 @@ export default async function Page(props: { params: { slug: string } }) {
     return redirect(`/${userSlug}`);
   }
 
-  const guest = await getGuestBySlug(slug);
+  const guest = await getGuestBySlug(decodedSlug);
   if (!guest) {
     return <div>Profile not found</div>;
   }
