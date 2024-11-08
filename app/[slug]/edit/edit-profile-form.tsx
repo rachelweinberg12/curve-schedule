@@ -22,7 +22,7 @@ export function EditProfileForm(props: {
   );
   const [updatedImage, setUpdatedImage] = useState<File | null>(null);
   const [isGeneratingBio, setIsGeneratingBio] = useState(false);
-  console.log(editedProfile.Bio);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const router = useRouter();
 
@@ -72,15 +72,18 @@ export function EditProfileForm(props: {
         method: "POST",
         body: formData,
       });
-      if (response.ok) {
-        const userSlug = generateSlug(editedProfile.Name);
-        router.push(`/${userSlug}`);
-        router.refresh();
-      } else {
-        console.error("Failed to update profile");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update profile");
       }
+      const userSlug = generateSlug(editedProfile.Name);
+      router.push(`/${userSlug}`);
+      router.refresh();
     } catch (error) {
       console.error("Error updating profile:", error);
+      setSubmitError(
+        error instanceof Error ? error.message : "Failed to update profile"
+      );
     }
   };
 
@@ -242,6 +245,11 @@ export function EditProfileForm(props: {
             onChange={handleChange}
           />
         </div>
+        {submitError && (
+          <div className="text-rose-500 text-sm font-medium text-center">
+            {submitError}
+          </div>
+        )}
         <button
           type="submit"
           className="bg-orange-500 text-white font-semibold py-2 rounded shadow hover:bg-orange-600 mx-auto px-12"
