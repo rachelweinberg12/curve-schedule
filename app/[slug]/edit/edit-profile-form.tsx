@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { GuestProfile } from "@/db/guests";
-import { Input, Textarea } from "@/app/input";
+import { Input, Textarea } from "@/components/input";
 import { generateSlug } from "@/utils/utils";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
