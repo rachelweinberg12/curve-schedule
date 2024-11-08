@@ -3,8 +3,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowUpTrayIcon, MapIcon } from "@heroicons/react/24/outline";
-import { useUser } from "@clerk/nextjs";
-import { RSVPButton } from "./rsvp-button";
 
 export function MapModal() {
   const [open, setOpen] = useState(false);

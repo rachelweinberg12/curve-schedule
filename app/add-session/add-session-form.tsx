@@ -19,7 +19,6 @@ import { BasicGuest } from "@/db/guests";
 import { Location } from "@/db/locations";
 import { Session } from "@/db/sessions";
 import { RequiredStar } from "@/components/tags";
-import { useUserRecordID } from "@/utils/hooks";
 
 export function AddSessionForm(props: {
   days: Day[];
@@ -59,7 +58,6 @@ export function AddSessionForm(props: {
     (st) => st.formattedTime === startTime
   )?.maxDuration;
   const [duration, setDuration] = useState(Math.min(maxDuration ?? 60, 60));
-  const userRecordID = useUserRecordID();
   const [hosts, setHosts] = useState<BasicGuest[]>([]);
   useEffect(() => {
     if (

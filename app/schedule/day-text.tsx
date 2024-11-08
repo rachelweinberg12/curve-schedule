@@ -2,13 +2,12 @@
 import { useSearchParams } from "next/navigation";
 import { SessionText } from "./session-text";
 import { DateTime } from "luxon";
-import { useContext } from "react";
-import { UserContext } from "../context";
 import { Day } from "@/db/days";
 import { RSVP } from "@/db/rsvps";
 import { Location } from "@/db/locations";
 import { Session } from "@/db/sessions";
 import { checkStringForSearch } from "@/utils/utils";
+import { useUserRecordID } from "@/utils/hooks";
 
 export function DayText(props: {
   locations: Location[];
@@ -19,7 +18,7 @@ export function DayText(props: {
 }) {
   const { day, locations, search, rsvps, filterByRSVP } = props;
   const searchParams = useSearchParams();
-  const { user: currentUser } = useContext(UserContext);
+  const userRecordID = useUserRecordID();
   const locParams = searchParams?.getAll("loc");
   const locationsFromParams = locations.filter((loc) =>
     locParams?.includes(loc.Name)
@@ -41,7 +40,7 @@ export function DayText(props: {
     sessions = sessions.filter(
       (session) =>
         rsvpSet.has(session.ID) ||
-        (currentUser && session.Hosts?.includes(currentUser))
+        (userRecordID && session.Hosts?.includes(userRecordID))
     );
   }
   return (

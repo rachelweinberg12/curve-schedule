@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Montserrat, Roboto } from "next/font/google";
 import "./globals.css";
 import NavBar from "./nav-bar";
-import { Context } from "./context";
 import clsx from "clsx";
 import { CONSTS } from "@/utils/constants";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -37,12 +36,10 @@ export default function RootLayout({
     <ClerkProvider publishableKey={clerkPublishableKey}>
       <html lang="en" className={`dark ${fontVars}`}>
         <body className="font-monteserrat bg-gray-800 text-white">
-          <Context>
-            <NavBar />
-            <main className={clsx("lg:px-24 sm:px-10 p-6", "py-24")}>
-              {children}
-            </main>
-          </Context>
+          <NavBar />
+          <main className={clsx("lg:px-24 sm:px-10 p-6", "py-24")}>
+            {children}
+          </main>
         </body>
       </html>
     </ClerkProvider>
