@@ -31,6 +31,7 @@ export function SessionBlock(props: {
     startTime > new Date().getTime() &&
     startTime >= new Date(day["Start bookings"]).getTime() &&
     startTime < new Date(day["End bookings"]).getTime();
+  const isBlocked = session.Title === "[Blocked]" && !session.Hosts;
   return isBookable ? (
     <BookableSessionCard
       session={session}
@@ -39,7 +40,7 @@ export function SessionBlock(props: {
     />
   ) : (
     <>
-      {isBlank ? (
+      {isBlank || isBlocked ? (
         <BlankSessionCard numHalfHours={numHalfHours} />
       ) : (
         <RealSessionCard

@@ -29,7 +29,9 @@ export function DayText(props: {
     return (
       includedLocations.some((location) =>
         session["Location name"].includes(location.Name)
-      ) && sessionMatchesSearch(session, search)
+      ) &&
+      sessionMatchesSearch(session, search) &&
+      session.Title !== "[Blocked]"
     );
   });
   let sessions = sortSessions(includedSessions, locations);
