@@ -94,6 +94,7 @@ export function RealSessionCard(props: {
   const { session, numHalfHours, location, allLocations, rsvpsForEvent } =
     props;
   const userRecordID = useUserRecordID();
+  // TODO: fix optimistic RSVP response
   const [optimisticRSVPResponse, setOptimisticRSVPResponse] = useState<
     boolean | null
   >(null);
@@ -151,16 +152,18 @@ export function RealSessionCard(props: {
         >
           {formattedHostNames}
         </p>
-        <div
-          className={clsx(
-            "absolute py-[1px] px-1 rounded-tl text-[10px] bottom-0 right-0 flex gap-0.5 items-center",
-            `bg-${location.Color}-800`,
-            lowerOpacity && "bg-opacity-50"
-          )}
-        >
-          <UserIcon className="h-.5 w-2.5" />
-          {numRSVPs}
-        </div>
+        {session.Capacity2 && (
+          <div
+            className={clsx(
+              "absolute py-[1px] px-1 rounded-tl text-[10px] bottom-0 right-0 flex gap-0.5 items-center",
+              `bg-${location.Color}-800`,
+              lowerOpacity && "bg-opacity-50"
+            )}
+          >
+            <UserIcon className="h-.5 w-2.5" />
+            {numRSVPs}/{session.Capacity2}
+          </div>
+        )}
       </button>
     </div>
   );
