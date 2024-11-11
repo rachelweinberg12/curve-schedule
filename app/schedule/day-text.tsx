@@ -67,6 +67,7 @@ export function DayText(props: {
                   locations={locations.filter((loc) =>
                     session["Location name"].includes(loc.Name)
                   )}
+                  numRSVPs={session["Num RSVPs"]}
                   rsvpsForEvent={rsvpsForEvent}
                 />
               );

@@ -9,14 +9,15 @@ import { useState } from "react";
 import { rsvp, RSVPButton } from "@/components/rsvp-button";
 import { Markdown } from "@/components/markdown";
 import Link from "next/link";
-import { PencilIcon } from "@heroicons/react/24/outline";
+import { UserIcon } from "@heroicons/react/16/solid";
 
 export function SessionText(props: {
   session: Session;
   locations: Location[];
+  numRSVPs: number;
   rsvpsForEvent?: RSVP[];
 }) {
-  const { session, locations, rsvpsForEvent } = props;
+  const { session, locations, numRSVPs, rsvpsForEvent } = props;
   const userMetadata = useUserMetadata();
   const { record_id: userRecordID, volunteer: isUserVolunteer } =
     userMetadata ?? {};
@@ -52,24 +53,32 @@ export function SessionText(props: {
           </div>
         </div>
       </div>
+      <span className="text-xs text-gray-400">
+        {DateTime.fromISO(session["Start time"])
+          .setZone("America/Los_Angeles")
+          .toFormat("EEEE")}
+        ,{" "}
+        {DateTime.fromISO(session["Start time"])
+          .setZone("America/Los_Angeles")
+          .toFormat("h:mm a")}{" "}
+        -{" "}
+        {DateTime.fromISO(session["End time"])
+          .setZone("America/Los_Angeles")
+          .toFormat("h:mm a")}
+      </span>
       <Markdown
         className="text-sm whitespace-pre-line mt-2"
         text={session.Description}
       />
       <div className="flex justify-between mt-2 gap-4 text-xs text-gray-400 items-center">
-        <span>
-          {DateTime.fromISO(session["Start time"])
-            .setZone("America/Los_Angeles")
-            .toFormat("EEEE")}
-          ,{" "}
-          {DateTime.fromISO(session["Start time"])
-            .setZone("America/Los_Angeles")
-            .toFormat("h:mm a")}{" "}
-          -{" "}
-          {DateTime.fromISO(session["End time"])
-            .setZone("America/Los_Angeles")
-            .toFormat("h:mm a")}
-        </span>
+        <div>
+          {session.Capacity2 && (
+            <span>
+              {numRSVPs} of {session.Capacity2} spots filled.{" "}
+              {session.Capacity2 - numRSVPs} spots left.
+            </span>
+          )}
+        </div>
         {rsvpsForEvent && !hostStatus && !isUserVolunteer && (
           <RSVPButton
             rsvp={() => {
