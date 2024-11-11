@@ -9,7 +9,7 @@ import { useState } from "react";
 import { rsvp, RSVPButton } from "@/components/rsvp-button";
 import { Markdown } from "@/components/markdown";
 import Link from "next/link";
-import { UserIcon } from "@heroicons/react/16/solid";
+import clsx from "clsx";
 
 export function SessionText(props: {
   session: Session;
@@ -31,7 +31,6 @@ export function SessionText(props: {
   const hostStatus = userRecordID
     ? !!session.Hosts?.includes(userRecordID)
     : false;
-  console.log(hostStatus);
   return (
     <div className="px-1.5 h-full min-h-10 pt-4 pb-6">
       <div className="flex justify-between items-start">
@@ -73,7 +72,12 @@ export function SessionText(props: {
       <div className="flex justify-between mt-2 gap-4 text-xs text-gray-400 items-center">
         <div>
           {session.Capacity2 && (
-            <span>
+            <span
+              className={clsx(
+                session.Capacity2 - numRSVPs <= 5 &&
+                  "text-amber-500 bg-amber-500 bg-opacity-10 px-1.5 py-0.5 rounded-sm"
+              )}
+            >
               {numRSVPs} of {session.Capacity2} spots filled.{" "}
               {session.Capacity2 - numRSVPs} spots left.
             </span>
