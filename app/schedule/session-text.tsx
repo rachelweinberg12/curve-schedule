@@ -52,9 +52,9 @@ export function SessionText(props: {
       ? 1
       : -1;
   const numRSVPs = session["Num RSVPs"] + changeToRSVPDisplay;
-  const spotsLeft = !!session.Capacity2 ? session.Capacity2 - numRSVPs : 0;
-  const isAtCapacity = !!session.Capacity2 && spotsLeft <= 0;
-  const isNearCapacity = !!session.Capacity2 && spotsLeft <= 5;
+  const spotsLeft = !!session.Capacity ? session.Capacity - numRSVPs : 0;
+  const isAtCapacity = !!session.Capacity && spotsLeft <= 0;
+  const isNearCapacity = !!session.Capacity && spotsLeft <= 5;
   return (
     <div className="px-1.5 h-full min-h-10 pt-4 pb-6">
       <div className="flex justify-between items-start">
@@ -95,7 +95,7 @@ export function SessionText(props: {
       />
       <div className="flex justify-between mt-2 gap-4 text-xs text-gray-400 items-center">
         <div>
-          {session.Capacity2 && (
+          {session.Capacity && (
             <span
               className={clsx(
                 isAtCapacity
@@ -106,8 +106,8 @@ export function SessionText(props: {
                 "px-1.5 py-0.5 rounded-sm bg-opacity-10"
               )}
             >
-              {numRSVPs} of {session.Capacity2} spots filled.{" "}
-              {Math.max(session.Capacity2 - numRSVPs, 0)} spots left.
+              {numRSVPs} of {session.Capacity} spots filled.{" "}
+              {Math.max(session.Capacity - numRSVPs, 0)} spots left.
             </span>
           )}
         </div>

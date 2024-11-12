@@ -158,7 +158,7 @@ export function RealSessionCard(props: {
         >
           {formattedHostNames}
         </p>
-        {session.Capacity2 && (
+        {session.Capacity && (
           <div
             className={clsx(
               "absolute py-[1px] px-1 rounded-tl text-[10px] bottom-0 right-0 flex gap-0.5 items-center",
@@ -167,7 +167,7 @@ export function RealSessionCard(props: {
             )}
           >
             <UserIcon className="h-.5 w-2.5" />
-            {numRSVPs}/{session.Capacity2}
+            {numRSVPs}/{session.Capacity}
           </div>
         )}
       </button>

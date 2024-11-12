@@ -12,7 +12,7 @@ export type Session = {
   "Host email"?: string;
   Location: string[];
   "Location name": string[];
-  Capacity2?: number;
+  Capacity?: number;
   "Num RSVPs": number;
 };
 export async function getSessions() {
@@ -29,7 +29,7 @@ export async function getSessions() {
         "Host email",
         "Location",
         "Location name",
-        "Capacity2",
+        "Capacity",
         "Num RSVPs",
       ],
       filterByFormula: `AND({Start time}, {End time}, {Location})`,
@@ -61,7 +61,7 @@ export async function getSessionsByEvent(eventName: string) {
         "Host email",
         "Location",
         "Location name",
-        "Capacity2",
+        "Capacity",
         "Num RSVPs",
       ],
       filterByFormula: filterFormula,
@@ -89,7 +89,7 @@ export async function getSessionsByHost(hostName: string) {
         "Host email",
         "Location",
         "Location name",
-        "Capacity2",
+        "Capacity",
         "Num RSVPs",
       ],
       filterByFormula: `SEARCH("${hostName}", {Hosts}) != 0`,
@@ -118,7 +118,7 @@ export async function getSessionsByIDs(sessionIDs: string[]) {
         "Host email",
         "Location",
         "Location name",
-        "Capacity2",
+        "Capacity",
         "Num RSVPs",
       ],
       filterByFormula: `FIND({ID}, "${sessionIDsString}") > 0`,
