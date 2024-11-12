@@ -97,17 +97,22 @@ export function RealSessionCard(props: {
   const [optimisticRSVPResponse, setOptimisticRSVPResponse] = useState<
     boolean | null
   >(null);
+  const userIsRSVPd = rsvpsForEvent.length > 0;
   const rsvpStatus =
-    optimisticRSVPResponse !== null
-      ? optimisticRSVPResponse
-      : rsvpsForEvent.length > 0;
+    optimisticRSVPResponse !== null ? optimisticRSVPResponse : userIsRSVPd;
   const hostStatus = userRecordID
     ? !!session.Hosts?.includes(userRecordID)
     : false;
   const formattedHostNames = session["Host name"]?.join(", ") ?? "No hosts";
   const lowerOpacity = !rsvpStatus && !hostStatus;
   const [sessionModalOpen, setSessionModalOpen] = useState(false);
-  const numRSVPs = session["Num RSVPs"] + (optimisticRSVPResponse ? 1 : 0);
+  const changeToRSVPDisplay =
+    optimisticRSVPResponse === null || userIsRSVPd === optimisticRSVPResponse
+      ? 0
+      : optimisticRSVPResponse
+      ? 1
+      : -1;
+  const numRSVPs = session["Num RSVPs"] + changeToRSVPDisplay;
   return (
     <div className={`row-span-${numHalfHours} my-0.5 overflow-hidden group`}>
       <SessionModal
@@ -119,7 +124,9 @@ export function RealSessionCard(props: {
             locations={allLocations.filter(
               (loc) => !!session["Location name"].includes(loc.Name)
             )}
-            rsvpsForEvent={rsvpsForEvent}
+            userIsRSVPd={rsvpsForEvent.length > 0}
+            optimisticRSVPResponse={optimisticRSVPResponse}
+            setOptimisticRSVPResponse={setOptimisticRSVPResponse}
           />
         }
       />
@@ -134,7 +141,7 @@ export function RealSessionCard(props: {
         <p
           className={clsx(
             "font-medium text-xs leading-[1.15] text-left",
-            numHalfHours > 1 ? "line-clamp-2" : "line-clamp-1"
+            numHalfHours > 1 ? "line-clamp-3" : "line-clamp-1"
           )}
         >
           {session.Title}
@@ -151,16 +158,18 @@ export function RealSessionCard(props: {
         >
           {formattedHostNames}
         </p>
-        <div
-          className={clsx(
-            "absolute py-[1px] px-1 rounded-tl text-[10px] bottom-0 right-0 flex gap-0.5 items-center",
-            `bg-${location.Color}-800`,
-            lowerOpacity && "bg-opacity-50"
-          )}
-        >
-          <UserIcon className="h-.5 w-2.5" />
-          {numRSVPs}
-        </div>
+        {session.Capacity && (
+          <div
+            className={clsx(
+              "absolute py-[1px] px-1 rounded-tl text-[10px] bottom-0 right-0 flex gap-0.5 items-center",
+              `bg-${location.Color}-800`,
+              lowerOpacity && "bg-opacity-50"
+            )}
+          >
+            <UserIcon className="h-.5 w-2.5" />
+            {numRSVPs}/{session.Capacity}
+          </div>
+        )}
       </button>
     </div>
   );

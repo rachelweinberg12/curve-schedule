@@ -4,6 +4,7 @@ import { Switch } from "@headlessui/react";
 import clsx from "clsx";
 
 export async function rsvp(sessionId: string, remove = false) {
+  console.log("REMOVE:", remove);
   await fetch("/api/toggle-rsvp", {
     method: "POST",
     body: JSON.stringify({
@@ -13,24 +14,30 @@ export async function rsvp(sessionId: string, remove = false) {
   });
 }
 
-export function RSVPButton(props: { rsvp: () => void; rsvpd: boolean }) {
-  const { rsvp, rsvpd } = props;
+export function RSVPButton(props: {
+  rsvp: () => void;
+  rsvpd: boolean;
+  disabled?: boolean;
+}) {
+  const { rsvp, rsvpd, disabled } = props;
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-2">
       <label className="text-xs text-gray-400">RSVP</label>
       <Switch
         checked={rsvpd}
         onChange={rsvp}
+        disabled={disabled}
         className={clsx(
-          "group relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparenttransition-colors duration-200 ease-in-out focus:outline-none",
+          "group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none",
           rsvpd
             ? "bg-orange-500 border-orange-500"
-            : "bg-gray-600 border-gray-600"
+            : "bg-gray-600 border-gray-600",
+          disabled && "opacity-50 cursor-not-allowed"
         )}
       >
         <span
           className={clsx(
-            "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-gray-700 shadow ring-0 transition duration-200 ease-in-out",
+            "pointer-events-none inline-block h-4 w-4 transform rounded-full bg-gray-700 shadow ring-0 transition duration-200 ease-in-out mt-[1px]",
             rsvpd ? "translate-x-5" : "translate-x-0"
           )}
         />

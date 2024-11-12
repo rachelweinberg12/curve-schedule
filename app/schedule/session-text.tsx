@@ -9,28 +9,52 @@ import { useState } from "react";
 import { rsvp, RSVPButton } from "@/components/rsvp-button";
 import { Markdown } from "@/components/markdown";
 import Link from "next/link";
-import { PencilIcon } from "@heroicons/react/24/outline";
+import clsx from "clsx";
+import { Tooltip } from "./tooltip";
 
 export function SessionText(props: {
   session: Session;
   locations: Location[];
-  rsvpsForEvent?: RSVP[];
+  userIsRSVPd?: boolean;
+  optimisticRSVPResponse?: boolean | null;
+  setOptimisticRSVPResponse?: (response: boolean | null) => void;
 }) {
-  const { session, locations, rsvpsForEvent } = props;
+  const {
+    session,
+    locations,
+    userIsRSVPd,
+    optimisticRSVPResponse,
+    setOptimisticRSVPResponse,
+  } = props;
   const userMetadata = useUserMetadata();
   const { record_id: userRecordID, volunteer: isUserVolunteer } =
     userMetadata ?? {};
-  const [optimisticRSVPResponse, setOptimisticRSVPResponse] = useState<
+  const [localOptRSVPResponse, setLocalOptRSVPResponse] = useState<
     boolean | null
   >(null);
-  const rsvpStatus =
-    optimisticRSVPResponse !== null
+  const realOptRSVPResponse =
+    optimisticRSVPResponse !== undefined
       ? optimisticRSVPResponse
-      : !!rsvpsForEvent && rsvpsForEvent.length > 0;
+      : localOptRSVPResponse;
+  const setRealOptRSVPResponse =
+    setOptimisticRSVPResponse !== undefined
+      ? setOptimisticRSVPResponse
+      : setLocalOptRSVPResponse;
+  const rsvpStatus =
+    realOptRSVPResponse !== null ? realOptRSVPResponse : !!userIsRSVPd;
   const hostStatus = userRecordID
     ? !!session.Hosts?.includes(userRecordID)
     : false;
-  console.log(hostStatus);
+  const changeToRSVPDisplay =
+    realOptRSVPResponse === null || userIsRSVPd === realOptRSVPResponse
+      ? 0
+      : realOptRSVPResponse
+      ? 1
+      : -1;
+  const numRSVPs = session["Num RSVPs"] + changeToRSVPDisplay;
+  const spotsLeft = !!session.Capacity ? session.Capacity - numRSVPs : 0;
+  const isAtCapacity = !!session.Capacity && spotsLeft <= 0;
+  const isNearCapacity = !!session.Capacity && spotsLeft <= 5;
   return (
     <div className="px-1.5 h-full min-h-10 pt-4 pb-6">
       <div className="flex justify-between items-start">
@@ -52,33 +76,59 @@ export function SessionText(props: {
           </div>
         </div>
       </div>
+      <span className="text-xs text-gray-400">
+        {DateTime.fromISO(session["Start time"])
+          .setZone("America/Los_Angeles")
+          .toFormat("EEEE")}
+        ,{" "}
+        {DateTime.fromISO(session["Start time"])
+          .setZone("America/Los_Angeles")
+          .toFormat("h:mm a")}{" "}
+        -{" "}
+        {DateTime.fromISO(session["End time"])
+          .setZone("America/Los_Angeles")
+          .toFormat("h:mm a")}
+      </span>
       <Markdown
         className="text-sm whitespace-pre-line mt-2"
         text={session.Description}
       />
       <div className="flex justify-between mt-2 gap-4 text-xs text-gray-400 items-center">
-        <span>
-          {DateTime.fromISO(session["Start time"])
-            .setZone("America/Los_Angeles")
-            .toFormat("EEEE")}
-          ,{" "}
-          {DateTime.fromISO(session["Start time"])
-            .setZone("America/Los_Angeles")
-            .toFormat("h:mm a")}{" "}
-          -{" "}
-          {DateTime.fromISO(session["End time"])
-            .setZone("America/Los_Angeles")
-            .toFormat("h:mm a")}
-        </span>
-        {rsvpsForEvent && !hostStatus && !isUserVolunteer && (
-          <RSVPButton
-            rsvp={() => {
-              if (!userRecordID) return;
-              rsvp(session.ID, !!rsvpStatus);
-              setOptimisticRSVPResponse(!rsvpStatus);
-            }}
-            rsvpd={rsvpStatus}
-          />
+        <div>
+          {session.Capacity && (
+            <span
+              className={clsx(
+                isAtCapacity
+                  ? "text-rose-500 bg-rose-500"
+                  : isNearCapacity
+                  ? "text-amber-500 bg-amber-500"
+                  : "hidden",
+                "px-1.5 py-0.5 rounded-sm bg-opacity-10"
+              )}
+            >
+              {numRSVPs} of {session.Capacity} spots filled.{" "}
+              {Math.max(session.Capacity - numRSVPs, 0)} spots left.
+            </span>
+          )}
+        </div>
+        {userIsRSVPd !== undefined && !hostStatus && !isUserVolunteer && (
+          <Tooltip
+            content={
+              isAtCapacity && !rsvpStatus ? (
+                <span>This session is full.</span>
+              ) : undefined
+            }
+          >
+            <RSVPButton
+              rsvp={() => {
+                if (!userRecordID) return;
+                rsvp(session.ID, !!rsvpStatus);
+                setRealOptRSVPResponse(!rsvpStatus);
+              }}
+              rsvpd={rsvpStatus}
+              disabled={isAtCapacity && !rsvpStatus}
+            />
+          </Tooltip>
         )}
         {hostStatus && (
           <Link

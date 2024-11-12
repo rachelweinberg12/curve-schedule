@@ -12,7 +12,7 @@ export type Session = {
   "Host email"?: string;
   Location: string[];
   "Location name": string[];
-  Capacity: number;
+  Capacity?: number;
   "Num RSVPs": number;
 };
 export async function getSessions() {
