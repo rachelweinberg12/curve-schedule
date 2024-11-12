@@ -29,8 +29,8 @@ export function checkStringForSearch(search: string, string: string) {
 }
 
 export function generateSlug(name: string): string {
-  // Remove all spaces
-  return name.replaceAll(" ", "");
+  // Remove all spaces and apostrophes
+  return name.replaceAll(" ", "").replaceAll("'", "");
 }
 
 export function getDurationFromSession(session: Session) {
