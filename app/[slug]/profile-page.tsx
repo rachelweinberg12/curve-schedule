@@ -109,7 +109,6 @@ export function ProfilePage(props: {
                 locations={locations.filter((loc) =>
                   session["Location name"].includes(loc.Name)
                 )}
-                numRSVPs={session["Num RSVPs"]}
               />
             ))}
           </div>
@@ -127,7 +126,6 @@ export function ProfilePage(props: {
                 locations={locations.filter((loc) =>
                   session["Location name"].includes(loc.Name)
                 )}
-                numRSVPs={session["Num RSVPs"]}
               />
             ))}
           </div>
