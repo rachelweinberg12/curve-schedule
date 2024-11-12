@@ -4,6 +4,7 @@ import { Switch } from "@headlessui/react";
 import clsx from "clsx";
 
 export async function rsvp(sessionId: string, remove = false) {
+  console.log("REMOVE:", remove);
   await fetch("/api/toggle-rsvp", {
     method: "POST",
     body: JSON.stringify({

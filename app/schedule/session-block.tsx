@@ -94,21 +94,25 @@ export function RealSessionCard(props: {
   const { session, numHalfHours, location, allLocations, rsvpsForEvent } =
     props;
   const userRecordID = useUserRecordID();
-  // TODO: fix optimistic RSVP response
   const [optimisticRSVPResponse, setOptimisticRSVPResponse] = useState<
     boolean | null
   >(null);
+  const userIsRSVPd = rsvpsForEvent.length > 0;
   const rsvpStatus =
-    optimisticRSVPResponse !== null
-      ? optimisticRSVPResponse
-      : rsvpsForEvent.length > 0;
+    optimisticRSVPResponse !== null ? optimisticRSVPResponse : userIsRSVPd;
   const hostStatus = userRecordID
     ? !!session.Hosts?.includes(userRecordID)
     : false;
   const formattedHostNames = session["Host name"]?.join(", ") ?? "No hosts";
   const lowerOpacity = !rsvpStatus && !hostStatus;
   const [sessionModalOpen, setSessionModalOpen] = useState(false);
-  const numRSVPs = session["Num RSVPs"] + (optimisticRSVPResponse ? 1 : 0);
+  const changeToRSVPDisplay =
+    optimisticRSVPResponse === null || userIsRSVPd === optimisticRSVPResponse
+      ? 0
+      : optimisticRSVPResponse
+      ? 1
+      : -1;
+  const numRSVPs = session["Num RSVPs"] + changeToRSVPDisplay;
   return (
     <div className={`row-span-${numHalfHours} my-0.5 overflow-hidden group`}>
       <SessionModal
@@ -120,7 +124,9 @@ export function RealSessionCard(props: {
             locations={allLocations.filter(
               (loc) => !!session["Location name"].includes(loc.Name)
             )}
-            rsvpsForEvent={rsvpsForEvent}
+            userIsRSVPd={rsvpsForEvent.length > 0}
+            optimisticRSVPResponse={optimisticRSVPResponse}
+            setOptimisticRSVPResponse={setOptimisticRSVPResponse}
           />
         }
       />
@@ -135,7 +141,7 @@ export function RealSessionCard(props: {
         <p
           className={clsx(
             "font-medium text-xs leading-[1.15] text-left",
-            numHalfHours > 1 ? "line-clamp-2" : "line-clamp-1"
+            numHalfHours > 1 ? "line-clamp-3" : "line-clamp-1"
           )}
         >
           {session.Title}

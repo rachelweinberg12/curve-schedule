@@ -15,14 +15,14 @@ import { Tooltip } from "./tooltip";
 export function SessionText(props: {
   session: Session;
   locations: Location[];
-  rsvpsForEvent?: RSVP[];
+  userIsRSVPd?: boolean;
   optimisticRSVPResponse?: boolean | null;
   setOptimisticRSVPResponse?: (response: boolean | null) => void;
 }) {
   const {
     session,
     locations,
-    rsvpsForEvent,
+    userIsRSVPd,
     optimisticRSVPResponse,
     setOptimisticRSVPResponse,
   } = props;
@@ -32,20 +32,26 @@ export function SessionText(props: {
   const [localOptRSVPResponse, setLocalOptRSVPResponse] = useState<
     boolean | null
   >(null);
-  const realOptRSVPResponse = optimisticRSVPResponse
-    ? optimisticRSVPResponse
-    : localOptRSVPResponse;
-  const setRealOptRSVPResponse = setOptimisticRSVPResponse
-    ? setOptimisticRSVPResponse
-    : setLocalOptRSVPResponse;
+  const realOptRSVPResponse =
+    optimisticRSVPResponse !== undefined
+      ? optimisticRSVPResponse
+      : localOptRSVPResponse;
+  const setRealOptRSVPResponse =
+    setOptimisticRSVPResponse !== undefined
+      ? setOptimisticRSVPResponse
+      : setLocalOptRSVPResponse;
   const rsvpStatus =
-    realOptRSVPResponse !== null
-      ? realOptRSVPResponse
-      : !!rsvpsForEvent && rsvpsForEvent.length > 0;
+    realOptRSVPResponse !== null ? realOptRSVPResponse : !!userIsRSVPd;
   const hostStatus = userRecordID
     ? !!session.Hosts?.includes(userRecordID)
     : false;
-  const numRSVPs = session["Num RSVPs"] + (realOptRSVPResponse ? 1 : 0);
+  const changeToRSVPDisplay =
+    realOptRSVPResponse === null || userIsRSVPd === realOptRSVPResponse
+      ? 0
+      : realOptRSVPResponse
+      ? 1
+      : -1;
+  const numRSVPs = session["Num RSVPs"] + changeToRSVPDisplay;
   const spotsLeft = !!session.Capacity2 ? session.Capacity2 - numRSVPs : 0;
   const isAtCapacity = !!session.Capacity2 && spotsLeft <= 0;
   const isNearCapacity = !!session.Capacity2 && spotsLeft <= 5;
@@ -105,10 +111,12 @@ export function SessionText(props: {
             </span>
           )}
         </div>
-        {rsvpsForEvent && !hostStatus && !isUserVolunteer && (
+        {userIsRSVPd !== undefined && !hostStatus && !isUserVolunteer && (
           <Tooltip
             content={
-              isAtCapacity ? <span>This session is full.</span> : undefined
+              isAtCapacity && !rsvpStatus ? (
+                <span>This session is full.</span>
+              ) : undefined
             }
           >
             <RSVPButton
