@@ -10,6 +10,7 @@ import { rsvp, RSVPButton } from "@/components/rsvp-button";
 import { Markdown } from "@/components/markdown";
 import Link from "next/link";
 import clsx from "clsx";
+import { Tooltip } from "./tooltip";
 
 export function SessionText(props: {
   session: Session;
@@ -45,6 +46,7 @@ export function SessionText(props: {
     ? !!session.Hosts?.includes(userRecordID)
     : false;
   const numRSVPs = session["Num RSVPs"] + (realOptRSVPResponse ? 1 : 0);
+  const isAtCapacity = !!session.Capacity2 && numRSVPs >= session.Capacity2;
   return (
     <div className="px-1.5 h-full min-h-10 pt-4 pb-6">
       <div className="flex justify-between items-start">
@@ -98,14 +100,21 @@ export function SessionText(props: {
           )}
         </div>
         {rsvpsForEvent && !hostStatus && !isUserVolunteer && (
-          <RSVPButton
-            rsvp={() => {
-              if (!userRecordID) return;
-              rsvp(session.ID, !!rsvpStatus);
-              setRealOptRSVPResponse(!rsvpStatus);
-            }}
-            rsvpd={rsvpStatus}
-          />
+          <Tooltip
+            content={
+              isAtCapacity ? <span>This session is full.</span> : undefined
+            }
+          >
+            <RSVPButton
+              rsvp={() => {
+                if (!userRecordID) return;
+                rsvp(session.ID, !!rsvpStatus);
+                setRealOptRSVPResponse(!rsvpStatus);
+              }}
+              rsvpd={rsvpStatus}
+              disabled={isAtCapacity && !rsvpStatus}
+            />
+          </Tooltip>
         )}
         {hostStatus && (
           <Link
