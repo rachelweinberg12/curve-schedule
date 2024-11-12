@@ -17,6 +17,26 @@ export async function POST(req: Request) {
   }
 
   if (!remove) {
+    // Check for existing RSVP
+    const existingRSVPs: any[] = [];
+    await base("RSVPs")
+      .select({
+        filterByFormula: `AND({Session ID} = "${sessionId}", {Guest ID} = "${guestID}")`,
+      })
+      .eachPage(function page(records: any, fetchNextPage: any) {
+        records.forEach(function (record: any) {
+          existingRSVPs.push(record);
+        });
+        fetchNextPage();
+      });
+
+    if (existingRSVPs.length > 0) {
+      return Response.json({
+        success: false,
+        error: "You have already RSVP'd to this session",
+      });
+    }
+
     await base("RSVPs").create(
       [
         {
