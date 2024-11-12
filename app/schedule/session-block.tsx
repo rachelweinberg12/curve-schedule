@@ -120,7 +120,6 @@ export function RealSessionCard(props: {
             locations={allLocations.filter(
               (loc) => !!session["Location name"].includes(loc.Name)
             )}
-            numRSVPs={numRSVPs}
             rsvpsForEvent={rsvpsForEvent}
           />
         }

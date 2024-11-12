@@ -14,23 +14,37 @@ import clsx from "clsx";
 export function SessionText(props: {
   session: Session;
   locations: Location[];
-  numRSVPs: number;
   rsvpsForEvent?: RSVP[];
+  optimisticRSVPResponse?: boolean | null;
+  setOptimisticRSVPResponse?: (response: boolean | null) => void;
 }) {
-  const { session, locations, numRSVPs, rsvpsForEvent } = props;
+  const {
+    session,
+    locations,
+    rsvpsForEvent,
+    optimisticRSVPResponse,
+    setOptimisticRSVPResponse,
+  } = props;
   const userMetadata = useUserMetadata();
   const { record_id: userRecordID, volunteer: isUserVolunteer } =
     userMetadata ?? {};
-  const [optimisticRSVPResponse, setOptimisticRSVPResponse] = useState<
+  const [localOptRSVPResponse, setLocalOptRSVPResponse] = useState<
     boolean | null
   >(null);
+  const realOptRSVPResponse = optimisticRSVPResponse
+    ? optimisticRSVPResponse
+    : localOptRSVPResponse;
+  const setRealOptRSVPResponse = setOptimisticRSVPResponse
+    ? setOptimisticRSVPResponse
+    : setLocalOptRSVPResponse;
   const rsvpStatus =
-    optimisticRSVPResponse !== null
-      ? optimisticRSVPResponse
+    realOptRSVPResponse !== null
+      ? realOptRSVPResponse
       : !!rsvpsForEvent && rsvpsForEvent.length > 0;
   const hostStatus = userRecordID
     ? !!session.Hosts?.includes(userRecordID)
     : false;
+  const numRSVPs = session["Num RSVPs"] + (realOptRSVPResponse ? 1 : 0);
   return (
     <div className="px-1.5 h-full min-h-10 pt-4 pb-6">
       <div className="flex justify-between items-start">
@@ -88,7 +102,7 @@ export function SessionText(props: {
             rsvp={() => {
               if (!userRecordID) return;
               rsvp(session.ID, !!rsvpStatus);
-              setOptimisticRSVPResponse(!rsvpStatus);
+              setRealOptRSVPResponse(!rsvpStatus);
             }}
             rsvpd={rsvpStatus}
           />
