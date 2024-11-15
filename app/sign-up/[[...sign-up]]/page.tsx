@@ -1,8 +1,6 @@
-import { SignUp } from "@clerk/nextjs";
-
 export default function SignUpPage() {
   return (
-    <div className="mx-auto">
+    <div className="mx-auto max-w-3xl text-center text-lg">
       In order to sign up, you&apos;ll need to follow your individual invitation
       link, which you should have recieved in an email with the subject line{" "}
       <span className="font-bold">
