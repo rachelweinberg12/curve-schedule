@@ -106,7 +106,10 @@ export function getAvailableStartTimes(
         startTimes.push({
           formattedTime,
           time: t,
-          maxDuration: (latestEndTime - t) / 1000 / 60,
+          maxDuration: Math.min(
+            generalMaxDuration,
+            (latestEndTime - t) / 1000 / 60
+          ),
           available: true,
         });
       }
