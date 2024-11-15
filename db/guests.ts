@@ -14,7 +14,13 @@ export type GuestProfile = {
   Bio: string;
   Title: string;
   ID: string;
-  Type: "Speaker" | "Attendee" | "Staff" | "Facilitator" | "Volunteer";
+  Type:
+    | "Speaker"
+    | "Attendee"
+    | "Staff"
+    | "Facilitator"
+    | "Volunteer"
+    | "Other";
   X: string;
   LinkedIn: string;
   Discord: string;
@@ -81,6 +87,7 @@ export async function getGuestProfiles() {
   const guests: GuestProfile[] = [];
   await base("Guests")
     .select({
+      view: "On agenda",
       fields: [
         "Name",
         "Email",
