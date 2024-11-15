@@ -39,6 +39,18 @@ export function getDurationFromSession(session: Session) {
   return Math.round((end.getTime() - start.getTime()) / 60000);
 }
 
+// TODO: instead of on same pacific date, should be on say Day in schedule
+export function areSamePacificDate(time1: number, time2: number): boolean {
+  const date1 = DateTime.fromMillis(time1).setZone("America/Los_Angeles");
+  const date2 = DateTime.fromMillis(time2).setZone("America/Los_Angeles");
+
+  return (
+    date1.year === date2.year &&
+    date1.month === date2.month &&
+    date1.day === date2.day
+  );
+}
+
 export type StartTime = {
   formattedTime: string;
   time: number;
@@ -98,7 +110,9 @@ export function getAvailableStartTimes(
         });
       } else {
         const nextSession = sortedSessions.find(
-          (session) => new Date(session["Start time"]).getTime() > t
+          (session) =>
+            new Date(session["Start time"]).getTime() > t &&
+            areSamePacificDate(new Date(session["Start time"]).getTime(), t)
         );
         const latestEndTime = nextSession
           ? new Date(nextSession["Start time"]).getTime()
