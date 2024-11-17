@@ -10,6 +10,10 @@ export type Session = {
   Hosts?: string[];
   "Host name"?: string[];
   "Host email"?: string;
+  Facilitator?: string[];
+  "Facilitator name": string[];
+  MC?: string[];
+  "MC name"?: string[];
   Location: string[];
   "Location name": string[];
   Capacity?: number;
@@ -27,6 +31,10 @@ export async function getSessions() {
         "Hosts",
         "Host name",
         "Host email",
+        "Facilitator",
+        "Facilitator name",
+        "MC",
+        "MC name",
         "Location",
         "Location name",
         "Capacity",
@@ -59,6 +67,10 @@ export async function getSessionsByEvent(eventName: string) {
         "Hosts",
         "Host name",
         "Host email",
+        "Facilitator",
+        "Facilitator name",
+        "MC",
+        "MC name",
         "Location",
         "Location name",
         "Capacity",
@@ -87,12 +99,48 @@ export async function getSessionsByHost(hostName: string) {
         "Hosts",
         "Host name",
         "Host email",
+        "Facilitator",
+        "Facilitator name",
+        "MC",
+        "MC name",
         "Location",
         "Location name",
         "Capacity",
         "Num RSVPs",
       ],
       filterByFormula: `SEARCH("${hostName}", {Hosts}) != 0`,
+    })
+    .eachPage(function page(records: any, fetchNextPage: any) {
+      records.forEach(function (record: any) {
+        sessions.push({ ...record.fields, ID: record.id });
+      });
+      fetchNextPage();
+    });
+  return sessions;
+}
+
+export async function getSessionsByExpHosts(hostName: string) {
+  const sessions: Session[] = [];
+  await base("Sessions")
+    .select({
+      fields: [
+        "Title",
+        "Description",
+        "Start time",
+        "End time",
+        "Hosts",
+        "Host name",
+        "Host email",
+        "Facilitator",
+        "Facilitator name",
+        "MC",
+        "MC name",
+        "Location",
+        "Location name",
+        "Capacity",
+        "Num RSVPs",
+      ],
+      filterByFormula: `OR((SEARCH("${hostName}", {Hosts}) != 0), (SEARCH("${hostName}", {MC}) != 0), (SEARCH("${hostName}", {Facilitator}) != 0))`,
     })
     .eachPage(function page(records: any, fetchNextPage: any) {
       records.forEach(function (record: any) {
@@ -116,6 +164,10 @@ export async function getSessionsByIDs(sessionIDs: string[]) {
         "Hosts",
         "Host name",
         "Host email",
+        "Facilitator",
+        "Facilitator name",
+        "MC",
+        "MC name",
         "Location",
         "Location name",
         "Capacity",

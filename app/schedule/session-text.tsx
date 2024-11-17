@@ -3,7 +3,6 @@ import { DateTime } from "luxon";
 import { Session } from "@/db/sessions";
 import { Location } from "@/db/locations";
 import { PersonLink, ColoredTag } from "@/components/tags";
-import { RSVP } from "@/db/rsvps";
 import { useUserMetadata } from "@/utils/hooks";
 import { useState } from "react";
 import { rsvp, RSVPButton } from "@/components/rsvp-button";
@@ -42,9 +41,11 @@ export function SessionText(props: {
       : setLocalOptRSVPResponse;
   const rsvpStatus =
     realOptRSVPResponse !== null ? realOptRSVPResponse : !!userIsRSVPd;
-  const hostStatus = userRecordID
-    ? !!session.Hosts?.includes(userRecordID)
-    : false;
+  const isSpeaking = userRecordID && !!session.Hosts?.includes(userRecordID);
+  const isFacilitating =
+    userRecordID && !!session.Facilitator?.includes(userRecordID);
+  const isMCing = userRecordID && !!session.MC?.includes(userRecordID);
+  const isHostingAtAll = isSpeaking || isFacilitating || isMCing;
   const changeToRSVPDisplay =
     realOptRSVPResponse === null || userIsRSVPd === realOptRSVPResponse
       ? 0
@@ -58,7 +59,20 @@ export function SessionText(props: {
   return (
     <div className="px-1.5 h-full min-h-10 pt-4 pb-6">
       <div className="flex justify-between items-start">
-        <h1 className="font-bold leading-tight">{session.Title}</h1>
+        <div className="flex items-end gap-1">
+          <h1 className="font-bold leading-tight">{session.Title}</h1>
+          {isHostingAtAll && (
+            <span className="text-sm text-gray-400 italic">
+              (
+              {isSpeaking
+                ? "speaking"
+                : isFacilitating
+                ? "facilitating"
+                : "MCing"}
+              )
+            </span>
+          )}
+        </div>
         <div className="flex items-center gap-1">
           {locations.map((loc) => (
             <ColoredTag key={loc.Name} color={loc.Color} text={loc.Name} />
@@ -111,7 +125,7 @@ export function SessionText(props: {
             </span>
           )}
         </div>
-        {userIsRSVPd !== undefined && !hostStatus && !isUserVolunteer && (
+        {userIsRSVPd !== undefined && !isHostingAtAll && !isUserVolunteer && (
           <Tooltip
             content={
               isAtCapacity && !rsvpStatus ? (
@@ -130,7 +144,7 @@ export function SessionText(props: {
             />
           </Tooltip>
         )}
-        {hostStatus && (
+        {isSpeaking && (
           <Link
             href={`/edit-session/${session.ID}`}
             className="px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded text-white"
