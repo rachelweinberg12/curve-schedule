@@ -46,6 +46,9 @@ export function SessionText(props: {
     userRecordID && !!session.Facilitator?.includes(userRecordID);
   const isMCing = userRecordID && !!session.MC?.includes(userRecordID);
   const isHostingAtAll = isSpeaking || isFacilitating || isMCing;
+  const allHostsToDisplay = session["Host name"]
+    ?.concat(session["Facilitator name"])
+    .filter((name) => !!name);
   const changeToRSVPDisplay =
     realOptRSVPResponse === null || userIsRSVPd === realOptRSVPResponse
       ? 0
@@ -82,11 +85,9 @@ export function SessionText(props: {
       <div className="flex flex-col sm:flex-row justify-between mt-2 sm:items-center gap-2">
         <div className="flex gap-1 text-xs text-gray-400 items-center">
           <div className="flex gap-2">
-            {session.Hosts?.map((host, idx) => {
-              return session["Host name"] ? (
-                <PersonLink key={host} name={session["Host name"][idx]} />
-              ) : undefined;
-            })}
+            {allHostsToDisplay?.map((hostName) => (
+              <PersonLink key={hostName} name={hostName} />
+            ))}
           </div>
         </div>
       </div>
