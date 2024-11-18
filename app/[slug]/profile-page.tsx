@@ -72,7 +72,7 @@ export function ProfilePage(props: {
       </div>
       {(profile.Bio || profile["Exp topics"] || profile["Curious topics"]) && (
         <div>
-          <hr className="border-gray-700 my-6" />
+          <hr className="border-gray-400 my-6" />
           {profile.Bio && (
             <div className="my-2">
               <h2 className="font-bold">Bio</h2>
@@ -99,9 +99,9 @@ export function ProfilePage(props: {
       )}
       {sessionsHosting.length > 0 && (
         <div>
-          <hr className="border-gray-700 my-6" />
+          <hr className="border-gray-400 my-6" />
           <h2 className="text-lg font-bold">Hosted Sessions</h2>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 divide-y divide-gray-700">
             {sortedHostingSessions.map((session) => (
               <SessionText
                 key={`${session["Title"]} + ${session["Start time"]} + ${session["End time"]}`}
@@ -116,7 +116,7 @@ export function ProfilePage(props: {
       )}
       {rsvpdSessions.length > 0 && (
         <div>
-          <hr className="border-gray-700 my-6" />
+          <hr className="border-gray-400 my-6" />
           <h2 className="text-lg font-bold">RSVP&apos;d Sessions</h2>
           <div className="flex flex-col gap-1">
             {sortedRSVPSessions.map((session) => (

@@ -57,7 +57,7 @@ export function SessionText(props: {
   const isAtCapacity = !!session.Capacity && spotsLeft <= 0;
   const isNearCapacity = !!session.Capacity && spotsLeft <= 5;
   return (
-    <div className="px-1.5 h-full min-h-10 pt-4 pb-6">
+    <div className="px-1.5 h-full min-h-10 py-4">
       <div className="flex justify-between items-start">
         <div className="flex items-end gap-1">
           <h1 className="font-bold leading-tight">{session.Title}</h1>
@@ -107,7 +107,7 @@ export function SessionText(props: {
         className="text-sm whitespace-pre-line mt-2"
         text={session.Description}
       />
-      <div className="flex justify-between mt-2 gap-4 text-xs text-gray-400 items-center">
+      <div className="flex justify-between mt-1 gap-4 text-xs text-gray-400 items-center">
         <div>
           {session.Capacity && (
             <span
