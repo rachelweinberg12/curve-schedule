@@ -106,7 +106,10 @@ export function RealSessionCard(props: {
     userRecordID && !!session.Facilitator?.includes(userRecordID);
   const isMCing = userRecordID && !!session.MC?.includes(userRecordID);
   const isHostingAtAll = isSpeaking || isFacilitating || isMCing;
-  const formattedHostNames = session["Host name"]?.join(", ") ?? "No hosts";
+  const allDisplayedHosts = session["Facilitator name"]
+    ? session["Host name"]?.concat(session["Facilitator name"])
+    : session["Host name"];
+  const formattedHostNames = allDisplayedHosts?.join(", ") ?? "No hosts";
   const lowerOpacity = !rsvpStatus && !isHostingAtAll;
   const [sessionModalOpen, setSessionModalOpen] = useState(false);
   const changeToRSVPDisplay =
