@@ -120,7 +120,22 @@ export function RealSessionCard(props: {
       : -1;
   const numRSVPs = session["Num RSVPs"] + changeToRSVPDisplay;
   return (
-    <div className={`row-span-${numHalfHours} my-0.5 overflow-hidden group`}>
+    <Tooltip
+      content={
+        isHostingAtAll ? (
+          <span className="text-nowrap text-sm">
+            You are{" "}
+            {isSpeaking
+              ? "speaking"
+              : isFacilitating
+              ? "facilitating"
+              : "MCing"}
+            .
+          </span>
+        ) : undefined
+      }
+      className={`row-span-${numHalfHours} my-0.5 overflow-hidden group`}
+    >
       <SessionModal
         close={() => setSessionModalOpen(false)}
         open={sessionModalOpen}
@@ -177,28 +192,17 @@ export function RealSessionCard(props: {
           </div>
         )}
         {isHostingAtAll && (
-          <Tooltip
+          <div
             className={clsx(
               "absolute pl-0.5 pb-0.5 rounded-bl top-0 text-sm right-0 flex gap-0.5 items-center",
               `bg-${location.Color}-800`,
               lowerOpacity && "bg-opacity-50"
             )}
-            content={
-              <span className="text-nowrap">
-                You are{" "}
-                {isSpeaking
-                  ? "speaking"
-                  : isFacilitating
-                  ? "facilitating"
-                  : "MCing"}
-                .
-              </span>
-            }
           >
             <StarIcon className="h-3 w-3" />
-          </Tooltip>
+          </div>
         )}
       </button>
-    </div>
+    </Tooltip>
   );
 }
