@@ -1,7 +1,7 @@
 import { getGuestBySlug } from "@/db/guests";
 import { ProfilePage } from "./profile-page";
 import { getUserByEmail, getUserRecordID, getUserSlug } from "@/db/auth";
-import { getSessionsByHost, getSessionsByIDs } from "@/db/sessions";
+import { getSessionsByExpHosts, getSessionsByIDs } from "@/db/sessions";
 import { getLocations } from "@/db/locations";
 import { getRSVPsByUser } from "@/db/rsvps";
 import { redirect } from "next/navigation";
@@ -26,7 +26,7 @@ export default async function Page(props: { params: { slug: string } }) {
   const [guestAccount, sessionsHosting, locations, userRecordID, rsvps] =
     await Promise.all([
       getUserByEmail(guest.Email),
-      getSessionsByHost(guest.Name),
+      getSessionsByExpHosts(guest.Name),
       getLocations(),
       getUserRecordID(),
       getRSVPsByUser(guest.ID),

@@ -3,7 +3,6 @@ import { DateTime } from "luxon";
 import { Session } from "@/db/sessions";
 import { Location } from "@/db/locations";
 import { PersonLink, ColoredTag } from "@/components/tags";
-import { RSVP } from "@/db/rsvps";
 import { useUserMetadata } from "@/utils/hooks";
 import { useState } from "react";
 import { rsvp, RSVPButton } from "@/components/rsvp-button";
@@ -42,9 +41,14 @@ export function SessionText(props: {
       : setLocalOptRSVPResponse;
   const rsvpStatus =
     realOptRSVPResponse !== null ? realOptRSVPResponse : !!userIsRSVPd;
-  const hostStatus = userRecordID
-    ? !!session.Hosts?.includes(userRecordID)
-    : false;
+  const isSpeaking = userRecordID && !!session.Hosts?.includes(userRecordID);
+  const isFacilitating =
+    userRecordID && !!session.Facilitator?.includes(userRecordID);
+  const isMCing = userRecordID && !!session.MC?.includes(userRecordID);
+  const isHostingAtAll = isSpeaking || isFacilitating || isMCing;
+  const allHostsToDisplay = session["Host name"]
+    ?.concat(session["Facilitator name"])
+    .filter((name) => !!name);
   const changeToRSVPDisplay =
     realOptRSVPResponse === null || userIsRSVPd === realOptRSVPResponse
       ? 0
@@ -56,9 +60,22 @@ export function SessionText(props: {
   const isAtCapacity = !!session.Capacity && spotsLeft <= 0;
   const isNearCapacity = !!session.Capacity && spotsLeft <= 5;
   return (
-    <div className="px-1.5 h-full min-h-10 pt-4 pb-6">
+    <div className="px-1.5 h-full min-h-10 py-4">
       <div className="flex justify-between items-start">
-        <h1 className="font-bold leading-tight">{session.Title}</h1>
+        <div className="flex items-end gap-1">
+          <h1 className="font-bold leading-tight">{session.Title}</h1>
+          {isHostingAtAll && (
+            <span className="text-sm text-gray-400 italic">
+              (
+              {isSpeaking
+                ? "speaking"
+                : isFacilitating
+                ? "facilitating"
+                : "MCing"}
+              )
+            </span>
+          )}
+        </div>
         <div className="flex items-center gap-1">
           {locations.map((loc) => (
             <ColoredTag key={loc.Name} color={loc.Color} text={loc.Name} />
@@ -68,11 +85,9 @@ export function SessionText(props: {
       <div className="flex flex-col sm:flex-row justify-between mt-2 sm:items-center gap-2">
         <div className="flex gap-1 text-xs text-gray-400 items-center">
           <div className="flex gap-2">
-            {session.Hosts?.map((host, idx) => {
-              return session["Host name"] ? (
-                <PersonLink key={host} name={session["Host name"][idx]} />
-              ) : undefined;
-            })}
+            {allHostsToDisplay?.map((hostName) => (
+              <PersonLink key={hostName} name={hostName} />
+            ))}
           </div>
         </div>
       </div>
@@ -93,7 +108,7 @@ export function SessionText(props: {
         className="text-sm whitespace-pre-line mt-2"
         text={session.Description}
       />
-      <div className="flex justify-between mt-2 gap-4 text-xs text-gray-400 items-center">
+      <div className="flex justify-between mt-1 gap-4 text-xs text-gray-400 items-center">
         <div>
           {session.Capacity && (
             <span
@@ -111,7 +126,7 @@ export function SessionText(props: {
             </span>
           )}
         </div>
-        {userIsRSVPd !== undefined && !hostStatus && !isUserVolunteer && (
+        {userIsRSVPd !== undefined && !isHostingAtAll && !isUserVolunteer && (
           <Tooltip
             content={
               isAtCapacity && !rsvpStatus ? (
@@ -130,7 +145,7 @@ export function SessionText(props: {
             />
           </Tooltip>
         )}
-        {hostStatus && (
+        {isSpeaking && (
           <Link
             href={`/edit-session/${session.ID}`}
             className="px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded text-white"

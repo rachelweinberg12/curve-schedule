@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { UserIcon } from "@heroicons/react/24/solid";
+import { UserIcon, StarIcon } from "@heroicons/react/24/solid";
 import { Session } from "@/db/sessions";
 import { Day } from "@/db/days";
 import { Location } from "@/db/locations";
@@ -11,6 +11,7 @@ import { useState } from "react";
 import { SessionModal } from "../modals";
 import { useUserRecordID } from "@/utils/hooks";
 import { SessionText } from "./session-text";
+import { Tooltip } from "./tooltip";
 
 export function SessionBlock(props: {
   session: Session;
@@ -100,11 +101,16 @@ export function RealSessionCard(props: {
   const userIsRSVPd = rsvpsForEvent.length > 0;
   const rsvpStatus =
     optimisticRSVPResponse !== null ? optimisticRSVPResponse : userIsRSVPd;
-  const hostStatus = userRecordID
-    ? !!session.Hosts?.includes(userRecordID)
-    : false;
-  const formattedHostNames = session["Host name"]?.join(", ") ?? "No hosts";
-  const lowerOpacity = !rsvpStatus && !hostStatus;
+  const isSpeaking = userRecordID && !!session.Hosts?.includes(userRecordID);
+  const isFacilitating =
+    userRecordID && !!session.Facilitator?.includes(userRecordID);
+  const isMCing = userRecordID && !!session.MC?.includes(userRecordID);
+  const isHostingAtAll = isSpeaking || isFacilitating || isMCing;
+  const allDisplayedHosts = session["Facilitator name"]
+    ? session["Host name"]?.concat(session["Facilitator name"])
+    : session["Host name"];
+  const formattedHostNames = allDisplayedHosts?.join(", ") ?? "No hosts";
+  const lowerOpacity = !rsvpStatus && !isHostingAtAll;
   const [sessionModalOpen, setSessionModalOpen] = useState(false);
   const changeToRSVPDisplay =
     optimisticRSVPResponse === null || userIsRSVPd === optimisticRSVPResponse
@@ -114,7 +120,22 @@ export function RealSessionCard(props: {
       : -1;
   const numRSVPs = session["Num RSVPs"] + changeToRSVPDisplay;
   return (
-    <div className={`row-span-${numHalfHours} my-0.5 overflow-hidden group`}>
+    <Tooltip
+      content={
+        isHostingAtAll ? (
+          <span className="text-nowrap text-sm">
+            You are{" "}
+            {isSpeaking
+              ? "speaking"
+              : isFacilitating
+              ? "facilitating"
+              : "MCing"}
+            .
+          </span>
+        ) : undefined
+      }
+      className={`row-span-${numHalfHours} my-0.5 overflow-hidden group`}
+    >
       <SessionModal
         close={() => setSessionModalOpen(false)}
         open={sessionModalOpen}
@@ -170,7 +191,18 @@ export function RealSessionCard(props: {
             {numRSVPs}/{session.Capacity}
           </div>
         )}
+        {isHostingAtAll && (
+          <div
+            className={clsx(
+              "absolute pl-0.5 pb-0.5 rounded-bl top-0 text-sm right-0 flex gap-0.5 items-center",
+              `bg-${location.Color}-800`,
+              lowerOpacity && "bg-opacity-50"
+            )}
+          >
+            <StarIcon className="h-3 w-3" />
+          </div>
+        )}
       </button>
-    </div>
+    </Tooltip>
   );
 }

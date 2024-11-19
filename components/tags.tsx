@@ -33,6 +33,7 @@ export const TypeTagColor = {
   Speaker: "yellow",
   Staff: "purple",
   Volunteer: "green",
+  Other: "gray",
 };
 
 export const RequiredStar = () => (
