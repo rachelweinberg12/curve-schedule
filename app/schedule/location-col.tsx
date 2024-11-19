@@ -82,6 +82,10 @@ function insertBlankSessions(
         "Host email": "",
         Location: [],
         "Location name": [""],
+        Facilitator: [],
+        "Facilitator name": [],
+        MC: [],
+        "MC name": [],
         "Num RSVPs": 0,
         ID: "",
       });
