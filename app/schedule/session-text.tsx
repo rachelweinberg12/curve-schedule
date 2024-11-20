@@ -62,10 +62,10 @@ export function SessionText(props: {
   return (
     <div className="px-1.5 h-full min-h-10 py-4">
       <div className="flex justify-between items-start">
-        <div className="flex items-end gap-1">
-          <h1 className="font-bold leading-tight">{session.Title}</h1>
+        <h1 className="font-bold leading-tight">
+          {session.Title}{" "}
           {isHostingAtAll && (
-            <span className="text-sm text-gray-400 italic">
+            <span className="text-sm text-gray-400 italic font-normal">
               (
               {isSpeaking
                 ? "speaking"
@@ -75,7 +75,7 @@ export function SessionText(props: {
               )
             </span>
           )}
-        </div>
+        </h1>
         <div className="flex items-center gap-1">
           {locations.map((loc) => (
             <ColoredTag key={loc.Name} color={loc.Color} text={loc.Name} />
