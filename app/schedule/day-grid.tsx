@@ -32,9 +32,9 @@ export function DayGrid(props: {
   const [scrolledToRightEnd, setScrolledToRightEnd] = useState(false);
   const [scrolledToLeftEnd, setScrolledToLeftEnd] = useState(true);
   // Now that the festival is over, show entire schedule by default
-  const [expanded, setExpanded] = useState(true);
+  // const [expanded, setExpanded] = useState(true);
   // Or use this to hide dates that have already ended
-  // const [expanded, setExpanded] = useState(end >= new Date());
+  const [expanded, setExpanded] = useState(end >= new Date());
   useSafeLayoutEffect(() => {
     const handleScroll = () => {
       if (scrollableDivRef.current) {
